@@ -3,7 +3,7 @@ import { Reveal } from "./Reveal";
 
 export function Faq() {
   return (
-    <section className="section section--alt" id="faq">
+    <section className="section" id="faq">
       <div className="wrap narrow">
         <Reveal as="h2">Questions fréquentes</Reveal>
 

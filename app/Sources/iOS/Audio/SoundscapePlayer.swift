@@ -20,6 +20,7 @@ final class SoundscapePlayer: ObservableObject {
 
     private static let volumeKey = "soundscapeVolume"
     private var player: AVAudioPlayer?
+    private var fanfarePlayer: AVAudioPlayer?
     private var fadeTask: Task<Void, Never>?
 
     init() {
@@ -79,6 +80,15 @@ final class SoundscapePlayer: ObservableObject {
             self?.player = nil
             self?.deactivateSession()
         }
+    }
+
+    /// Fanfare d'un haut fait : un seul passage, par-dessus tout le reste.
+    func playFanfare() {
+        guard let url = Bundle.main.url(forResource: "fanfare", withExtension: "wav") else { return }
+        activateSession()
+        fanfarePlayer = try? AVAudioPlayer(contentsOf: url)
+        fanfarePlayer?.volume = min(1, max(0.35, volume))
+        fanfarePlayer?.play()
     }
 
     private func activateSession() {

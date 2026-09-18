@@ -15,6 +15,7 @@ Tout reste sur l'appareil : pas de compte, pas de serveur, pas de réseau.
 | **Aide & détente** | Conseils quand ça coince, respiration guidée, signaux qui doivent envoyer consulter |
 | **Son** | Quatre ambiances embarquées qui se mélangent à votre musique, et commande de la musique du système |
 | **Palmarès** | 14 hauts faits, équivalences absurdes, titre honorifique et certificat partageable |
+| **Météo intestinale** | Bulletin calculé sur la semaine, profil, prévision de la prochaine visite |
 | **Siri** | « Je vais aux toilettes », « J'ai fini » via App Shortcuts |
 | **Site** | `website/`, React 18 + TypeScript (Vite), servi par Express, déployable sur Heroku |
 
@@ -92,6 +93,20 @@ app.json                     manifeste du bouton « Deploy to Heroku »
   C'est tout ce que ça fait.
 - Ambiance **Réunion** : brouhaha de bureau et frappes de clavier, synthétisés
   comme les autres, à lancer depuis les toilettes du travail.
+- `ForecastEngine` — **météo intestinale** : la semaine écoulée comparée à la
+  précédente donne une condition (Grand beau, Variable, Perturbé, Tempête),
+  une pression en hectopascals, un risque d'averse, une visibilité et un vent.
+  Plus une prévision de la prochaine visite, avec une fiabilité honnêtement
+  basse. Affichée en tête des statistiques.
+- `PersonaEngine` — **profil** déduit du créneau dominant et de la durée
+  moyenne : du « Sprinteur du matin » à « L'Ermite de la nuit », quinze
+  combinaisons possibles.
+- `AbsurdStats.lifetimeSentence` — projection du rythme actuel sur cinquante
+  ans, en mois passés assis.
+- **Rétrospective** partageable, façon bilan de fin d'année, rendue en image
+  comme le certificat.
+- **Fanfare et bandeau** au déblocage d'un haut fait : `fanfare.wav` est
+  synthétisée par le même script que les ambiances.
 
 ### Architecture en bref
 

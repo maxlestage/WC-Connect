@@ -147,6 +147,17 @@ public enum AchievementEngine {
         Achievement.allCases.filter { isUnlocked($0, sessions: sessions, calendar: calendar) }
     }
 
+    /// Hauts faits gagnés entre deux états de l'historique, pour féliciter au
+    /// bon moment.
+    public static func newlyUnlocked(
+        previous: [ToiletSession],
+        current: [ToiletSession],
+        calendar: Calendar = .current
+    ) -> [Achievement] {
+        let before = Set(unlocked(sessions: previous, calendar: calendar))
+        return unlocked(sessions: current, calendar: calendar).filter { !before.contains($0) }
+    }
+
     /// Titre honorifique attribué selon le nombre de hauts faits.
     public static func rank(unlockedCount count: Int) -> String {
         switch count {

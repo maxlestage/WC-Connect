@@ -4,6 +4,9 @@ import SwiftUI
 struct TrophyView: View {
     @EnvironmentObject private var store: SessionStore
     @State private var certificate: Image?
+    @State private var recap: Image?
+
+    private var persona: Persona { PersonaEngine.persona(sessions: store.sessions) }
 
     private var unlocked: [Achievement] {
         AchievementEngine.unlocked(sessions: store.sessions)
@@ -15,8 +18,10 @@ struct TrophyView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 26) {
                 rankHeader
+                personaCard
                 badges
                 absurdStats
+                recapSection
                 certificateSection
             }
             .padding(20)
@@ -39,6 +44,26 @@ struct TrophyView: View {
         .padding(18)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(WCTheme.gradient.opacity(0.14), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+    }
+
+    private var personaCard: some View {
+        HStack(spacing: 14) {
+            Image(systemName: persona.symbol)
+                .font(.title2)
+                .foregroundStyle(WCTheme.warn)
+                .frame(width: 34)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(persona.title)
+                    .font(.headline)
+                Text(persona.detail)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.quaternary.opacity(0.3), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
     }
 
     // MARK: - Hauts faits
@@ -85,6 +110,12 @@ struct TrophyView: View {
             Text(AbsurdStats.headline(totalDuration: stats.totalDuration))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
+            Text(AbsurdStats.lifetimeSentence(
+                averagePerDay: stats.averagePerDay,
+                averageDuration: stats.averageDuration
+            ))
+            .font(.caption)
+            .foregroundStyle(WCTheme.warn)
 
             ForEach(AbsurdStats.equivalences(totalDuration: stats.totalDuration, visitCount: stats.total)) { item in
                 HStack(spacing: 12) {
@@ -106,6 +137,44 @@ struct TrophyView: View {
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.quaternary.opacity(0.3), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+    }
+
+    // MARK: - Rétrospective
+
+    private var recapSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Rétrospective")
+                .font(.headline)
+            Text("Votre année sur le trône, résumée en une image. Personne ne vous l'a demandée.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            RecapCard(
+                persona: persona,
+                stats: stats,
+                topBadge: unlocked.last
+            )
+
+            if let recap {
+                ShareLink(item: recap, preview: SharePreview("Rétrospective WC Connect", image: recap)) {
+                    Label("Partager la rétrospective", systemImage: "square.and.arrow.up")
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                }
+                .buttonStyle(.borderedProminent)
+            } else {
+                Button {
+                    recap = render(
+                        RecapCard(persona: persona, stats: stats, topBadge: unlocked.last)
+                    )
+                } label: {
+                    Label("Préparer la rétrospective", systemImage: "wand.and.stars")
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                }
+                .buttonStyle(.bordered)
+            }
+        }
     }
 
     // MARK: - Certificat
@@ -150,18 +219,77 @@ struct TrophyView: View {
 
     @MainActor
     private func renderCertificate() {
-        let renderer = ImageRenderer(
-            content: CertificateCard(
+        certificate = render(
+            CertificateCard(
                 rank: AchievementEngine.rank(unlockedCount: unlocked.count),
                 longest: stats.longestDuration,
                 total: stats.total,
                 badges: unlocked.count
             )
-            .frame(width: 340)
         )
+    }
+
+    /// Rend une carte en image partageable.
+    @MainActor
+    private func render(_ card: some View) -> Image? {
+        let renderer = ImageRenderer(content: card.frame(width: 340))
         renderer.scale = 3
-        if let image = renderer.uiImage {
-            certificate = Image(uiImage: image)
+        guard let image = renderer.uiImage else { return nil }
+        return Image(uiImage: image)
+    }
+}
+
+/// Rétrospective partageable, façon bilan de fin d'année.
+struct RecapCard: View {
+    let persona: Persona
+    let stats: Stats
+    let topBadge: Achievement?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Ma rétrospective")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.white.opacity(0.75))
+            Text(persona.title)
+                .font(.title2.weight(.bold))
+                .foregroundStyle(.white)
+
+            VStack(alignment: .leading, spacing: 8) {
+                line("Temps total", WCFormat.duration(stats.totalDuration))
+                line("Visites", "\(stats.total)")
+                line("Record", WCFormat.duration(stats.longestDuration))
+                line("Créneau favori", stats.busiestHour.map { "\($0) h" } ?? "—")
+                if let topBadge {
+                    line("Dernier haut fait", topBadge.title)
+                }
+            }
+
+            Text(AbsurdStats.lifetimeSentence(
+                averagePerDay: stats.averagePerDay,
+                averageDuration: stats.averageDuration
+            ))
+            .font(.caption2)
+            .foregroundStyle(.white.opacity(0.8))
+
+            Text("WC Connect")
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(.white.opacity(0.6))
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(WCTheme.gradient, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+    }
+
+    private func line(_ title: String, _ value: String) -> some View {
+        HStack {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.white.opacity(0.75))
+            Spacer(minLength: 12)
+            Text(value)
+                .font(.subheadline.weight(.semibold))
+                .monospacedDigit()
+                .foregroundStyle(.white)
         }
     }
 }

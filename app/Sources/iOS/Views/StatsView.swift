@@ -11,6 +11,11 @@ struct StatsView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
+                    ForecastCard(
+                        forecast: ForecastEngine.forecast(sessions: store.sessions),
+                        nextVisit: ForecastEngine.nextVisit(sessions: store.sessions),
+                        persona: PersonaEngine.persona(sessions: store.sessions)
+                    )
                     tiles
                     trophyLink
                     weekChart

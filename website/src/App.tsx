@@ -12,6 +12,7 @@ import { Privacy } from "./components/Privacy";
 import { SoundSection } from "./components/SoundSection";
 import { TrackingSection } from "./components/TrackingSection";
 import { WatchSection } from "./components/WatchSection";
+import { WeatherSection } from "./components/WeatherSection";
 import { useDemoTimer } from "./hooks/useDemoTimer";
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
         <WatchSection elapsed={elapsed} />
         <TrackingSection />
         <FunSection />
+        <WeatherSection />
         <Privacy />
         <Faq />
         <Cta />

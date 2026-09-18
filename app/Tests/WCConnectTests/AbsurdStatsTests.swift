@@ -48,6 +48,28 @@ final class AbsurdStatsTests: XCTestCase {
         XCTAssertEqual(items.first { $0.id == "paper" }?.value, "1,20 km")
     }
 
+    func testLifetimeDaysMatchTheArithmetic() {
+        // 2 visites de 4 minutes par jour pendant 50 ans.
+        let days = AbsurdStats.lifetimeDays(averagePerDay: 2, averageDuration: 240, years: 50)
+        XCTAssertEqual(days, 2 * 240 * 365 * 50 / 86_400, accuracy: 0.001)
+        XCTAssertEqual(days, 101.39, accuracy: 0.05)
+    }
+
+    func testLifetimeDaysClampNegativeInput() {
+        XCTAssertEqual(AbsurdStats.lifetimeDays(averagePerDay: -2, averageDuration: 240), 0)
+        XCTAssertEqual(AbsurdStats.lifetimeDays(averagePerDay: 2, averageDuration: -240), 0)
+        XCTAssertEqual(AbsurdStats.lifetimeDays(averagePerDay: 2, averageDuration: 240, years: 0), 0)
+    }
+
+    func testLifetimeSentenceScales() {
+        XCTAssertTrue(AbsurdStats.lifetimeSentence(averagePerDay: 0.001, averageDuration: 240)
+            .contains("moins d'une journée"))
+        XCTAssertTrue(AbsurdStats.lifetimeSentence(averagePerDay: 1, averageDuration: 60)
+            .contains("jours"))
+        XCTAssertTrue(AbsurdStats.lifetimeSentence(averagePerDay: 2.4, averageDuration: 252)
+            .contains("mois"))
+    }
+
     func testHeadlineAdaptsToTheScale() {
         XCTAssertTrue(AbsurdStats.headline(totalDuration: 120).contains("début"))
         XCTAssertTrue(AbsurdStats.headline(totalDuration: 3 * 3600).contains("heures"))

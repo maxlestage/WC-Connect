@@ -5,7 +5,19 @@ struct WatchStatsView: View {
 
     var body: some View {
         let stats = store.stats
+        let persona = PersonaEngine.persona(sessions: store.sessions)
         return List {
+            Section {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(persona.title)
+                        .font(.caption.weight(.semibold))
+                    Text(AchievementEngine.rank(
+                        unlockedCount: AchievementEngine.unlocked(sessions: store.sessions).count
+                    ))
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                }
+            }
             row("Aujourd'hui", "\(stats.today)", "sun.max.fill")
             row("Par jour", stats.total > 0 ? String(format: "%.1f", stats.averagePerDay) : "—", "calendar")
             row("Moyenne", stats.total > 0 ? WCFormat.duration(stats.averageDuration) : "—", "timer")
