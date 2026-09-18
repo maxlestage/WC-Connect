@@ -17,7 +17,7 @@ Tout reste sur l'appareil : pas de compte, pas de serveur, pas de réseau.
 | **Palmarès** | 14 hauts faits, équivalences absurdes, titre honorifique et certificat partageable |
 | **Météo intestinale** | Bulletin calculé sur la semaine, profil, prévision de la prochaine visite |
 | **Siri** | « Je vais aux toilettes », « I'm going to the bathroom » et leurs variantes |
-| **Site** | `website/`, React 18 + TypeScript (Vite), **statique** et **bilingue** français / anglais |
+| **Site** | `website/`, React 18 + TypeScript (Vite), **bilingue**, servi par Heroku ou par n'importe quel hébergeur de fichiers |
 
 ## Structure du dépôt
 
@@ -230,29 +230,45 @@ npm run preview        # relit le dossier construit
 | `VITE_BASE` | sous-chemin de publication : `/WC-Connect/` sur GitHub Pages, `/` sur un domaine dédié |
 | `VITE_SITE_URL` | origine publique, injectée dans les balises Open Graph — elles exigent des URL absolues, et sans serveur c'est à la construction que ça se décide |
 
-### Publication, depuis un téléphone et sans serveur
+### Publication
 
-**GitHub Pages, automatique.** Le workflow `.github/workflows/pages.yml`
-construit et publie à chaque commit sur `master`. Une seule chose à faire, une
-fois, depuis le navigateur du téléphone : **Settings → Pages → Source →
-GitHub Actions**. Le site vit ensuite sur
-`https://<compte>.github.io/WC-Connect/` et se met à jour tout seul.
+Le site se construit en fichiers statiques. Deux façons de les servir, au
+choix, sans rien changer au code.
 
-> GitHub Pages sur un dépôt privé demande une offre payante. Sur un dépôt
-> privé et gratuit, préférez Cloudflare Pages ou Netlify ci-dessous.
+#### Heroku
 
-**Cloudflare Pages ou Netlify.** Connectez le dépôt depuis leur interface
-(dépôts privés acceptés, offres gratuites), avec :
+```bash
+heroku create mon-app-wc-connect
+heroku buildpacks:set heroku/nodejs
+git push heroku HEAD:main
+heroku open
+```
 
-- commande de construction : `npm ci && npm run build`
-- dossier publié : `website/dist`
-- variable `VITE_SITE_URL` : l'URL que l'hébergeur vous attribue
+Ou, depuis un téléphone, le bouton en tête de ce chapitre.
 
-**Render.** `render.yaml` décrit déjà un site statique : *New → Blueprint*,
-puis *Apply*.
+Heroku exécute `npm ci`, puis `heroku-postbuild` (la construction du site), et
+lance `node website/server.js` — **un serveur de fichiers sans aucune
+dépendance**, écrit avec les seuls modules intégrés de Node. Il sert
+`website/dist`, met les fichiers versionnés en cache long, compresse le texte,
+expose `/healthz`, et complète les balises de partage avec l'origine
+réellement servie : Heroku attribue son domaine après la construction, donc
+rien ne peut être figé avant.
 
-Dans tous les cas, `website/dist` est un dossier de fichiers : il se dépose
-tel quel sur n'importe quel hébergement, y compris à la main.
+La variable `SITE_URL` permet de forcer cette origine si vous branchez un
+domaine personnalisé.
+
+#### Hébergement de fichiers
+
+`website/dist` se dépose tel quel, sans serveur :
+
+| Hébergeur | Dépôt privé | Coût |
+|---|---|---|
+| GitHub Pages (workflow `pages.yml` inclus) | non, demande une offre payante | gratuit |
+| Cloudflare Pages / Netlify | oui | gratuit |
+| Render (`render.yaml`, statique) | oui | gratuit |
+
+Construisez alors avec `VITE_SITE_URL` renseigné, pour que les URL de partage
+soient absolues — il n'y a aucun serveur pour les calculer à la volée.
 
 ### Aperçus de partage
 
@@ -264,9 +280,16 @@ npx playwright screenshot --viewport-size=1200,630 \
   website/scripts/social-card.html website/public/social-card.png
 ```
 
-Les balises Open Graph contiennent un marqueur `__SITE_URL__` que Vite
-remplace à la construction par `VITE_SITE_URL`. La CI vérifie qu'aucun
-marqueur ne subsiste et que l'URL de l'image est bien absolue.
+Les balises Open Graph contiennent un marqueur `__SITE_URL__` :
+
+- `VITE_SITE_URL` renseigné à la construction — Vite le remplace, la page est
+  autonome et convient à un hébergement de fichiers ;
+- variable absente — le marqueur reste, et `website/server.js` le remplace à
+  chaque requête par l'origine servie. C'est ce qui permet à Heroku de
+  fonctionner sans connaître son domaine à l'avance.
+
+La CI vérifie les deux chemins : page construite avec origine figée, puis
+serveur Node interrogé derrière un proxy simulé.
 
 ## Vie privée
 
