@@ -96,7 +96,19 @@ for (const width of largeurs) {
       );
     }
 
-    // 1. La montre ne recouvre ni la carte ni la barre de progression.
+    // 1. La montre et le téléphone ne se chevauchent pas du tout. Ils se
+    //    chevauchaient auparavant, et selon l'ordre de peinture le cadre du
+    //    téléphone pouvait passer devant la montre : un écart supprime la
+    //    question.
+    if (montre.gauche < telephone.droite - marge) {
+      signaler(
+        `${etiquette} : la montre et le téléphone se chevauchent sur ` +
+          `${Math.round(telephone.droite - montre.gauche)} px ` +
+          `(téléphone jusqu'à ${Math.round(telephone.droite)}, montre dès ${Math.round(montre.gauche)})`,
+      );
+    }
+
+    // 2. La montre ne recouvre ni la carte ni la barre de progression.
     for (const [nom, cible] of [["la carte", carte], ["la barre", barre]]) {
       const chevauche =
         montre.gauche < cible.droite - marge &&
@@ -112,7 +124,7 @@ for (const width of largeurs) {
       }
     }
 
-    // 2. Le contenu de la montre tient dans son boîtier.
+    // 3. Le contenu de la montre tient dans son boîtier.
     for (const [nom, cible] of [["le cadran", cadran], ["le bouton", bouton]]) {
       if (cible.bas > montre.bas + marge || cible.droite > montre.droite + marge || cible.gauche < montre.gauche - marge) {
         signaler(
@@ -122,12 +134,12 @@ for (const width of largeurs) {
       }
     }
 
-    // 3. La carte de la Live Activity tient dans l'écran du téléphone.
+    // 4. La carte de la Live Activity tient dans l'écran du téléphone.
     if (carte.droite > telephone.droite + marge || carte.gauche < telephone.gauche - marge) {
       signaler(`${etiquette} : la carte déborde du téléphone`);
     }
 
-    // 4. Rien ne sort de la page.
+    // 5. Rien ne sort de la page.
     if (largeurPage > width + marge) {
       signaler(`${etiquette} : la page est large de ${largeurPage} px`);
     } else if (montre.droite > width + marge) {

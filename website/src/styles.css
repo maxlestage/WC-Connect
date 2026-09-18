@@ -431,10 +431,16 @@ a { color: inherit; }
 .hero__facts strong { font-size: 1.25rem; }
 .hero__facts span { color: var(--ink-3); font-size: 0.88rem; }
 
+/* Téléphone et montre côte à côte, séparés par un vrai écart. Ils se
+   chevauchaient — une coquetterie qui posait une question d'empilement sans
+   réponse évidente : selon l'ordre de peinture, le cadre du téléphone pouvait
+   passer devant la montre. Un écart supprime la question, et personne ne
+   recouvre plus personne. */
 .hero__devices {
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  gap: 20px;
   min-height: 520px;
 }
 
@@ -442,7 +448,7 @@ a { color: inherit; }
   /* `minmax(0, …)` et non `1fr` nu : le minimum d'un `1fr` est la largeur
      du contenu, et la colonne pousse alors la page. */
   .hero__inner { grid-template-columns: minmax(0, 1fr); }
-  .hero__devices { min-height: 460px; margin-top: 12px; }
+  .hero__devices { min-height: 460px; margin-top: 12px; gap: 12px; }
 }
 
 /* ---------- iPhone ---------- */
@@ -455,7 +461,7 @@ a { color: inherit; }
    changer `--taille`, rien d'autre. */
 
 .phone {
-  --taille: min(300px, 78vw);
+  --taille: min(300px, 54vw);
   width: var(--taille);
   /* 300 px donnaient 16 px : l'échelle reste identique à l'origine. */
   font-size: calc(var(--taille) / 18.75);
@@ -610,17 +616,10 @@ a { color: inherit; }
 
 /* ---------- Apple Watch ---------- */
 
-/* La montre est dans le flux, à droite du téléphone, et son chevauchement est
-   une marge négative : il vaut toujours la même chose, quelle que soit la
-   largeur de la fenêtre. Positionnée en absolu au bord du conteneur, elle
-   mordait sur la carte de la Live Activity dès que la colonne se resserrait —
-   le défaut changeait de gravité à chaque largeur. */
 .watch {
-  --taille: 152px;
-  /* 1,25em de recouvrement, soit la largeur du cadre du téléphone : on mord
-     sur le boîtier, jamais sur l'écran. */
-  margin-left: -1.25em;
-  margin-bottom: 28px;
+  /* Les deux maquettes rétrécissent sur la même base : un pourcentage de la
+     fenêtre, plafonné. Elles tiennent donc côte à côte à toute largeur. */
+  --taille: min(152px, 30vw);
   width: var(--taille);
   flex: none;
   /* 152 px donnaient 16 px. */
@@ -686,19 +685,15 @@ a { color: inherit; }
    progression. Les largeurs ci-dessous sont vérifiées par
    `scripts/check-hero.mjs`. */
 /* Entre 901 et 1100 px, la colonne des appareils est la plus étroite des mises
-   en page à deux colonnes : le téléphone y rétrécit un peu. */
+   en page à deux colonnes : les deux maquettes y rétrécissent. */
 @media (min-width: 901px) and (max-width: 1100px) {
-  .phone { --taille: 264px; }
-}
-
-@media (max-width: 640px) {
-  .phone { --taille: min(232px, 60vw); }
-  .watch { --taille: 124px; margin-bottom: 12px; }
+  .phone { --taille: 240px; }
+  .watch { --taille: 128px; }
+  .hero__devices { gap: 16px; }
 }
 
 @media (max-width: 380px) {
-  .phone { --taille: min(206px, 57vw); }
-  .watch { --taille: 112px; margin-bottom: 4px; }
+  .hero__devices { gap: 10px; }
 }
 
 /* ---------- Sections ---------- */

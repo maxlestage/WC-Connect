@@ -344,11 +344,18 @@ en `em`, à partir d'une échelle dérivée de la largeur du boîtier
 - changer une maquette de taille, c'est changer `--taille`, rien d'autre.
 
 La montre n'a **pas de hauteur imposée** : elle suit son contenu, ce qui
-empêche le cadran et le bouton de sortir du boîtier. Elle est **dans le flux**,
-à droite du téléphone, et son chevauchement est une marge négative d'un cadre
-de largeur : il vaut toujours la même chose. Positionnée en absolu au bord du
-conteneur, elle mordait sur la carte de la Live Activity dès que la colonne se
-resserrait.
+empêche le cadran et le bouton de sortir du boîtier.
+
+Les deux maquettes sont **côte à côte, séparées par un vrai écart**, et
+rétrécissent sur la même base (un pourcentage de la fenêtre, plafonné). Elles
+se chevauchaient : une coquetterie qui posait une question d'empilement sans
+réponse évidente — selon l'ordre de peinture, le cadre du téléphone pouvait
+passer devant la montre — et qui, positionnée en absolu, faisait mordre la
+montre sur la carte de la Live Activity dès que la colonne se resserrait. Un
+écart supprime la question.
+
+L'anneau reçoit sa progression du composant, en attributs SVG, et la feuille de
+style ne doit donc pas la déclarer (voir ci-dessous).
 
 L'anneau de la montre reçoit son `stroke-dasharray` et son `stroke-dashoffset`
 du composant, en **attributs SVG**. La feuille de style ne doit donc pas les
@@ -359,10 +366,11 @@ au piège parce qu'elle passe par un `style` en ligne, qui gagne contre le CSS.
 
 `npm run check:hero` vérifie, à onze largeurs et trois tailles de texte du
 navigateur (16, 20 et 24 px, émulées par CDP comme le fait un téléphone), que
-la montre ne recouvre ni la carte ni la barre de progression, que son contenu
-tient dans son boîtier, que la carte tient dans l'écran du téléphone, que la
-page ne déborde pas, et que **l'anneau et la barre affichent la même
-progression** — elles décrivent la même visite.
+la montre et le téléphone **ne se chevauchent pas du tout**, que la montre ne
+recouvre ni la carte ni la barre de progression, que son contenu tient dans son
+boîtier, que la carte tient dans l'écran du téléphone, que la page ne déborde
+pas, et que **l'anneau et la barre affichent la même progression** — elles
+décrivent la même visite.
 
 ### Grilles : toujours `minmax(0, 1fr)`
 
