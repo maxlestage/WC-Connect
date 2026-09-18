@@ -34,6 +34,8 @@ website/
   src/                       app React + TypeScript (composants, hooks, styles)
   server/server.ts           serveur Express (statique + repli SPA)
 package.json, Procfile       espace de travail npm et démarrage Heroku
+app.json                     manifeste du bouton « Deploy to Heroku »
+.github/workflows/site.yml   construction du site vérifiée à chaque commit
 ```
 
 ### Architecture en bref
@@ -115,10 +117,40 @@ npm run build          # dist/ (client) + server-dist/ (serveur)
 npm start              # sert le build sur http://localhost:3000
 ```
 
-### Déploiement sur Heroku
+### Déploiement sur Heroku depuis un téléphone (sans ordinateur)
 
-Le dépôt est un espace de travail npm : le buildpack Node officiel suffit, sans
-configuration supplémentaire.
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/maxlestage/WC-Connect)
+
+Tout se fait dans le navigateur du téléphone, sans ligne de commande :
+
+1. **Appuyez sur le bouton ci-dessus.** Heroku lit `app.json` à la racine du
+   dépôt et prépare l'application tout seul.
+   *(Avant la fusion de la branche de travail, utilisez
+   [ce lien](https://heroku.com/deploy?template=https://github.com/maxlestage/WC-Connect/tree/claude/toilet-app-live-activity-vn1mn5)
+   qui pointe sur la branche `claude/toilet-app-live-activity-vn1mn5`.)*
+2. **Connectez-vous à Heroku** (ou créez un compte). Heroku n'a plus d'offre
+   gratuite : il faut une carte et un dyno Eco, environ 5 $ par mois pour
+   toutes vos applications.
+3. **Choisissez un nom** d'application et une région, puis **Deploy app**.
+   La construction dure une à deux minutes.
+4. **View** ouvre le site. C'est fini.
+
+### Redéployer à chaque modification, toujours depuis le téléphone
+
+Dans le tableau de bord Heroku : **votre app → Deploy → Deployment method →
+GitHub → Connect to GitHub**, choisissez le dépôt `WC-Connect` et la branche,
+puis **Enable Automatic Deploys**. Chaque commit poussé sur cette branche
+redéploie le site tout seul.
+
+À partir de là, le cycle complet tient dans le téléphone : vous demandez une
+modification à Claude Code depuis l'application mobile, le commit part sur
+GitHub, GitHub Actions vérifie que le site se construit (pastille verte ou
+rouge sur le commit, visible dans l'app GitHub), et Heroku met le site en ligne.
+
+En cas de souci, les journaux se lisent aussi depuis le navigateur :
+**votre app → More → View logs**.
+
+### Et en ligne de commande, si un ordinateur repasse par là
 
 ```bash
 heroku create mon-app-wc-connect
@@ -127,10 +159,14 @@ git push heroku HEAD:main
 heroku open
 ```
 
-À la construction, Heroku exécute `npm ci` puis `heroku-postbuild`
+### Ce que fait Heroku à la construction
+
+`npm ci` à la racine, puis `heroku-postbuild`
 (`npm run build --workspace website`), qui produit le client dans
-`website/dist/` et le serveur dans `website/server-dist/`. Le `Procfile` lance
-ensuite `node website/server-dist/server.js`, qui écoute sur `$PORT`.
+`website/dist/` et le serveur dans `website/server-dist/`. Heroku retire
+ensuite les dépendances de développement (Vite, TypeScript) — le serveur n'a
+besoin que d'Express et de `compression`. Le `Procfile` lance
+`node website/server-dist/server.js`, qui écoute sur `$PORT`.
 
 Le serveur sert les fichiers versionnés de `dist/assets` en cache long, renvoie
 `index.html` pour toute autre route et expose `/healthz` pour les sondes de

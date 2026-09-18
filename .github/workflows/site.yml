@@ -1,0 +1,54 @@
+name: Site
+
+# Construit le site exactement comme Heroku, pour que l'état du dépôt soit
+# vérifiable depuis un téléphone (pastille verte ou rouge sur le commit).
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "website/**"
+      - "package.json"
+      - "package-lock.json"
+      - "Procfile"
+      - "app.json"
+      - ".github/workflows/site.yml"
+  pull_request:
+    paths:
+      - "website/**"
+      - "package.json"
+      - "package-lock.json"
+      - "Procfile"
+      - "app.json"
+      - ".github/workflows/site.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Vérifier les types
+        run: npm run typecheck
+
+      - name: Construire le site (comme Heroku)
+        run: npm run heroku-postbuild
+
+      - name: Vérifier que le serveur démarre et répond
+        run: |
+          PORT=3000 node website/server-dist/server.js &
+          SERVER_PID=$!
+          for attempt in $(seq 1 20); do
+            if curl -fsS http://localhost:3000/healthz > /dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://localhost:3000/healthz
+          curl -fsS -o /dev/null http://localhost:3000/
+          kill $SERVER_PID

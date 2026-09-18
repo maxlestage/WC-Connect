@@ -1,24 +1,32 @@
 {
   "name": "WC Connect — site",
-  "description": "Site de présentation de WC Connect (React + TypeScript, servi par Express).",
+  "description": "Site de présentation de WC Connect : React + TypeScript construits par Vite, servis par Express. Déployable en un geste, sans ordinateur.",
   "repository": "https://github.com/maxlestage/WC-Connect",
-  "keywords": [
-    "react",
-    "typescript",
-    "vite",
-    "express",
-    "ios"
-  ],
+  "logo": "https://raw.githubusercontent.com/maxlestage/WC-Connect/master/website/public/logo.svg",
+  "keywords": ["react", "typescript", "vite", "express", "node", "ios", "site"],
+  "website": "https://github.com/maxlestage/WC-Connect",
+  "stack": "heroku-24",
   "buildpacks": [
     {
       "url": "heroku/nodejs"
     }
   ],
-  "env": {
-    "NPM_CONFIG_PRODUCTION": {
-      "description": "Laisser à false : Vite et TypeScript sont nécessaires à la construction.",
-      "value": "false"
+  "formation": {
+    "web": {
+      "quantity": 1
     }
   },
-  "scripts": {}
+  "env": {
+    "NPM_CONFIG_PRODUCTION": {
+      "description": "Laisser à false : Vite et TypeScript sont nécessaires à la construction du site.",
+      "value": "false",
+      "required": false
+    },
+    "NODE_ENV": {
+      "description": "Environnement Node utilisé par Express.",
+      "value": "production",
+      "required": false
+    }
+  },
+  "success_url": "/"
 }
