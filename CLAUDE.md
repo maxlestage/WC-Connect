@@ -46,12 +46,17 @@ website/   site de présentation React 18 + TypeScript (Vite), statique
 
 - Espace de travail npm à la racine : `npm install`, `npm run typecheck`,
   `npm run build`, `npm run preview`.
-- **Aucun serveur** : le site est un dossier de fichiers (`website/dist`).
-  Ne réintroduisez ni Express, ni Procfile, ni service web — le propriétaire
-  a demandé explicitement le tout-statique (18 septembre 2026).
-- Publication : GitHub Pages par `.github/workflows/pages.yml` (automatique
-  sur `master`), sinon Cloudflare Pages, Netlify ou le blueprint Render
-  statique. Deux variables de construction : `VITE_BASE` et `VITE_SITE_URL`.
+- **Heroku est de nouveau la cible principale** : le propriétaire l'a demandé
+  (18 septembre 2026, après avoir demandé le tout-statique plus tôt le même
+  jour — cette consigne-ci l'emporte). `Procfile`, `app.json` et
+  `website/server.js` doivent rester en place et fonctionnels.
+- `website/server.js` n'a **aucune dépendance** : seuls les modules intégrés de
+  Node. N'y ajoutez ni Express ni équivalent ; le site doit aussi rester
+  déposable tel quel sur un hébergeur de fichiers.
+- Publication : Heroku (`Procfile`), ou GitHub Pages par
+  `.github/workflows/pages.yml`, Cloudflare Pages, Netlify, blueprint Render
+  statique. Variables : `VITE_BASE`, `VITE_SITE_URL` à la construction, et
+  `SITE_URL` côté serveur.
 - `.github/workflows/site.yml` vérifie types, construction et contenu du
   dossier publié.
 - `.github/workflows/app.yml` compile et teste le code Swift sur un runner

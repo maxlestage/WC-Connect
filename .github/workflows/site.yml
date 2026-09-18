@@ -10,6 +10,8 @@ on:
       - "package.json"
       - "package-lock.json"
       - "render.yaml"
+      - "Procfile"
+      - "app.json"
       - ".github/workflows/site.yml"
   pull_request:
     paths:
@@ -17,6 +19,8 @@ on:
       - "package.json"
       - "package-lock.json"
       - "render.yaml"
+      - "Procfile"
+      - "app.json"
       - ".github/workflows/site.yml"
 
 jobs:
@@ -62,7 +66,7 @@ jobs:
 
           echo "dossier publié conforme"
 
-      - name: Servir le dossier publié et l'appeler
+      - name: Servir le dossier publié tel quel
         run: |
           set -euo pipefail
           cd website/dist
@@ -75,4 +79,29 @@ jobs:
           curl -fsS -o /dev/null http://localhost:8080/
           curl -fsS -o /dev/null http://localhost:8080/social-card.png
           kill $serveur
-          echo "fichiers servables tels quels"
+          echo "hebergement statique : fichiers servables tels quels"
+
+      - name: Reconstruire sans origine figee, comme sur Heroku
+        run: npm run build
+
+      - name: Verifier le serveur Node d'Heroku
+        run: |
+          set -euo pipefail
+          PORT=8090 node website/server.js &
+          serveur=$!
+          for essai in $(seq 1 20); do
+            if curl -fsS -o /dev/null http://localhost:8090/healthz; then break; fi
+            sleep 1
+          done
+
+          curl -fsS http://localhost:8090/healthz
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8090/)" = "200"
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8090/social-card.png)" = "200"
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8090/route/inconnue)" = "404"
+
+          curl -fsS -H 'Host: exemple.test' -H 'X-Forwarded-Proto: https' http://localhost:8090/ | grep -q 'og:image" content="https://exemple.test/social-card.png"'
+          curl -fsS -H 'Host: "><script>x</script>' http://localhost:8090/ | grep -q 'og:image" content="/social-card.png"'
+          test "$(curl -s -o /dev/null -w '%{http_code}' 'http://localhost:8090/../package.json')" = "404"
+
+          kill $serveur
+          echo "serveur Heroku conforme"
