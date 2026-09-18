@@ -29,8 +29,8 @@ export function Hero({ elapsed }: HeroProps) {
             depuis votre poignet. Sans compte, sans serveur, sans jugement.
           </p>
           <div className="hero__cta">
-            <a className="btn" href="#telecharger">
-              Essayer WC&nbsp;Connect
+            <a className="btn" href="#fonctions">
+              Découvrir l'app
             </a>
             <a className="btn btn--ghost" href="#live">
               Voir la Live Activity
