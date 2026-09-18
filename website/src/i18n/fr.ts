@@ -391,6 +391,47 @@ export const fr = {
 
   footer: {
     tagline: "Fait avec sérieux pour un sujet qui ne l'est pas.",
+    description:
+      "Le suivi discret de vos pauses, sur iPhone et Apple\u00a0Watch. Aucune donnée ne quitte vos appareils.",
+    columns: [
+      {
+        title: "Le produit",
+        links: [
+          { href: "#fonctions", label: "Fonctions" },
+          { href: "#live", label: "Live Activity" },
+          { href: "#watch", label: "Apple Watch" },
+          { href: "#suivi", label: "Suivi et statistiques" },
+        ],
+      },
+      {
+        title: "Bien-être",
+        links: [
+          { href: "#aide", label: "Quand ça coince" },
+          { href: "#detente", label: "Respiration guidée" },
+          { href: "#son", label: "Ambiances et musique" },
+        ],
+      },
+      {
+        title: "En savoir plus",
+        links: [
+          { href: "#palmares", label: "Palmarès" },
+          { href: "#meteo", label: "Météo intestinale" },
+          { href: "#confidentialite", label: "Confidentialité" },
+          { href: "#faq", label: "Questions fréquentes" },
+        ],
+      },
+    ],
+    creditsTitle: "Crédits",
+    credits: "Conçu et développé par %@.",
+    author: "maxlestage",
+    statusTitle: "Disponibilité",
+    status: "En développement privé. Bêta sur invitation.",
+    backToTop: "Haut de page",
+    copyright: "© %@ WC Connect. Tous droits réservés.",
+    legal:
+      "Projet indépendant, non affilié à Apple. iPhone, Apple\u00a0Watch, Siri, Apple\u00a0Music et Dynamic Island sont des marques d'Apple\u00a0Inc.",
+    medical:
+      "WC Connect n'est pas un dispositif médical et ne remplace pas l'avis d'un professionnel de santé.",
   },
 };
 

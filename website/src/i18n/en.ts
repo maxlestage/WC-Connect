@@ -389,5 +389,46 @@ export const en: Dictionary = {
 
   footer: {
     tagline: "Made seriously, about something that isn't.",
+    description:
+      "Discreet tracking of your breaks, on iPhone and Apple\u00a0Watch. No data ever leaves your devices.",
+    columns: [
+      {
+        title: "The product",
+        links: [
+          { href: "#fonctions", label: "Features" },
+          { href: "#live", label: "Live Activity" },
+          { href: "#watch", label: "Apple Watch" },
+          { href: "#suivi", label: "Tracking and stats" },
+        ],
+      },
+      {
+        title: "Wellbeing",
+        links: [
+          { href: "#aide", label: "When it won't come" },
+          { href: "#detente", label: "Guided breathing" },
+          { href: "#son", label: "Soundscapes and music" },
+        ],
+      },
+      {
+        title: "Learn more",
+        links: [
+          { href: "#palmares", label: "Trophies" },
+          { href: "#meteo", label: "Gut forecast" },
+          { href: "#confidentialite", label: "Privacy" },
+          { href: "#faq", label: "Frequently asked questions" },
+        ],
+      },
+    ],
+    creditsTitle: "Credits",
+    credits: "Designed and developed by %@.",
+    author: "maxlestage",
+    statusTitle: "Availability",
+    status: "In private development. Beta by invitation.",
+    backToTop: "Back to top",
+    copyright: "© %@ WC Connect. All rights reserved.",
+    legal:
+      "Independent project, not affiliated with Apple. iPhone, Apple\u00a0Watch, Siri, Apple\u00a0Music and Dynamic Island are trademarks of Apple\u00a0Inc.",
+    medical:
+      "WC Connect is not a medical device and does not replace advice from a health professional.",
   },
 };
