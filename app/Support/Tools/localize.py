@@ -56,6 +56,8 @@ TRANSLATIONS = {
     "Appareils": "Devices",
     "Données": "Data",
     "Version": "Version",
+    "Crédits": "Credits",
+    "Conçu et développé par": "Designed and developed by",
     "En cours": "In progress",
     "Dernière visite": "Last visit",
     "Aucune visite": "No visits",

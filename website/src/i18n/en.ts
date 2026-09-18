@@ -421,7 +421,7 @@ export const en: Dictionary = {
     ],
     creditsTitle: "Credits",
     credits: "Designed and developed by %@.",
-    author: "maxlestage",
+    author: "Maxime Nathan Lestage",
     statusTitle: "Availability",
     status: "In private development. Beta by invitation.",
     backToTop: "Back to top",

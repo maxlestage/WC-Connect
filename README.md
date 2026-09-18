@@ -318,6 +318,10 @@ effectuée par l'app, et un export CSV permet de tout récupérer.
 - Objectifs et badges hebdomadaires
 - Localisation anglaise (l'app est aujourd'hui en français)
 
+## Crédits
+
+Conçu et développé par **Maxime Nathan Lestage**.
+
 ---
 
 Projet indépendant, non affilié à Apple. iPhone, Apple Watch, Siri et Dynamic

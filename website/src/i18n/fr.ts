@@ -423,7 +423,7 @@ export const fr = {
     ],
     creditsTitle: "Crédits",
     credits: "Conçu et développé par %@.",
-    author: "maxlestage",
+    author: "Maxime Nathan Lestage",
     statusTitle: "Disponibilité",
     status: "En développement privé. Bêta sur invitation.",
     backToTop: "Haut de page",

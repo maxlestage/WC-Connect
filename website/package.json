@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "description": "Site de présentation de WC Connect (React + TypeScript, entièrement statique)",
+  "author": "Maxime Nathan Lestage",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit -p tsconfig.json && vite build",
