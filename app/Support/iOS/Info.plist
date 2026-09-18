@@ -22,6 +22,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Pour déposer dans Santé les symptômes digestifs que vous notez : constipation, diarrhée, ballonnements, crampes.</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Pour afficher le morceau en cours et piloter la lecture depuis WC Connect.</string>
 	<key>NSSupportsLiveActivities</key>

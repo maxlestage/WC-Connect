@@ -6,6 +6,7 @@ import { Footer } from "./components/Footer";
 import { FunSection } from "./components/FunSection";
 import { HelpSection } from "./components/HelpSection";
 import { Hero } from "./components/Hero";
+import { JournalSection } from "./components/JournalSection";
 import { LiveActivitySection } from "./components/LiveActivitySection";
 import { Nav } from "./components/Nav";
 import { Privacy } from "./components/Privacy";
@@ -38,6 +39,7 @@ export default function App() {
         <LiveActivitySection elapsed={elapsed} />
         <WatchSection elapsed={elapsed} />
         <TrackingSection />
+        <JournalSection />
         <FunSection />
         <WeatherSection />
         <Privacy />

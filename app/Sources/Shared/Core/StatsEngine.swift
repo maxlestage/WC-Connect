@@ -26,11 +26,16 @@ public struct Stats: Sendable {
     public let week: [DayBucket]
     public let byPlace: [Place: Int]
     public let byKind: [SessionKind: Int]
+    /// Répartition sur l'échelle de Bristol, pour les visites renseignées.
+    public let byBristol: [Bristol: Int]
+    /// Nombre de visites par symptôme noté.
+    public let bySymptom: [Symptom: Int]
+    public let averageEffort: Double?
 
     public static let empty = Stats(
         total: 0, today: 0, averagePerDay: 0, averageDuration: 0, totalDuration: 0,
         longestDuration: 0, streakDays: 0, busiestHour: nil, averageComfort: nil,
-        week: [], byPlace: [:], byKind: [:]
+        week: [], byPlace: [:], byKind: [:], byBristol: [:], bySymptom: [:], averageEffort: nil
     )
 }
 
@@ -52,7 +57,7 @@ public enum StatsEngine {
                 total: 0, today: 0, averagePerDay: 0, averageDuration: 0, totalDuration: 0,
                 longestDuration: 0, streakDays: 0, busiestHour: nil, averageComfort: nil,
                 week: emptyWeek(now: now, calendar: calendar, weekLength: weekLength),
-                byPlace: [:], byKind: [:]
+                byPlace: [:], byKind: [:], byBristol: [:], bySymptom: [:], averageEffort: nil
             )
         }
 
@@ -70,6 +75,10 @@ public enum StatsEngine {
         var byKind: [SessionKind: Int] = [:]
         var comfortSum = 0
         var comfortCount = 0
+        var byBristol: [Bristol: Int] = [:]
+        var bySymptom: [Symptom: Int] = [:]
+        var effortSum = 0
+        var effortCount = 0
 
         for session in finished {
             let hour = calendar.component(.hour, from: session.startedAt)
@@ -79,6 +88,16 @@ public enum StatsEngine {
             if let comfort = session.comfort {
                 comfortSum += comfort
                 comfortCount += 1
+            }
+            if let bristol = session.bristol {
+                byBristol[bristol, default: 0] += 1
+            }
+            if let effort = session.effort {
+                effortSum += effort
+                effortCount += 1
+            }
+            for symptom in session.symptomList {
+                bySymptom[symptom, default: 0] += 1
             }
         }
 
@@ -99,7 +118,10 @@ public enum StatsEngine {
             averageComfort: comfortCount > 0 ? Double(comfortSum) / Double(comfortCount) : nil,
             week: week(sessions: finished, now: now, calendar: calendar, weekLength: weekLength),
             byPlace: byPlace,
-            byKind: byKind
+            byKind: byKind,
+            byBristol: byBristol,
+            bySymptom: bySymptom,
+            averageEffort: effortCount > 0 ? Double(effortSum) / Double(effortCount) : nil
         )
     }
 

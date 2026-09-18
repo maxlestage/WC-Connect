@@ -152,14 +152,17 @@ public final class SessionStore: ObservableObject {
     }
 
     public func exportCSV() -> String {
-        var lines = ["debut,fin,duree_secondes,type,lieu,confort,appareil,note"]
+        var lines = ["debut,fin,duree_secondes,type,lieu,confort,bristol,effort,symptomes,appareil,note"]
         for session in sessions.reversed() {
             let start = ISO8601DateFormatter().string(from: session.startedAt)
             let end = session.endedAt.map { ISO8601DateFormatter().string(from: $0) } ?? ""
             let duration = session.finalDuration.map { String(Int($0.rounded())) } ?? ""
             let comfort = session.comfort.map(String.init) ?? ""
             let note = (session.note ?? "").replacingOccurrences(of: "\"", with: "\"\"")
-            lines.append("\(start),\(end),\(duration),\(session.kind.rawValue),\(session.place.rawValue),\(comfort),\(session.source.rawValue),\"\(note)\"")
+            let bristol = session.bristol.map { String($0.rawValue) } ?? ""
+            let effort = session.effort.map(String.init) ?? ""
+            let symptomes = session.symptomList.map(\.rawValue).joined(separator: " ")
+            lines.append("\(start),\(end),\(duration),\(session.kind.rawValue),\(session.place.rawValue),\(comfort),\(bristol),\(effort),\(symptomes),\(session.source.rawValue),\"\(note)\"")
         }
         return lines.joined(separator: "\n")
     }

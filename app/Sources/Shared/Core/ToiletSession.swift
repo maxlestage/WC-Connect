@@ -79,6 +79,13 @@ public struct ToiletSession: Identifiable, Codable, Hashable, Sendable {
     public var place: Place
     /// Confort ressenti de 1 à 5, saisi à la fin de la visite.
     public var comfort: Int?
+    /// Échelle de Bristol, de 1 à 7.
+    public var bristol: Bristol?
+    /// Effort ressenti de 1 à 5.
+    public var effort: Int?
+    /// Symptômes notés. Facultatif pour rester compatible avec les historiques
+    /// enregistrés avant l'existence du journal.
+    public var symptoms: [Symptom]?
     public var note: String?
     public var source: SessionSource
 
@@ -89,6 +96,9 @@ public struct ToiletSession: Identifiable, Codable, Hashable, Sendable {
         kind: SessionKind = .standard,
         place: Place = .home,
         comfort: Int? = nil,
+        bristol: Bristol? = nil,
+        effort: Int? = nil,
+        symptoms: [Symptom]? = nil,
         note: String? = nil,
         source: SessionSource = .phone
     ) {
@@ -98,11 +108,24 @@ public struct ToiletSession: Identifiable, Codable, Hashable, Sendable {
         self.kind = kind
         self.place = place
         self.comfort = comfort
+        self.bristol = bristol
+        self.effort = effort
+        self.symptoms = symptoms
         self.note = note
         self.source = source
     }
 
     public var isRunning: Bool { endedAt == nil }
+
+    /// Symptômes notés, liste vide si le journal n'a pas été rempli.
+    public var symptomList: [Symptom] {
+        symptoms ?? []
+    }
+
+    /// Vrai si la visite comporte un symptôme qui justifie un avis médical.
+    public var needsAdvice: Bool {
+        symptomList.contains(where: \.needsAdvice)
+    }
 
     /// Durée écoulée : définitive si la visite est terminée, sinon calculée à `now`.
     public func duration(now: Date = Date()) -> TimeInterval {

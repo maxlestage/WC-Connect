@@ -7,7 +7,7 @@ export function FunSection() {
   const t = useT();
 
   return (
-    <section className="section section--alt" id="palmares">
+    <section className="section" id="palmares">
       <div className="wrap split">
         <Reveal className="split__text">
           <p className="eyebrow">{t.fun.eyebrow}</p>

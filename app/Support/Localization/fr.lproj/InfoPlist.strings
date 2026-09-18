@@ -1,3 +1,4 @@
 /* Chaînes de l'Info.plist — français */
 "CFBundleDisplayName" = "WC Connect";
 "NSAppleMusicUsageDescription" = "Pour afficher le morceau en cours et piloter la lecture depuis WC Connect.";
+"NSHealthUpdateUsageDescription" = "Pour déposer dans Santé les symptômes digestifs que vous notez : constipation, diarrhée, ballonnements, crampes.";

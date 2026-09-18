@@ -1,3 +1,4 @@
 /* Info.plist strings — English */
 "CFBundleDisplayName" = "WC Connect";
 "NSAppleMusicUsageDescription" = "To show the current track and control playback from WC Connect.";
+"NSHealthUpdateUsageDescription" = "To write the digestive symptoms you record into Health: constipation, diarrhoea, bloating, cramps.";

@@ -5,7 +5,7 @@ export function Faq() {
   const t = useT();
 
   return (
-    <section className="section" id="faq">
+    <section className="section section--alt" id="faq">
       <div className="wrap narrow">
         <Reveal as="h2">{t.faq.title}</Reveal>
 

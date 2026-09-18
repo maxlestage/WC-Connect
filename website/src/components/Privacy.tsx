@@ -5,7 +5,7 @@ export function Privacy() {
   const t = useT();
 
   return (
-    <section className="section section--alt" id="confidentialite">
+    <section className="section" id="confidentialite">
       <div className="wrap narrow">
         <Reveal>
           <p className="eyebrow">{t.privacy.eyebrow}</p>

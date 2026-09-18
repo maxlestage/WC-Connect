@@ -26,6 +26,12 @@ struct WCConnectApp: App {
         store.liveActivity = LiveActivityController.shared
         LiveActivityController.shared.adopt(activeSession: store.active)
         store.attachWatchSync()
+        Task {
+            await HydrationReminders.shared.refreshAuthorization()
+            // Les rappels sont reprogrammés au lancement : un changement de
+            // langue ou de fuseau ne doit pas laisser d'anciens réglages.
+            await HydrationReminders.shared.reschedule()
+        }
     }
 }
 

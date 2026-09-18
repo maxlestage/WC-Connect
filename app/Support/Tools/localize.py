@@ -524,6 +524,89 @@ TRANSLATIONS.update({
         "Today's bulletin, computed from your week.",
 })
 
+TRANSLATIONS.update({
+    # --- Journal des symptômes (échelle de Bristol) ---
+    "Journal": "Journal",
+    "Consistance": "Consistency",
+    "Non renseignée": "Not recorded",
+    "Type %@": "Type %@",
+    "Billes dures et séparées": "Hard, separate lumps",
+    "En saucisse, grumeleuse": "Sausage-shaped, lumpy",
+    "En saucisse, avec des craquelures": "Sausage-shaped, with cracks",
+    "En saucisse, lisse et souple": "Sausage-shaped, smooth and soft",
+    "Morceaux mous aux bords nets": "Soft blobs with clear edges",
+    "Morceaux floconneux, bords déchiquetés": "Fluffy pieces, ragged edges",
+    "Entièrement liquide": "Entirely liquid",
+    "Tendance constipation": "Constipation tendency",
+    "Dans la norme": "Within the norm",
+    "Tendance diarrhée": "Diarrhoea tendency",
+    "Effort": "Effort",
+    "Effort important": "Considerable effort",
+    "Effort moyen : %@/5": "Average effort: %@/5",
+    "Symptômes notés": "Symptoms recorded",
+    "Symptôme à signaler": "Symptom worth reporting",
+    "Ballonnements": "Bloating",
+    "Crampes": "Cramps",
+    "Urgence": "Urgency",
+    "Sensation incomplète": "Incomplete feeling",
+    "Présence de sang": "Blood present",
+    "L'échelle de Bristol est la classification usuelle de la consistance. Ces notes servent à suivre une évolution, et à la montrer à un professionnel si besoin.":
+        "The Bristol scale is the usual classification for consistency. These notes are there to track a trend, and to show it to a professional if needed.",
+    "Du sang dans les selles justifie un avis médical, même une seule fois. Ce n'est pas une urgence en soi, mais ça se regarde.":
+        "Blood in your stool warrants medical advice, even just once. It is not an emergency in itself, but it should be looked at.",
+    "Un symptôme noté justifie un avis médical. L'app ne diagnostique rien : montrez ce journal à un professionnel.":
+        "One recorded symptom warrants medical advice. The app diagnoses nothing: show this journal to a professional.",
+
+    # --- Rappels d'hydratation ---
+    "Hydratation": "Hydration",
+    "Rappels d'hydratation": "Hydration reminders",
+    "Un verre d'eau ?": "A glass of water?",
+    "L'eau est ce qui rend les fibres efficaces. Deux minutes, et c'est fait.":
+        "Water is what makes fibre work. Two minutes, and it is done.",
+
+    # --- Objectif de la semaine ---
+    "Objectif de la semaine": "Goal for the week",
+    "Objectif tenu : %@ jours sur %@, et des visites courtes.":
+        "Goal met: %@ days out of %@, with short visits.",
+    "Régularité tenue, mais les visites s'allongent : %@ en moyenne.":
+        "Regularity holding, but visits are getting longer: %@ on average.",
+    "%@ jours sur %@ cette semaine. Continuez.":
+        "%@ days out of %@ this week. Keep going.",
+
+    # --- Export vers Santé ---
+    "Santé": "Health",
+    "Exporter les symptômes vers Santé": "Export symptoms to Health",
+
+    # --- Carte de défi ---
+    "Défi": "Challenge",
+    "Défi WC Connect": "WC Connect Challenge",
+    "Défier quelqu'un": "Challenge someone",
+    "Préparer le défi": "Prepare the challenge",
+    "Envoyer le défi": "Send the challenge",
+    "Battez ça. Sans serveur pour arbitrer, il faudra se croire sur parole.":
+        "Beat that. With no server to referee, you will have to take each other's word for it.",
+    "Une carte à envoyer à qui vous voudrez. Aucun serveur, aucun classement : juste une image et votre parole.":
+        "A card to send to whoever you like. No server, no leaderboard: just an image and your word.",
+
+    # --- Réglages : hydratation, objectif, Santé ---
+    "%@ j": "%@ d",
+    "Rappels par jour : %@": "Reminders per day: %@",
+    "À partir de %@": "From %@",
+    "Jusqu'à %@": "Until %@",
+    "Rappels prévus à %@. Tout est programmé localement.":
+        "Reminders set for %@. Everything is scheduled locally.",
+    "Boire régulièrement est le conseil le plus déterminant, et le plus facile à oublier.":
+        "Drinking regularly is the most decisive piece of advice, and the easiest to forget.",
+    "Jours avec visite : %@ sur 7": "Days with a visit: %@ out of 7",
+    "Durée moyenne visée : %@ min": "Target average duration: %@ min",
+    "Un objectif modeste : de la régularité, et des visites qui ne s'éternisent pas. L'avancement s'affiche dans les statistiques.":
+        "A modest goal: regularity, and visits that do not drag on. Progress shows up in the statistics.",
+    "Seuls les symptômes digestifs sont déposés dans Santé : constipation, diarrhée, ballonnements, crampes. Jamais l'historique complet.":
+        "Only digestive symptoms are written to Health: constipation, diarrhoea, bloating, cramps. Never the full history.",
+    "L'app Santé n'est pas disponible sur cet appareil.":
+        "The Health app is not available on this device.",
+})
+
 
 def escape(texte: str) -> str:
     return texte.replace("\\", "\\\\").replace('"', '\\"')

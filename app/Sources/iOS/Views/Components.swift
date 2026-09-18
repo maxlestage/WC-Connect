@@ -77,6 +77,13 @@ struct SessionRow: View {
 
             Spacer()
 
+            if session.needsAdvice {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.caption)
+                    .foregroundStyle(WCTheme.warn)
+                    .accessibilityLabel("Symptôme à signaler")
+            }
+
             if let comfort = session.comfort, comfort > 0 {
                 HStack(spacing: 2) {
                     Text("\(comfort)")

@@ -2,6 +2,10 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject private var store: SessionStore
+    @StateObject private var hydration = HydrationReminders.shared
+    @StateObject private var health = HealthExport.shared
+
+    @State private var goal = WeeklyGoal.stored
 
     @AppStorage("defaultKind", store: AppGroup.defaults) private var defaultKindRaw = SessionKind.standard.rawValue
     @AppStorage("defaultPlace", store: AppGroup.defaults) private var defaultPlaceRaw = Place.home.rawValue
@@ -28,12 +32,95 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Toggle("Rappels d'hydratation", isOn: Binding(
+                        get: { hydration.isEnabled },
+                        set: { actif in
+                            if actif {
+                                Task { await hydration.enable() }
+                            } else {
+                                hydration.isEnabled = false
+                            }
+                        }
+                    ))
+                    if hydration.isEnabled {
+                        Stepper(
+                            value: Binding(get: { hydration.count }, set: { hydration.count = $0 }),
+                            in: HydrationSchedule.countRange
+                        ) {
+                            // Chaînes déjà traduites : l'interpolation d'un
+                            // LocalizedStringKey produirait une clé absente
+                            // de la table.
+                            Text("Rappels par jour : %@".wcLocalized(String(hydration.count)))
+                        }
+                        Stepper(
+                            value: Binding(get: { hydration.startHour }, set: { hydration.startHour = $0 }),
+                            in: 5...12
+                        ) {
+                            Text("À partir de %@".wcLocalized(WCFormat.hourLabel(hydration.startHour)))
+                        }
+                        Stepper(
+                            value: Binding(get: { hydration.endHour }, set: { hydration.endHour = $0 }),
+                            in: 15...23
+                        ) {
+                            Text("Jusqu'à %@".wcLocalized(WCFormat.hourLabel(hydration.endHour)))
+                        }
+                    }
+                } header: {
+                    Text("Hydratation")
+                } footer: {
+                    Text(hydrationFooter)
+                }
+
+                Section {
+                    Stepper(
+                        value: Binding(
+                            get: { goal.activeDays },
+                            set: { enregistrer(WeeklyGoal(activeDays: $0, maxAverageDuration: goal.maxAverageDuration)) }
+                        ),
+                        in: 1...7
+                    ) {
+                        Text("Jours avec visite : %@ sur 7".wcLocalized(String(goal.activeDays)))
+                    }
+                    Stepper(
+                        value: Binding(
+                            get: { Int(goal.maxAverageDuration / 60) },
+                            set: { enregistrer(WeeklyGoal(activeDays: goal.activeDays, maxAverageDuration: TimeInterval($0) * 60)) }
+                        ),
+                        in: 2...15
+                    ) {
+                        Text("Durée moyenne visée : %@ min".wcLocalized(String(Int(goal.maxAverageDuration / 60))))
+                    }
+                } header: {
+                    Text("Objectif de la semaine")
+                } footer: {
+                    Text("Un objectif modeste : de la régularité, et des visites qui ne s'éternisent pas. L'avancement s'affiche dans les statistiques.")
+                }
+
+                Section {
                     LabeledContent("Live Activity", value: liveActivityStatus)
                     LabeledContent("Apple Watch", value: WatchSyncService.shared.isSupported ? "Appairée".wcLocalized : "Indisponible".wcLocalized)
                 } header: {
                     Text("Appareils")
                 } footer: {
                     Text("La Live Activity s'affiche sur l'écran verrouillé, dans la Dynamic Island et dans la pile intelligente de l'Apple Watch. Elle s'active automatiquement au démarrage d'une visite.")
+                }
+
+                Section {
+                    Toggle("Exporter les symptômes vers Santé", isOn: Binding(
+                        get: { health.isEnabled },
+                        set: { actif in
+                            if actif {
+                                Task { await health.enable() }
+                            } else {
+                                health.isEnabled = false
+                            }
+                        }
+                    ))
+                    .disabled(!health.isAvailable)
+                } header: {
+                    Text("Santé")
+                } footer: {
+                    Text(healthFooter)
                 }
 
                 Section("Données") {
@@ -60,6 +147,9 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Réglages")
+            .task {
+                await hydration.refreshAuthorization()
+            }
             .confirmationDialog(
                 "Effacer tout l'historique ?",
                 isPresented: $showResetConfirmation,
@@ -80,6 +170,27 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+
+    /// Pied de la section Hydratation : les heures réellement programmées.
+    private var hydrationFooter: String {
+        guard hydration.isEnabled else {
+            return "Boire régulièrement est le conseil le plus déterminant, et le plus facile à oublier.".wcLocalized
+        }
+        let heures = hydration.hours.map(WCFormat.hourLabel).joined(separator: ", ")
+        return "Rappels prévus à %@. Tout est programmé localement.".wcLocalized(heures)
+    }
+
+    private var healthFooter: String {
+        health.isAvailable
+            ? "Seuls les symptômes digestifs sont déposés dans Santé : constipation, diarrhée, ballonnements, crampes. Jamais l'historique complet.".wcLocalized
+            : "L'app Santé n'est pas disponible sur cet appareil.".wcLocalized
+    }
+
+    /// Enregistre l'objectif dans l'espace partagé et rafraîchit l'affichage.
+    private func enregistrer(_ nouveau: WeeklyGoal) {
+        goal = nouveau
+        WeeklyGoal.stored = nouveau
     }
 
     private var liveActivityStatus: String {

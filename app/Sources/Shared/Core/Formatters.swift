@@ -41,4 +41,9 @@ public enum WCFormat {
     public static func hourLabel(_ hour: Int) -> String {
         "%@ h".wcLocalized(String(hour))
     }
+
+    /// « 12 j » en français, « 12 d » en anglais.
+    public static func days(_ count: Int) -> String {
+        "%@ j".wcLocalized(String(count))
+    }
 }
