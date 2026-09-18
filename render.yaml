@@ -1,0 +1,17 @@
+# Variante gratuite d'hébergement, déployable depuis un téléphone comme Heroku.
+# Render lit ce fichier et configure le service tout seul.
+services:
+  - type: web
+    name: wc-connect-site
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci && npm run build --workspace website
+    startCommand: node website/server-dist/server.js
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production

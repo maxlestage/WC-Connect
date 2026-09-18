@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Xcode
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+
+# Projet généré par XcodeGen (voir app/project.yml)
+app/WCConnect.xcodeproj/
+
+# Node / site
+node_modules/
+npm-debug.log*
