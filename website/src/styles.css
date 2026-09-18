@@ -260,8 +260,13 @@ a { color: inherit; }
 /* Le panneau et son bouton remplacent les liens en ligne sous 1220 px. Dix
    liens, deux sélecteurs et un bouton d'appel ne tiennent pas sur une ligne en
    dessous — et c'est ce débordement qui élargissait la page entière. Rien
-   n'est perdu : tout passe par le menu. */
-@media (max-width: 1220px) {
+   n'est perdu : tout passe par le menu.
+   Le seuil est en `em` et non en pixels : dans une requête de média, `em` suit
+   la taille de texte par défaut du navigateur (le réglage « texte plus grand »
+   d'un téléphone). Exprimé en pixels, il laissait les liens en ligne alors
+   qu'ils étaient devenus une fois et demie plus larges, et la page débordait
+   à nouveau. 76,25em = 1220px à 16px. */
+@media (max-width: 76.25em) {
   .nav__links { display: none; }
   .nav__wide { display: none; }
   .burger { display: inline-flex; }
@@ -269,11 +274,11 @@ a { color: inherit; }
 }
 
 /* Ouvert puis fenêtre élargie : le panneau s'efface, les liens reviennent. */
-@media (min-width: 1221px) {
+@media (min-width: 76.3125em) {
   .menu--on { display: none; }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 35em) {
   .brand span { font-size: 0.95rem; }
   .nav__inner { min-height: 56px; }
   .menu { max-height: calc(100vh - 56px); }
@@ -413,7 +418,6 @@ a { color: inherit; }
 .hero__facts span { color: var(--ink-3); font-size: 0.88rem; }
 
 .hero__devices {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -421,17 +425,29 @@ a { color: inherit; }
 }
 
 @media (max-width: 900px) {
-  .hero__inner { grid-template-columns: 1fr; }
+  /* `minmax(0, …)` et non `1fr` nu : le minimum d'un `1fr` est la largeur
+     du contenu, et la colonne pousse alors la page. */
+  .hero__inner { grid-template-columns: minmax(0, 1fr); }
   .hero__devices { min-height: 460px; margin-top: 12px; }
 }
 
 /* ---------- iPhone ---------- */
 
+/* Les maquettes sont des images d'appareils (`role="img"` avec un texte de
+   remplacement), pas du texte à lire. Leur contenu est donc exprimé en `em`
+   à partir d'une échelle dérivée de la largeur du boîtier : tout grandit et
+   rétrécit ensemble, et une taille de texte système plus grande ne fait plus
+   déborder l'écran de son cadre. Changer une maquette de taille, c'est
+   changer `--taille`, rien d'autre. */
+
 .phone {
-  width: min(300px, 78vw);
+  --taille: min(300px, 78vw);
+  width: var(--taille);
+  /* 300 px donnaient 16 px : l'échelle reste identique à l'origine. */
+  font-size: calc(var(--taille) / 18.75);
   aspect-ratio: 9 / 19.5;
-  border-radius: 46px;
-  padding: 10px;
+  border-radius: 2.875em;
+  padding: 0.625em;
   background: linear-gradient(160deg, #3a4356, #171c28);
   box-shadow: var(--shadow), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
 }
@@ -439,8 +455,8 @@ a { color: inherit; }
 .phone__screen {
   position: relative;
   height: 100%;
-  border-radius: 38px;
-  padding: 16px 14px;
+  border-radius: 2.375em;
+  padding: 1em 0.875em;
   color: #fff;
   background:
     radial-gradient(120% 80% at 20% 0%, #2b6fb5 0%, transparent 55%),
@@ -451,6 +467,8 @@ a { color: inherit; }
   align-items: center;
 }
 
+/* La pastille existe aussi hors du téléphone (section Live Activity) : les
+   valeurs en pixels restent la référence, le téléphone les redéfinit en `em`. */
 .island {
   display: inline-flex;
   align-items: center;
@@ -464,6 +482,13 @@ a { color: inherit; }
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 .island--big { padding: 10px 20px; font-size: 1rem; align-self: center; }
+
+.phone .island {
+  font-size: 0.8em;
+  gap: 0.625em;
+  padding: 0.547em 1.094em;
+}
+
 .island__dot {
   width: 9px;
   height: 9px;
@@ -472,6 +497,7 @@ a { color: inherit; }
   box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent);
   animation: pulse 2.4s ease-out infinite;
 }
+.phone .island__dot { width: 0.703em; height: 0.703em; }
 
 @keyframes pulse {
   0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); }
@@ -480,52 +506,69 @@ a { color: inherit; }
 }
 
 .phone__time {
-  font-size: 3.1rem;
+  font-size: 3.1em;
   font-weight: 300;
   letter-spacing: -0.02em;
-  margin-top: 22px;
+  margin-top: 0.443em;
   font-variant-numeric: tabular-nums;
 }
-.phone__date { font-size: 0.85rem; opacity: 0.72; margin-top: -6px; }
+.phone__date { font-size: 0.85em; opacity: 0.72; margin-top: -0.44em; }
 
 .activity {
   width: 100%;
   margin-top: auto;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px;
-  border-radius: 22px;
+  gap: 0.75em;
+  padding: 0.875em;
+  border-radius: 1.375em;
   background: rgba(255, 255, 255, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(8px);
 }
-.activity--bar { margin-top: 10px; margin-bottom: 12px; padding: 16px 14px; }
+.activity--bar { margin-top: 0.625em; margin-bottom: 0.75em; padding: 1em 0.875em; }
 
 .activity__icon {
-  width: 42px;
-  height: 42px;
+  width: 2.625em;
+  height: 2.625em;
   display: grid;
   place-items: center;
-  border-radius: 13px;
+  border-radius: 0.8125em;
   background: linear-gradient(160deg, #4fb2ff, #1c66c7);
   color: #fff;
   flex: none;
 }
+.activity__icon svg { width: 60%; height: 60%; }
+/* `min-width: 0` permet au bloc de rétrécir dans son conteneur souple plutôt
+   que de pousser la carte au-delà de l'écran. */
 .activity__body { min-width: 0; }
-.activity__label { margin: 0; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; color: #fff; }
+.activity__label {
+  margin: 0;
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+  color: #fff;
+  white-space: nowrap;
+}
 .activity__timer {
-  margin: 2px 0;
-  font-size: 1.7rem;
+  margin: 0.118em 0;
+  font-size: 1.7em;
   font-weight: 620;
   font-variant-numeric: tabular-nums;
   color: #fff;
 }
-.activity__meta { margin: 0; font-size: 0.76rem; opacity: 0.72; color: #fff; }
+.activity__meta {
+  margin: 0;
+  font-size: 0.76em;
+  opacity: 0.72;
+  color: #fff;
+  white-space: nowrap;
+}
 .activity__action {
   margin-left: auto;
-  width: 36px;
-  height: 36px;
+  width: 2.25em;
+  height: 2.25em;
   flex: none;
   display: grid;
   place-items: center;
@@ -541,6 +584,7 @@ a { color: inherit; }
   background: rgba(255, 255, 255, 0.22);
   overflow: hidden;
 }
+.phone .bar { height: 0.4375em; }
 .bar span {
   display: block;
   height: 100%;
@@ -552,43 +596,43 @@ a { color: inherit; }
 
 /* ---------- Apple Watch ---------- */
 
-.hero__devices .phone { margin-right: clamp(0px, 7vw, 76px); }
-
+/* La montre est dans le flux, à droite du téléphone, et son chevauchement est
+   une marge négative : il vaut toujours la même chose, quelle que soit la
+   largeur de la fenêtre. Positionnée en absolu au bord du conteneur, elle
+   mordait sur la carte de la Live Activity dès que la colonne se resserrait —
+   le défaut changeait de gravité à chaque largeur. */
 .watch {
-  position: absolute;
-  right: 0;
-  bottom: 28px;
-  width: 152px;
-  aspect-ratio: 1 / 1.22;
-  border-radius: 42px;
-  padding: 9px;
+  --taille: 152px;
+  /* 1,25em de recouvrement, soit la largeur du cadre du téléphone : on mord
+     sur le boîtier, jamais sur l'écran. */
+  margin-left: -1.25em;
+  margin-bottom: 28px;
+  width: var(--taille);
+  flex: none;
+  /* 152 px donnaient 16 px. */
+  font-size: calc(var(--taille) / 9.5);
+  /* Pas de hauteur imposée : elle suit le contenu. Avec un rapport figé, le
+     cadran et le bouton débordaient du boîtier dès que la montre rétrécissait
+     — c'était le défaut visible sur téléphone. */
+  border-radius: 2.625em;
+  padding: 0.5625em;
   background: linear-gradient(150deg, #48505f, #10141d);
   box-shadow: var(--shadow);
 }
 .watch__screen {
-  height: 100%;
-  border-radius: 34px;
+  border-radius: 2.125em;
   background: #05070d;
   color: #fff;
-  padding: 12px 10px;
+  padding: 0.75em 0.625em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.625em;
 }
 
-@media (max-width: 520px) {
-  .watch { width: 112px; right: 0; bottom: 0; }
-  .hero__devices .phone { margin-right: 40px; }
-}
-
-@media (max-width: 380px) {
-  .phone { width: min(260px, 70vw); }
-  .watch { width: 96px; }
-  .hero__devices .phone { margin-right: 28px; }
-}
-
-.ring { position: relative; width: 92px; height: 92px; }
+/* Le cadran suit la largeur de la montre au lieu d'une taille figée : c'est
+   ce qui l'empêche de déborder quand la montre rétrécit. */
+.ring { position: relative; width: 82%; aspect-ratio: 1; }
 .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
 .ring circle { fill: none; stroke-width: 9; stroke-linecap: round; }
 .ring__track { stroke: rgba(255, 255, 255, 0.16); }
@@ -607,16 +651,37 @@ a { color: inherit; }
   font-variant-numeric: tabular-nums;
   font-weight: 620;
 }
-.ring__label small { display: block; font-size: 0.6rem; opacity: 0.65; font-weight: 500; }
+.ring__label small { display: block; font-size: 0.6em; opacity: 0.65; font-weight: 500; }
 
 .watch__button {
   width: 100%;
   text-align: center;
-  padding: 7px 0;
+  padding: 0.473em 0;
   border-radius: 999px;
   background: #1f6fc0;
-  font-size: 0.74rem;
+  font-size: 0.74em;
   font-weight: 620;
+  white-space: nowrap;
+}
+
+/* La montre se pose dans l'espace laissé libre à droite du téléphone : elle ne
+   chevauche que le cadre, jamais la carte de la Live Activity ni la barre de
+   progression. Les largeurs ci-dessous sont vérifiées par
+   `scripts/check-hero.mjs`. */
+/* Entre 901 et 1100 px, la colonne des appareils est la plus étroite des mises
+   en page à deux colonnes : le téléphone y rétrécit un peu. */
+@media (min-width: 901px) and (max-width: 1100px) {
+  .phone { --taille: 264px; }
+}
+
+@media (max-width: 640px) {
+  .phone { --taille: min(232px, 60vw); }
+  .watch { --taille: 124px; margin-bottom: 12px; }
+}
+
+@media (max-width: 380px) {
+  .phone { --taille: min(206px, 57vw); }
+  .watch { --taille: 112px; margin-bottom: 4px; }
 }
 
 /* ---------- Sections ---------- */
@@ -651,7 +716,8 @@ a { color: inherit; }
 .split--reverse .split__text { order: 2; }
 
 @media (max-width: 860px) {
-  .split { grid-template-columns: 1fr; }
+  /* Voir `.hero__inner` : un `1fr` nu ne rétrécit pas sous son contenu. */
+  .split { grid-template-columns: minmax(0, 1fr); }
   .split--reverse .split__text { order: 0; }
 }
 
@@ -879,7 +945,7 @@ a { color: inherit; }
 }
 
 @media (max-width: 520px) {
-  .footer__grid { grid-template-columns: 1fr; gap: 24px; }
+  .footer__grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
 }
 
 /* Apparition au défilement */
@@ -1058,9 +1124,12 @@ a { color: inherit; }
 .player__controls { margin-left: auto; display: flex; align-items: center; gap: 12px; opacity: 0.9; }
 .player__play { font-size: 1.5rem; color: #6fc3ff; }
 
+/* Toutes les grilles à nombre de colonnes fixe utilisent `minmax(0, 1fr)` :
+   un `1fr` nu a pour minimum la largeur de son contenu, donc la grille refuse
+   de rétrécir et pousse la page dès que le texte grandit. */
 .player__sounds {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   margin-top: 16px;
 }
@@ -1154,7 +1223,7 @@ a { color: inherit; }
 .tiles {
   width: min(380px, 100%);
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 .tile {
@@ -1183,7 +1252,7 @@ main section[id] { scroll-margin-top: 80px; }
 .badges {
   width: min(380px, 100%);
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 .badge-card {
@@ -1247,7 +1316,7 @@ main section[id] { scroll-margin-top: 80px; }
 
 .forecast__rows {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   padding: 12px 0;
   border-top: 1px solid var(--line);
@@ -1325,7 +1394,7 @@ main section[id] { scroll-margin-top: 80px; }
 
 .journal__scale {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 5px;
 }
 .journal__step {
@@ -1432,5 +1501,5 @@ main section[id] { scroll-margin-top: 80px; }
 
 @media (max-width: 420px) {
   /* Sept colonnes deviennent illisibles : on passe à deux rangées. */
-  .journal__scale { grid-template-columns: repeat(4, 1fr); }
+  .journal__scale { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }

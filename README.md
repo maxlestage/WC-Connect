@@ -331,10 +331,48 @@ accessible).
   premier rendu** : sans lui, un thème clair choisi sur un appareil réglé en
   sombre provoquerait un éclair sombre au chargement.
 
+### Maquettes d'appareils
+
+Le téléphone et la montre du hero sont des **images d'appareils** : chacun
+porte `role="img"` et un texte de remplacement. Leur contenu est donc exprimé
+en `em`, à partir d'une échelle dérivée de la largeur du boîtier
+(`--taille`) :
+
+- tout grandit et rétrécit ensemble, et une **taille de texte système plus
+  grande ne fait plus déborder l'écran de son cadre** — c'était le défaut
+  visible sur téléphone ;
+- changer une maquette de taille, c'est changer `--taille`, rien d'autre.
+
+La montre n'a **pas de hauteur imposée** : elle suit son contenu, ce qui
+empêche le cadran et le bouton de sortir du boîtier. Elle est **dans le flux**,
+à droite du téléphone, et son chevauchement est une marge négative d'un cadre
+de largeur : il vaut toujours la même chose. Positionnée en absolu au bord du
+conteneur, elle mordait sur la carte de la Live Activity dès que la colonne se
+resserrait.
+
+`npm run check:hero` vérifie, à onze largeurs et trois tailles de texte du
+navigateur (16, 20 et 24 px, émulées par CDP comme le fait un téléphone), que
+la montre ne recouvre ni la carte ni la barre de progression, que son contenu
+tient dans son boîtier, que la carte tient dans l'écran du téléphone, et que
+la page ne déborde pas.
+
+### Grilles : toujours `minmax(0, 1fr)`
+
+Un `1fr` nu vaut `minmax(auto, 1fr)` : son minimum est la largeur du contenu,
+donc la colonne **refuse de rétrécir** et pousse la page. C'est la cause racine
+des débordements horizontaux de ce site — ils réapparaissaient à chaque
+nouveau contenu un peu large, ou dès que la taille de texte grandissait. Toutes
+les grilles à nombre de colonnes fixe utilisent désormais `minmax(0, 1fr)`.
+
+De même, les seuils de la barre de navigation sont en **`em`** et non en
+pixels : dans une requête de média, `em` suit la taille de texte par défaut du
+navigateur. En pixels, le seuil laissait les liens en ligne alors qu'ils
+étaient devenus une fois et demie plus larges.
+
 ### Menu burger
 
-Sous 1220 px, les dix liens ne tiennent plus sur une ligne avec les deux
-sélecteurs et le bouton d'appel : ils passent dans un panneau ouvert par un
+Sous 76,25em (1220 px à taille de texte normale), les dix liens ne tiennent
+plus sur une ligne avec les deux sélecteurs et le bouton d'appel : ils passent dans un panneau ouvert par un
 bouton burger, qui porte aussi le thème, la langue et l'appel. Rien n'est
 perdu, et la barre ne peut plus élargir la page — c'est ce débordement qui
 était le défaut le plus visible du site.
