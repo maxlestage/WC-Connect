@@ -108,9 +108,18 @@ final class MedicalReportTests: XCTestCase {
     }
 
     func testPlusieursVisitesLeMemeJourNeComptentQuUnJour() {
-        let rapport = bilan([visite(day: 15, hour: 8), visite(day: 15, hour: 19)])
+        // Les deux visites sont avant l'heure de référence (midi) : une visite
+        // du soir serait dans le futur, et donc écartée.
+        let rapport = bilan([visite(day: 15, hour: 8), visite(day: 15, hour: 11)])
         XCTAssertEqual(rapport.visits, 2)
         XCTAssertEqual(rapport.daysWithVisit, 1)
+    }
+
+    func testVisiteDansLeFuturIgnoree() {
+        // Une visite enregistrée après l'heure de référence ne compte pas :
+        // un bilan ne décrit que ce qui a déjà eu lieu.
+        let rapport = bilan([visite(day: 15, hour: 8), visite(day: 15, hour: 19)])
+        XCTAssertEqual(rapport.visits, 1)
     }
 
     func testDureeMoyenne() {
