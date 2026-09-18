@@ -4,6 +4,7 @@ struct SettingsView: View {
     @EnvironmentObject private var store: SessionStore
     @StateObject private var hydration = HydrationReminders.shared
     @StateObject private var health = HealthExport.shared
+    @StateObject private var reminders = VisitReminders.shared
 
     @State private var goal = WeeklyGoal.stored
 
@@ -97,6 +98,94 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Toggle("Rappel de régularité", isOn: Binding(
+                        get: { reminders.routineEnabled },
+                        set: { actif in
+                            if actif {
+                                Task { await reminders.enableRoutine(sessions: store.sessions) }
+                            } else {
+                                reminders.routineEnabled = false
+                            }
+                        }
+                    ))
+                    if reminders.routineEnabled {
+                        Stepper(
+                            value: Binding(
+                                get: { reminders.routineHour },
+                                set: { reminders.routineHour = $0 }
+                            ),
+                            in: 5...12
+                        ) {
+                            Text("Chaque jour à %@".wcLocalized(WCFormat.hourLabel(reminders.routineHour)))
+                        }
+                    }
+                } header: {
+                    Text("Régularité")
+                } footer: {
+                    Text("Y aller à heure fixe est le premier conseil contre la constipation : l'intestin se réveille après un repas. L'heure proposée est celle qui ressort déjà de votre historique.")
+                }
+
+                Section {
+                    Toggle("Alerte d'absence", isOn: Binding(
+                        get: { reminders.absenceEnabled },
+                        set: { actif in
+                            if actif {
+                                Task { await reminders.enableAbsence(sessions: store.sessions) }
+                            } else {
+                                reminders.absenceEnabled = false
+                                Task { await reminders.rescheduleAbsence(sessions: store.sessions) }
+                            }
+                        }
+                    ))
+                    if reminders.absenceEnabled {
+                        Stepper(
+                            value: Binding(
+                                get: { reminders.absenceDays },
+                                set: { jours in
+                                    reminders.absenceDays = jours
+                                    Task { await reminders.rescheduleAbsence(sessions: store.sessions) }
+                                }
+                            ),
+                            in: AbsenceEngine.thresholdRange
+                        ) {
+                            Text("Au-delà de %@".wcLocalized(WCFormat.days(reminders.absenceDays)))
+                        }
+                    }
+                } header: {
+                    Text("Absence prolongée")
+                } footer: {
+                    Text(absenceFooter)
+                }
+
+                Section {
+                    Toggle("Limiter le temps assis", isOn: Binding(
+                        get: { reminders.sittingEnabled },
+                        set: { actif in
+                            if actif {
+                                Task { await reminders.enableSitting() }
+                            } else {
+                                reminders.sittingEnabled = false
+                            }
+                        }
+                    ))
+                    if reminders.sittingEnabled {
+                        Stepper(
+                            value: Binding(
+                                get: { reminders.sittingMinutes },
+                                set: { reminders.sittingMinutes = $0 }
+                            ),
+                            in: VisitReminders.sittingRange
+                        ) {
+                            Text("Rappel après %@ min".wcLocalized(String(reminders.sittingMinutes)))
+                        }
+                    }
+                } header: {
+                    Text("Temps assis")
+                } footer: {
+                    Text("Rester longtemps assis à pousser fatigue les veines du bas du corps. Le rappel arrive pendant la visite, et disparaît dès qu'elle se termine.")
+                }
+
+                Section {
                     LabeledContent("Live Activity", value: liveActivityStatus)
                     LabeledContent("Apple Watch", value: WatchSyncService.shared.isSupported ? "Appairée".wcLocalized : "Indisponible".wcLocalized)
                 } header: {
@@ -125,6 +214,11 @@ struct SettingsView: View {
 
                 Section("Données") {
                     LabeledContent("Visites enregistrées", value: "\(store.sessions.count)")
+                    NavigationLink {
+                        MedicalReportView()
+                    } label: {
+                        Label("Bilan pour le médecin", systemImage: "doc.text.magnifyingglass")
+                    }
                     Button {
                         exportedCSV = store.exportCSV()
                     } label: {
@@ -179,6 +273,17 @@ struct SettingsView: View {
         }
         let heures = hydration.hours.map(WCFormat.hourLabel).joined(separator: ", ")
         return "Rappels prévus à %@. Tout est programmé localement.".wcLocalized(heures)
+    }
+
+    /// Pied de l'alerte d'absence : ce que dit l'historique aujourd'hui.
+    private var absenceFooter: String {
+        guard reminders.absenceEnabled else {
+            return "Trois jours sans selles est le repère usuel de la constipation. L'app le signale une fois, sans dramatiser.".wcLocalized
+        }
+        guard let jours = AbsenceEngine.daysSinceLastVisit(sessions: store.sessions) else {
+            return "Aucune visite enregistrée : l'alerte se programmera après la première.".wcLocalized
+        }
+        return "Dernière visite il y a %@. L'alerte est programmée en fin d'après-midi.".wcLocalized(WCFormat.days(jours))
     }
 
     private var healthFooter: String {

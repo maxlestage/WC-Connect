@@ -277,15 +277,15 @@ export const fr = {
   },
 
   journal: {
-    eyebrow: "Journal & objectifs",
+    eyebrow: "Journal, rappels & objectifs",
     title: "Des notes qui préparent une vraie consultation",
-    body: "En fin de visite, l'app propose de noter la consistance sur l'échelle de Bristol, l'effort ressenti et les symptômes. Rien n'est obligatoire, rien n'est un diagnostic : c'est un journal, à garder pour soi ou à montrer à un professionnel. Un symptôme qui mérite un avis médical est signalé comme tel, sans dramatiser.",
+    body: "En fin de visite, l'app propose de noter la consistance sur l'échelle de Bristol, l'effort ressenti et les symptômes. Rien n'est obligatoire, rien n'est un diagnostic : c'est un journal, à garder pour soi ou à montrer à un professionnel. Autour, quatre rappels qui servent vraiment à quelque chose, et un bilan d'une page à emmener en consultation.",
     points: [
       "Échelle de Bristol des types 1 à 7, avec la tendance associée",
       "Six symptômes en un geste, effort ressenti de 0 à 5",
       "Un rappel d'avis médical dès qu'un symptôme le justifie",
-      "Objectif de la semaine : jours actifs et durée moyenne à tenir",
-      "Rappels d'hydratation locaux, dans le créneau que vous fixez",
+      "Quatre rappels locaux : boire, y aller à heure fixe, ne pas s'éterniser, et l'alerte après plusieurs jours sans rien",
+      "Un bilan d'une page — fréquence, absences, consistance, symptômes — à partager avec un médecin",
       "Export facultatif vers Santé, et colonnes ajoutées à l'export CSV",
     ],
     cardAlt: "Journal d'une visite : consistance, effort et symptômes",
@@ -309,9 +309,12 @@ export const fr = {
     active: ["Ballonnements"],
     disclaimer: "L'app ne diagnostique rien. Un symptôme signalé renvoie vers un avis médical, jamais vers un verdict.",
     tiles: [
-      { title: "Objectif de la semaine", value: "5 jours sur 7", detail: "Et des visites sous 6 minutes en moyenne." },
-      { title: "Rappels d'hydratation", value: "9 h · 13 h · 16 h · 20 h", detail: "Notifications locales, de 2 à 8 par jour." },
-      { title: "Santé", value: "Export facultatif", detail: "Ballonnements, crampes, constipation, diarrhée." },
+      { title: "Rappels d'hydratation", value: "9 h · 13 h · 16 h · 20 h", detail: "Boire est ce qui rend les fibres efficaces. De 2 à 8 rappels par jour, dans votre créneau." },
+      { title: "Rappel de régularité", value: "Chaque jour à 8 h", detail: "Y aller à heure fixe est le premier conseil contre la constipation. L'heure vient de votre historique." },
+      { title: "Alerte d'absence", value: "Au-delà de 3 jours", detail: "Le repère usuel de la constipation. Signalé une fois, avec un renvoi vers un avis médical." },
+      { title: "Temps assis", value: "Rappel après 10 min", detail: "Rester assis à pousser fatigue les veines. Le rappel disparaît dès la fin de la visite." },
+      { title: "Bilan pour le médecin", value: "30, 60 ou 90 jours", detail: "Fréquence, plus longue absence, consistance, symptômes. Une page à partager." },
+      { title: "Objectif & Santé", value: "5 jours sur 7", detail: "Un objectif hebdomadaire modeste, et un export facultatif des symptômes vers Santé." },
     ],
   },
 
@@ -385,7 +388,7 @@ export const fr = {
   privacy: {
     eyebrow: "Confidentialité",
     title: "Vos pauses ne regardent personne",
-    lead: "Aucun compte, aucune analyse, aucun serveur. L'historique vit dans un espace partagé entre l'app, les widgets et la montre, sur vos appareils uniquement. La synchronisation iPhone ↔ Watch passe par WatchConnectivity, en direct, d'appareil à appareil. Les rappels d'hydratation sont des notifications programmées localement, et l'export vers Santé ne part que si vous l'activez : l'app y écrit, elle ne lit rien.",
+    lead: "Aucun compte, aucune analyse, aucun serveur. L'historique vit dans un espace partagé entre l'app, les widgets et la montre, sur vos appareils uniquement. La synchronisation iPhone ↔ Watch passe par WatchConnectivity, en direct, d'appareil à appareil. Les rappels — boire, régularité, absence, temps assis — sont des notifications programmées localement, et l'export vers Santé ne part que si vous l'activez : l'app y écrit, elle ne lit rien.",
     tags: ["0 tracker", "0 requête réseau", "Santé en écriture seule", "Export CSV", "Suppression immédiate"],
   },
 
@@ -419,6 +422,10 @@ export const fr = {
       {
         question: "Puis-je récupérer mes données ?",
         answer: "Un export CSV est disponible dans les réglages : date de début, date de fin, durée, type, lieu, confort, consistance, effort, symptômes, appareil et note.",
+      },
+      {
+        question: "Qu'est-ce que le bilan pour le médecin ?",
+        answer: "Une page calculée sur 30, 60 ou 90 jours : nombre de visites, jours avec visite, plus longue absence, durée moyenne, répartition de la consistance et symptômes notés. Un CSV se lit mal en cabinet ; ce bilan se partage comme une image. Il ne conclut rien — l'interprétation revient au professionnel.",
       },
       {
         question: "À quoi sert l'échelle de Bristol ?",

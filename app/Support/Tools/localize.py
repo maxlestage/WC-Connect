@@ -607,6 +607,70 @@ TRANSLATIONS.update({
         "The Health app is not available on this device.",
 })
 
+TRANSLATIONS.update({
+    # --- Rappel de régularité ---
+    "Régularité": "Regularity",
+    "Rappel de régularité": "Regularity reminder",
+    "Chaque jour à %@": "Every day at %@",
+    "Le moment de votre visite": "Time for your visit",
+    "Prendre le temps, sans pousser. Si rien ne vient, revenez plus tard.":
+        "Take your time, without pushing. If nothing comes, come back later.",
+    "Y aller à heure fixe est le premier conseil contre la constipation : l'intestin se réveille après un repas. L'heure proposée est celle qui ressort déjà de votre historique.":
+        "Going at a fixed time is the first piece of advice against constipation: the gut wakes up after a meal. The suggested hour is the one your own history already points to.",
+
+    # --- Alerte d'absence prolongée ---
+    "Absence prolongée": "Prolonged absence",
+    "Alerte d'absence": "Absence alert",
+    "Au-delà de %@": "Beyond %@",
+    "Rien depuis %@ jours": "Nothing for %@ days",
+    "Rien depuis %@ jours. Au-delà de trois jours, un avis médical vaut mieux qu'un remède maison.":
+        "Nothing for %@ days. Beyond three days, medical advice beats a home remedy.",
+    "Buvez, bougez, mangez des fibres. Si ça dure, un avis médical vaut mieux qu'un remède maison.":
+        "Drink, move, eat fibre. If it lasts, medical advice beats a home remedy.",
+    "Trois jours sans selles est le repère usuel de la constipation. L'app le signale une fois, sans dramatiser.":
+        "Three days without a stool is the usual marker for constipation. The app says so once, without drama.",
+    "Aucune visite enregistrée : l'alerte se programmera après la première.":
+        "No visit recorded yet: the alert will be scheduled after the first one.",
+    "Dernière visite il y a %@. L'alerte est programmée en fin d'après-midi.":
+        "Last visit %@ ago. The alert is set for late afternoon.",
+
+    # --- Limite de temps assis ---
+    "Temps assis": "Time seated",
+    "Limiter le temps assis": "Limit time seated",
+    "Rappel après %@ min": "Remind me after %@ min",
+    "%@ minutes, c'est assez": "%@ minutes is enough",
+    "Rester assis à pousser fatigue les veines. Levez-vous, marchez, revenez quand l'envie revient.":
+        "Sitting and pushing tires the veins. Stand up, walk, come back when the urge returns.",
+    "Rester longtemps assis à pousser fatigue les veines du bas du corps. Le rappel arrive pendant la visite, et disparaît dès qu'elle se termine.":
+        "Sitting for a long time and pushing tires the veins in your lower body. The reminder arrives during the visit, and goes away as soon as it ends.",
+
+    # --- Bilan pour le médecin ---
+    "Bilan pour le médecin": "Report for your doctor",
+    "Bilan WC Connect": "WC Connect report",
+    "Bilan des %@ derniers jours": "Report for the last %@ days",
+    "Préparer le bilan": "Prepare the report",
+    "Partager le bilan": "Share the report",
+    "Période": "Period",
+    "30 jours": "30 days",
+    "60 jours": "60 days",
+    "90 jours": "90 days",
+    "Jours avec visite": "Days with a visit",
+    "Fréquence": "Frequency",
+    "Plus longue absence": "Longest absence",
+    "Durée moyenne": "Average duration",
+    "Effort moyen": "Average effort",
+    "%@ sur %@": "%@ out of %@",
+    "%@ par semaine": "%@ per week",
+    "%@/5": "%@/5",
+    "%@ – %@": "%@ – %@",
+    "Un ou plusieurs symptômes notés justifient un avis médical.":
+        "One or more recorded symptoms warrant medical advice.",
+    "Aucune visite enregistrée sur cette période. Le bilan se remplit tout seul, une visite à la fois.":
+        "No visit recorded over this period. The report fills itself in, one visit at a time.",
+    "WC Connect n'est pas un dispositif médical. Ce bilan décrit ce que vous avez noté, rien de plus : l'interprétation revient à un professionnel.":
+        "WC Connect is not a medical device. This report describes what you recorded, nothing more: the interpretation is for a professional.",
+})
+
 
 def escape(texte: str) -> str:
     return texte.replace("\\", "\\\\").replace('"', '\\"')

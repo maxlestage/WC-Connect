@@ -1254,7 +1254,9 @@ main section[id] { scroll-margin-top: 80px; }
 
 .journal__tiles {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  /* 280 px plutôt que 230 : six tuiles se rangent en 3 × 2 plutôt qu'en
+     4 + 2, qui laissait une rangée à moitié vide. */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 14px;
   margin-top: 36px;
 }
