@@ -13,7 +13,7 @@ Tout reste sur l'appareil : pas de compte, pas de serveur, pas de réseau.
 | **Apple Watch** | watchOS 10+, app native autonome + complications, synchronisation WatchConnectivity |
 | **Widgets** | Écran d'accueil et écran verrouillé, bouton interactif (App Intents) |
 | **Siri** | « Je vais aux toilettes », « J'ai fini » via App Shortcuts |
-| **Site** | `website/`, HTML/CSS/JS statique, thème clair et sombre, sans dépendance |
+| **Site** | `website/`, React 18 + TypeScript (Vite), servi par Express, déployable sur Heroku |
 
 ## Structure du dépôt
 
@@ -29,7 +29,11 @@ app/
     WatchWidgets/              complications de la montre
   Support/                     Info.plist, entitlements, catalogues d'assets, icône
   Tests/WCConnectTests/        tests unitaires de la logique (sans app hôte)
-website/                       site de présentation (index.html, styles.css, app.js)
+website/
+  index.html                 point d'entrée Vite
+  src/                       app React + TypeScript (composants, hooks, styles)
+  server/server.ts           serveur Express (statique + repli SPA)
+package.json, Procfile       espace de travail npm et démarrage Heroku
 ```
 
 ### Architecture en bref
@@ -88,14 +92,49 @@ python3 app/Support/Tools/make_icon.py
 
 ## Site de présentation
 
-Statique, aucune dépendance :
+Application **React 18 + TypeScript** (Vite) servie par un petit serveur
+**Express** écrit lui aussi en TypeScript, prête à être déployée sur **Heroku**.
 
-```bash
-cd website
-python3 -m http.server 8000     # puis http://localhost:8000
+```
+package.json          racine de l'espace de travail npm (workspaces)
+Procfile              web: node website/server-dist/server.js
+website/
+  index.html          point d'entrée Vite
+  src/                composants React, hooks, contenu typé, styles
+  server/server.ts    serveur Express (fichiers statiques + repli SPA)
+  tsconfig*.json      client, configuration Vite et serveur
 ```
 
-Déployable tel quel sur GitHub Pages, Netlify ou tout hébergement de fichiers.
+### En local
+
+```bash
+npm install            # à la racine du dépôt (workspaces npm)
+npm run dev            # serveur de développement Vite, http://localhost:5173
+npm run typecheck      # TypeScript strict, client et configuration
+npm run build          # dist/ (client) + server-dist/ (serveur)
+npm start              # sert le build sur http://localhost:3000
+```
+
+### Déploiement sur Heroku
+
+Le dépôt est un espace de travail npm : le buildpack Node officiel suffit, sans
+configuration supplémentaire.
+
+```bash
+heroku create mon-app-wc-connect
+heroku buildpacks:set heroku/nodejs
+git push heroku HEAD:main
+heroku open
+```
+
+À la construction, Heroku exécute `npm ci` puis `heroku-postbuild`
+(`npm run build --workspace website`), qui produit le client dans
+`website/dist/` et le serveur dans `website/server-dist/`. Le `Procfile` lance
+ensuite `node website/server-dist/server.js`, qui écoute sur `$PORT`.
+
+Le serveur sert les fichiers versionnés de `dist/assets` en cache long, renvoie
+`index.html` pour toute autre route et expose `/healthz` pour les sondes de
+disponibilité.
 
 ## Vie privée
 
