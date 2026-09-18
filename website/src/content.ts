@@ -45,6 +45,21 @@ export const features: readonly Feature[] = [
       "Visites du jour sur l'écran d'accueil, chronomètre sur l'écran verrouillé et sur le cadran de la montre.",
   },
   {
+    title: "Quand ça coince",
+    description:
+      "Au bout de quelques minutes, l'app propose des gestes concrets — posture, pieds surélevés, ne pas pousser en bloquant sa respiration — et dit quand il vaut mieux consulter.",
+  },
+  {
+    title: "Respiration guidée",
+    description:
+      "Trois rythmes animés, dont un sans apnée pensé pour le trône, avec un retour haptique au poignet pour garder les yeux fermés.",
+  },
+  {
+    title: "Ambiances & musique",
+    description:
+      "Trois boucles sonores embarquées qui se superposent à votre musique sans l'interrompre, et les commandes de lecture de votre bibliothèque dans l'app.",
+  },
+  {
     title: "Statistiques claires",
     description:
       "Durée moyenne, créneau favori, répartition maison / travail / dehors, série de jours suivis et graphiques sur 7 jours.",
@@ -65,6 +80,7 @@ export const liveActivityPoints: readonly string[] = [
 
 export const watchPoints: readonly string[] = [
   "Chronomètre plein écran avec anneau de progression",
+  "Respiration guidée au poignet, rythmée par les haptiques",
   "Historique et statistiques par défilement vertical",
   "Complications : cercle, rectangle, coin et ligne",
   "Retour haptique au démarrage et à la fin",

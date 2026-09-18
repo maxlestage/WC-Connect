@@ -8,6 +8,11 @@ struct TimerView: View {
     @AppStorage("defaultPlace", store: AppGroup.defaults) private var defaultPlaceRaw = Place.home.rawValue
 
     @State private var sessionToAnnotate: ToiletSession?
+    @State private var showBreathing = false
+    @State private var showTips = false
+    @State private var nudgeDismissed = false
+
+    @StateObject private var soundscapes = SoundscapePlayer.shared
 
     private var kind: SessionKind {
         get { SessionKind(rawValue: defaultKindRaw) ?? .standard }
@@ -25,6 +30,7 @@ struct TimerView: View {
                 VStack(spacing: 28) {
                     chronometer
                     controls
+                    helpNudge
                     quickStats
                     if let last = store.lastSession, store.active == nil {
                         lastVisitCard(last)
@@ -38,6 +44,22 @@ struct TimerView: View {
                 EndVisitSheet(session: session) { updated in
                     store.update(updated)
                 }
+            }
+            .sheet(isPresented: $showBreathing) {
+                BreathingView(pattern: .belly)
+            }
+            .sheet(isPresented: $showTips) {
+                NavigationStack {
+                    TipsView()
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Fermer") { showTips = false }
+                            }
+                        }
+                }
+            }
+            .onChange(of: store.active?.id) { _, _ in
+                nudgeDismissed = false
             }
         }
     }
@@ -132,6 +154,95 @@ struct TimerView: View {
                 .buttonStyle(.bordered)
             }
         }
+    }
+
+    // MARK: - Coup de pouce
+
+    /// Au bout de quelques minutes, l'app propose de souffler plutôt que de
+    /// pousser. Le seuil reste en deçà des cinq minutes conseillées pour se
+    /// relever.
+    private func nudgeThreshold(for kind: SessionKind) -> TimeInterval {
+        min(kind.goal, 4 * 60)
+    }
+
+    @ViewBuilder
+    private var helpNudge: some View {
+        if let session = store.active, !nudgeDismissed {
+            TimelineView(.periodic(from: .now, by: 5)) { context in
+                if session.duration(now: context.date) >= nudgeThreshold(for: session.kind) {
+                    nudgeCard(seed: session.id.hashValue)
+                }
+            }
+        }
+    }
+
+    private func nudgeCard(seed: Int) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 8) {
+                Image(systemName: "lightbulb.fill")
+                    .foregroundStyle(WCTheme.warn)
+                Text("Ça coince ?")
+                    .font(.headline)
+                Spacer()
+                Button {
+                    nudgeDismissed = true
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.caption.weight(.semibold))
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.secondary)
+                .accessibilityLabel("Masquer les conseils")
+            }
+
+            ForEach(TipLibrary.suggestions(seed: seed)) { tip in
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Image(systemName: tip.category.symbol)
+                        .font(.caption)
+                        .foregroundStyle(WCTheme.accent)
+                        .frame(width: 16)
+                    Text(tip.title)
+                        .font(.subheadline)
+                }
+            }
+
+            HStack(spacing: 10) {
+                Button {
+                    showBreathing = true
+                } label: {
+                    Label("Respirer", systemImage: "wind")
+                        .font(.subheadline.weight(.semibold))
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+
+                Button {
+                    soundscapes.toggle(.rain)
+                } label: {
+                    Label(
+                        soundscapes.current == .rain ? "Couper" : "Ambiance",
+                        systemImage: soundscapes.current == .rain ? "pause.fill" : "cloud.rain.fill"
+                    )
+                    .font(.subheadline)
+                }
+                .buttonStyle(.bordered)
+
+                Button {
+                    showTips = true
+                } label: {
+                    Label("Conseils", systemImage: "list.bullet")
+                        .font(.subheadline)
+                        .labelStyle(.iconOnly)
+                        .padding(.horizontal, 4)
+                }
+                .buttonStyle(.bordered)
+                .accessibilityLabel("Tous les conseils")
+            }
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(WCTheme.warn.opacity(0.12), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .transition(.opacity.combined(with: .move(edge: .bottom)))
     }
 
     // MARK: - Résumés

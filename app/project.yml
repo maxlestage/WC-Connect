@@ -30,6 +30,7 @@ targets:
       - path: Sources/Shared/Sync
       - path: Sources/iOS
       - path: Support/Assets.xcassets
+      - path: Support/Audio
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.wcconnect.app
