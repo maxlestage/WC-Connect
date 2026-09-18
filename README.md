@@ -12,6 +12,8 @@ Tout reste sur l'appareil : pas de compte, pas de serveur, pas de réseau.
 | **Live Activity** | ActivityKit : écran verrouillé, Dynamic Island, bouton « Terminer » interactif |
 | **Apple Watch** | watchOS 10+, app native autonome + complications, synchronisation WatchConnectivity |
 | **Widgets** | Écran d'accueil et écran verrouillé, bouton interactif (App Intents) |
+| **Aide & détente** | Conseils quand ça coince, respiration guidée, signaux qui doivent envoyer consulter |
+| **Son** | Trois ambiances embarquées qui se mélangent à votre musique, et commande de la musique du système |
 | **Siri** | « Je vais aux toilettes », « J'ai fini » via App Shortcuts |
 | **Site** | `website/`, React 18 + TypeScript (Vite), servi par Express, déployable sur Heroku |
 
@@ -37,6 +39,40 @@ package.json, Procfile       espace de travail npm et démarrage Heroku
 app.json                     manifeste du bouton « Deploy to Heroku »
 .github/workflows/site.yml   construction du site vérifiée à chaque commit
 ```
+
+### Aide quand ça coince
+
+- `TipLibrary` — 18 conseils classés (posture, respiration, détente, habitudes,
+  boire et manger, bouger). Ceux marqués `isImmediate` s'appliquent assis :
+  surélever les pieds, se pencher vers l'avant, ne pas bloquer sa respiration.
+- Après quelques minutes de visite (au plus quatre), l'écran principal propose
+  trois de ces gestes, la respiration guidée et une ambiance sonore. La carte se
+  masque d'un geste.
+- `TipLibrary.redFlags` — sang dans les selles, douleur intense, vomissements,
+  constipation qui dure : la liste est affichée dans l'app avec, en pied de
+  page, le rappel que **WC Connect n'est pas un dispositif médical**.
+- `BreathingPattern` — trois rythmes (ventre 4-6 sans apnée, carré 4-4-4-4,
+  détente 4-7-8). La logique est purement calculée (`state(at:)`) et testée ;
+  l'interface anime un cercle, la montre ajoute un tapotement par phase. Le
+  rythme conseillé pendant une visite est sans apnée, parce que retenir son
+  souffle revient à pousser.
+
+### Son et musique
+
+- `SoundscapePlayer` lit en boucle trois ambiances embarquées (pluie, bruit
+  brun, souffle) avec une session audio en `mixWithOthers` : elles se
+  superposent à votre musique au lieu de la couper. L'audio en arrière-plan est
+  déclaré, donc l'ambiance survit au verrouillage de l'écran.
+- `MusicRemote` pilote la musique du système (`MPMusicPlayerController`) :
+  lecture, pause, morceau suivant ou précédent, et affichage du titre en cours
+  si vous autorisez l'accès à la bibliothèque. L'app ne diffuse aucun
+  catalogue — elle télécommande le vôtre.
+- Les boucles sont **synthétisées**, donc libres de droits. Pour les
+  régénérer :
+
+  ```bash
+  python3 app/Support/Tools/make_soundscapes.py
+  ```
 
 ### Architecture en bref
 

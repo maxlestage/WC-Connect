@@ -8,6 +8,9 @@ struct RootView: View {
             TimerView()
                 .tabItem { Label("Visite", systemImage: "toilet.fill") }
 
+            RelaxView()
+                .tabItem { Label("Détente", systemImage: "leaf.fill") }
+
             HistoryView()
                 .tabItem { Label("Historique", systemImage: "list.bullet.rectangle") }
 
