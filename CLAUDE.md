@@ -20,7 +20,7 @@ Conditions à respecter avant de fusionner :
 1. la CI est verte sur le dernier commit (workflow `Site` et les autres
    vérifications de la PR) ;
 2. la PR n'a pas de conflit ;
-3. ce que vous livrez a été vérifié (types, construction, serveur qui répond).
+3. ce que vous livrez a été vérifié (types, construction, contenu du dossier publié).
 
 Si l'une des trois n'est pas remplie : réparez d'abord, ou dites clairement ce
 qui bloque. Ne fusionnez jamais du rouge. Passez toujours par une PR — jamais
@@ -37,16 +37,21 @@ de commit poussé directement sur `master` — pour que la CI ait son mot à dir
 
 ```
 app/       application iOS + watchOS (SwiftUI, XcodeGen, Live Activity)
-website/   site de présentation React 18 + TypeScript (Vite) servi par Express
+website/   site de présentation React 18 + TypeScript (Vite), statique
 ```
 
 - Espace de travail npm à la racine : `npm install`, `npm run typecheck`,
-  `npm run build`, `npm start`.
-- Déploiement : bouton Heroku (dépôt public seulement), connexion GitHub
-  authentifiée côté Heroku, ou blueprint Render (`render.yaml`, gratuit).
-- Le workflow `.github/workflows/site.yml` rejoue la construction d'Heroku,
-  démarre le serveur et vérifie `/healthz`, la carte de partage et les
-  métadonnées absolues.
+  `npm run build`, `npm run preview`.
+- **Aucun serveur** : le site est un dossier de fichiers (`website/dist`).
+  Ne réintroduisez ni Express, ni Procfile, ni service web — le propriétaire
+  a demandé explicitement le tout-statique (18 septembre 2026).
+- Publication : GitHub Pages par `.github/workflows/pages.yml` (automatique
+  sur `master`), sinon Cloudflare Pages, Netlify ou le blueprint Render
+  statique. Deux variables de construction : `VITE_BASE` et `VITE_SITE_URL`.
+- `.github/workflows/site.yml` vérifie types, construction et contenu du
+  dossier publié.
+- `.github/workflows/app.yml` compile et teste le code Swift sur un runner
+  macOS : c'est la seule vérification possible de `app/`.
 
 ## Application iOS
 

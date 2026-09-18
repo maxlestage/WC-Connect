@@ -1,7 +1,7 @@
 name: Site
 
-# Construit le site exactement comme Heroku, pour que l'état du dépôt soit
-# vérifiable depuis un téléphone (pastille verte ou rouge sur le commit).
+# Vérifie le site statique : types, construction, et contenu du dossier
+# publié. Il n'y a plus de serveur à démarrer.
 on:
   push:
     branches: ["**"]
@@ -9,8 +9,6 @@ on:
       - "website/**"
       - "package.json"
       - "package-lock.json"
-      - "Procfile"
-      - "app.json"
       - "render.yaml"
       - ".github/workflows/site.yml"
   pull_request:
@@ -18,8 +16,6 @@ on:
       - "website/**"
       - "package.json"
       - "package-lock.json"
-      - "Procfile"
-      - "app.json"
       - "render.yaml"
       - ".github/workflows/site.yml"
 
@@ -40,22 +36,43 @@ jobs:
       - name: Vérifier les types
         run: npm run typecheck
 
-      - name: Construire le site (comme Heroku)
-        run: npm run heroku-postbuild
+      - name: Construire le site
+        env:
+          VITE_SITE_URL: https://exemple.test
+        run: npm run build
 
-      - name: Vérifier que le serveur démarre et répond
+      - name: Vérifier le dossier publié
         run: |
-          PORT=3000 node website/server-dist/server.js &
-          SERVER_PID=$!
-          for attempt in $(seq 1 20); do
-            if curl -fsS http://localhost:3000/healthz > /dev/null; then break; fi
+          set -euo pipefail
+          cd website/dist
+
+          for fichier in index.html social-card.png logo.svg favicon.svg; do
+            test -s "$fichier" || { echo "manquant ou vide : $fichier"; exit 1; }
+          done
+
+          ls assets/*.js  > /dev/null || { echo "aucun script construit"; exit 1; }
+          ls assets/*.css > /dev/null || { echo "aucune feuille de style construite"; exit 1; }
+
+          # Les aperçus de partage exigent des URL absolues, injectées à la
+          # construction puisqu'il n'y a plus de serveur pour le faire.
+          grep -q 'og:image" content="https://exemple.test/social-card.png"' index.html \
+            || { echo "og:image non absolu"; exit 1; }
+          ! grep -q '__SITE_URL__' index.html \
+            || { echo "marqueur __SITE_URL__ resté dans la page"; exit 1; }
+
+          echo "dossier publié conforme"
+
+      - name: Servir le dossier publié et l'appeler
+        run: |
+          set -euo pipefail
+          cd website/dist
+          python3 -m http.server 8080 &
+          serveur=$!
+          for essai in $(seq 1 20); do
+            if curl -fsS -o /dev/null http://localhost:8080/; then break; fi
             sleep 1
           done
-          curl -fsS http://localhost:3000/healthz
-          curl -fsS -o /dev/null http://localhost:3000/
-          curl -fsS -o /dev/null http://localhost:3000/social-card.png
-          # Les aperçus de partage exigent une URL absolue : le serveur doit
-          # avoir remplacé le marqueur __SITE_URL__.
-          curl -fsS http://localhost:3000/ | grep -q 'og:image" content="http'
-          ! curl -fsS http://localhost:3000/ | grep -q '__SITE_URL__'
-          kill $SERVER_PID
+          curl -fsS -o /dev/null http://localhost:8080/
+          curl -fsS -o /dev/null http://localhost:8080/social-card.png
+          kill $serveur
+          echo "fichiers servables tels quels"
