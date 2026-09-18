@@ -110,7 +110,8 @@ jobs:
     # Un site qui se balade latéralement sur un téléphone est un défaut : ce
     # travail le vérifie à seize largeurs, dans les deux langues, menu du
     # burger fermé puis ouvert, puis à trois tailles de texte du navigateur. Il
-    # contrôle aussi les maquettes d'appareils et la cohérence du thème sombre.
+    # contrôle aussi les maquettes d'appareils, le panneau du menu à hauteur
+    # d'écran réelle, et la cohérence du thème sombre.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -143,4 +144,5 @@ jobs:
           done
           npm run check:overflow --workspace website -- http://localhost:4173/
           npm run check:hero --workspace website -- http://localhost:4173/
+          npm run check:menu --workspace website -- http://localhost:4173/
           kill $serveur

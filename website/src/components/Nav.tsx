@@ -71,6 +71,10 @@ export function Nav() {
           ))}
         </nav>
 
+        <a className="btn menu__cta" href="#disponibilite" onClick={() => setOpen(false)}>
+          {t.nav.cta}
+        </a>
+
         <div className="menu__row">
           <span className="menu__label">{t.theme.label}</span>
           <ThemeSwitch />
@@ -81,10 +85,6 @@ export function Nav() {
           <span className="menu__label">{t.nav.languageLabel}</span>
           <LanguageSwitch />
         </div>
-
-        <a className="btn menu__cta" href="#disponibilite" onClick={() => setOpen(false)}>
-          {t.nav.cta}
-        </a>
       </div>
     </header>
   );
