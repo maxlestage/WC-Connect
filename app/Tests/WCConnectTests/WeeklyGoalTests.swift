@@ -73,8 +73,17 @@ final class WeeklyGoalTests: XCTestCase {
 
     func testRegulariteNeDepassePasUn() {
         let sessions = (1...7).map { visite(ilYA: Double($0), minutes: 2) }
-        XCTAssertEqual(progres(sessions).daysWithVisit, 7)
-        XCTAssertEqual(progres(sessions).regularity, 1)
+        let p = progres(sessions)
+        // La fenêtre est strictement de sept jours : la visite d'il y a
+        // exactement sept jours tombe sur la borne et sort du décompte.
+        XCTAssertEqual(p.daysWithVisit, 6)
+        // Six jours pour un objectif de cinq : l'avancement plafonne à 1.
+        XCTAssertEqual(p.regularity, 1)
+    }
+
+    func testLaBorneDeSeptJoursEstExclue() {
+        XCTAssertEqual(progres([visite(ilYA: 7)]).daysWithVisit, 0)
+        XCTAssertEqual(progres([visite(ilYA: 6.9)]).daysWithVisit, 1)
     }
 
     func testVisitesTropAnciennesSontIgnorees() {
