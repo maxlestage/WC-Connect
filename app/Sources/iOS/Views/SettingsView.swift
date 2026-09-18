@@ -29,7 +29,7 @@ struct SettingsView: View {
 
                 Section {
                     LabeledContent("Live Activity", value: liveActivityStatus)
-                    LabeledContent("Apple Watch", value: WatchSyncService.shared.isSupported ? "Appairée" : "Indisponible")
+                    LabeledContent("Apple Watch", value: WatchSyncService.shared.isSupported ? "Appairée".wcLocalized : "Indisponible".wcLocalized)
                 } header: {
                     Text("Appareils")
                 } footer: {
@@ -80,7 +80,7 @@ struct SettingsView: View {
     }
 
     private var liveActivityStatus: String {
-        LiveActivityController.shared.isAvailable ? "Autorisée" : "Désactivée dans Réglages"
+        LiveActivityController.shared.isAvailable ? "Autorisée".wcLocalized : "Désactivée dans Réglages".wcLocalized
     }
 
     private var appVersion: String {

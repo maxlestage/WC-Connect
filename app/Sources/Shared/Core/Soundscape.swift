@@ -20,19 +20,19 @@ public enum Soundscape: String, CaseIterable, Identifiable, Hashable, Sendable {
 
     public var title: String {
         switch self {
-        case .rain: return "Pluie"
-        case .brown: return "Bruit brun"
-        case .swell: return "Souffle"
-        case .meeting: return "Réunion"
+        case .rain: return "Pluie".wcLocalized
+        case .brown: return "Bruit brun".wcLocalized
+        case .swell: return "Souffle".wcLocalized
+        case .meeting: return "Réunion".wcLocalized
         }
     }
 
     public var subtitle: String {
         switch self {
-        case .rain: return "Couvre les bruits alentour"
-        case .brown: return "Grave et régulier, très masquant"
-        case .swell: return "Respire sur dix secondes"
-        case .meeting: return "Brouhaha de bureau et clavier, pour brouiller les pistes"
+        case .rain: return "Couvre les bruits alentour".wcLocalized
+        case .brown: return "Grave et régulier, très masquant".wcLocalized
+        case .swell: return "Respire sur dix secondes".wcLocalized
+        case .meeting: return "Brouhaha de bureau et clavier, pour brouiller les pistes".wcLocalized
         }
     }
 

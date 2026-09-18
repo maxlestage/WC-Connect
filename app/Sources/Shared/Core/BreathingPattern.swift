@@ -9,10 +9,10 @@ public enum BreathingPhase: String, Codable, Hashable, Sendable {
 
     public var title: String {
         switch self {
-        case .inhale: return "Inspirez"
-        case .hold: return "Retenez"
-        case .exhale: return "Expirez"
-        case .rest: return "Pause"
+        case .inhale: return "Inspirez".wcLocalized
+        case .hold: return "Retenez".wcLocalized
+        case .exhale: return "Expirez".wcLocalized
+        case .rest: return "Pause".wcLocalized
         }
     }
 
@@ -145,8 +145,8 @@ public extension BreathingPattern {
     /// visite, car retenir son souffle revient à pousser.
     static let belly = BreathingPattern(
         id: "belly",
-        title: "Ventre 4-6",
-        subtitle: "Sans apnée : la plus indiquée sur le trône, elle relâche le ventre et le périnée.",
+        title: "Ventre 4-6".wcLocalized,
+        subtitle: "Sans apnée : la plus indiquée sur le trône, elle relâche le ventre et le périnée.".wcLocalized,
         steps: [BreathingStep(.inhale, 4), BreathingStep(.exhale, 6)],
         cycles: 12
     )
@@ -154,8 +154,8 @@ public extension BreathingPattern {
     /// Cohérence cardiaque simplifiée.
     static let square = BreathingPattern(
         id: "square",
-        title: "Carré 4-4-4-4",
-        subtitle: "Quatre temps égaux pour calmer le rythme et se recentrer.",
+        title: "Carré 4-4-4-4".wcLocalized,
+        subtitle: "Quatre temps égaux pour calmer le rythme et se recentrer.".wcLocalized,
         steps: [
             BreathingStep(.inhale, 4),
             BreathingStep(.hold, 4),
@@ -168,8 +168,8 @@ public extension BreathingPattern {
     /// Expiration longue, très relaxante.
     static let relax = BreathingPattern(
         id: "relax",
-        title: "Détente 4-7-8",
-        subtitle: "Expiration longue, pour relâcher les épaules et la mâchoire.",
+        title: "Détente 4-7-8".wcLocalized,
+        subtitle: "Expiration longue, pour relâcher les épaules et la mâchoire.".wcLocalized,
         steps: [BreathingStep(.inhale, 4), BreathingStep(.hold, 7), BreathingStep(.exhale, 8)],
         cycles: 6
     )

@@ -26,11 +26,11 @@ public enum PersonaEngine {
 
         var label: String {
             switch self {
-            case .matin: return "du matin"
-            case .midi: return "de la pause déjeuner"
-            case .apresMidi: return "de l'après-midi"
-            case .soir: return "du soir"
-            case .nuit: return "de la nuit"
+            case .matin: return "du matin".wcLocalized
+            case .midi: return "de la pause déjeuner".wcLocalized
+            case .apresMidi: return "de l'après-midi".wcLocalized
+            case .soir: return "du soir".wcLocalized
+            case .nuit: return "de la nuit".wcLocalized
             }
         }
     }
@@ -53,8 +53,8 @@ public enum PersonaEngine {
         let finished = sessions.filter { $0.endedAt != nil }
         guard !finished.isEmpty else {
             return Persona(
-                title: "Profil vierge",
-                detail: "Aucune visite enregistrée : votre légende reste à écrire.",
+                title: "Profil vierge".wcLocalized,
+                detail: "Aucune visite enregistrée : votre légende reste à écrire.".wcLocalized,
                 symbol: "person.fill.questionmark"
             )
         }
@@ -75,32 +75,32 @@ public enum PersonaEngine {
     private static func title(moment: Moment, tempo: Tempo) -> String {
         let noun: String
         switch tempo {
-        case .eclair: noun = "Le Sprinteur"
-        case .regulier: noun = "L'Habitué"
-        case .contemplatif: noun = "Le Philosophe"
+        case .eclair: noun = "Le Sprinteur".wcLocalized
+        case .regulier: noun = "L'Habitué".wcLocalized
+        case .contemplatif: noun = "Le Philosophe".wcLocalized
         }
 
         if moment == .nuit {
             switch tempo {
-            case .eclair: return "Le Fantôme nocturne"
-            case .regulier: return "Le Veilleur"
-            case .contemplatif: return "L'Ermite de la nuit"
+            case .eclair: return "Le Fantôme nocturne".wcLocalized
+            case .regulier: return "Le Veilleur".wcLocalized
+            case .contemplatif: return "L'Ermite de la nuit".wcLocalized
             }
         }
-        return "\(noun) \(moment.label)"
+        return "%@ %@".wcLocalized(noun, moment.label)
     }
 
     private static func detail(moment: Moment, tempo: Tempo, stats: Stats) -> String {
         let duration = WCFormat.duration(stats.averageDuration)
-        let hour = stats.busiestHour.map { "\($0) h" } ?? "une heure indéterminée"
+        let hour = stats.busiestHour.map { "\($0) h" } ?? "une heure indéterminée".wcLocalized
 
         switch tempo {
         case .eclair:
-            return "Vous expédiez l'affaire en \(duration), surtout vers \(hour). Efficace, presque suspect."
+            return "Vous expédiez l'affaire en %@, surtout vers %@. Efficace, presque suspect.".wcLocalized(duration, hour)
         case .regulier:
-            return "\(duration) en moyenne, avec une préférence marquée pour \(hour). Une horloge."
+            return "%@ en moyenne, avec une préférence marquée pour %@. Une horloge.".wcLocalized(duration, hour)
         case .contemplatif:
-            return "\(duration) en moyenne : vous ne venez pas seulement pour la fonction, mais aussi pour la réflexion. Surtout vers \(hour)."
+            return "%@ en moyenne : vous ne venez pas seulement pour la fonction, mais aussi pour la réflexion. Surtout vers %@.".wcLocalized(duration, hour)
         }
     }
 

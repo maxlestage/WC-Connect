@@ -90,9 +90,9 @@ struct TodayWidgetView: View {
 
     private var inline: some View {
         if let active = entry.active {
-            return Text("WC · \(WCFormat.clock(active.duration(now: entry.date)))")
+            return Text("WC · %@".wcLocalized(WCFormat.clock(active.duration(now: entry.date))))
         }
-        return Text("WC · \(entry.todayCount) aujourd'hui")
+        return Text("WC · %@ aujourd'hui".wcLocalized(String(entry.todayCount)))
     }
 
     private var circular: some View {
@@ -128,9 +128,13 @@ struct TodayWidgetView: View {
                 Text(active.place.title)
                     .font(.caption2)
             } else {
-                Text("\(entry.todayCount) visite\(entry.todayCount > 1 ? "s" : "") aujourd'hui")
+                Text(entry.todayCount > 1
+                     ? "%@ visites aujourd'hui".wcLocalized(String(entry.todayCount))
+                     : "%@ visite aujourd'hui".wcLocalized(String(entry.todayCount)))
                     .font(.title3.weight(.semibold))
-                Text(entry.averageDuration > 0 ? "Moyenne \(WCFormat.duration(entry.averageDuration))" : "Aucune visite enregistrée")
+                Text(entry.averageDuration > 0
+                     ? "Moyenne %@".wcLocalized(WCFormat.duration(entry.averageDuration))
+                     : "Aucune visite enregistrée".wcLocalized)
                     .font(.caption2)
             }
         }
@@ -158,7 +162,7 @@ struct TodayWidgetView: View {
             } else {
                 Text("\(entry.todayCount)")
                     .font(.system(size: 34, weight: .semibold, design: .rounded))
-                Text("visite\(entry.todayCount > 1 ? "s" : "") aujourd'hui")
+                Text(entry.todayCount > 1 ? "visites aujourd'hui".wcLocalized : "visite aujourd'hui".wcLocalized)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -171,7 +175,7 @@ struct TodayWidgetView: View {
             small
             Divider()
             VStack(alignment: .leading, spacing: 6) {
-                Label("\(entry.state.sessions.count) au total", systemImage: "number")
+                Label("%@ au total".wcLocalized(String(entry.state.sessions.count)), systemImage: "number")
                 Label(
                     entry.averageDuration > 0 ? WCFormat.duration(entry.averageDuration) : "—",
                     systemImage: "timer"

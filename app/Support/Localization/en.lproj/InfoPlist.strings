@@ -1,0 +1,3 @@
+/* Info.plist strings — English */
+"CFBundleDisplayName" = "WC Connect";
+"NSAppleMusicUsageDescription" = "To show the current track and control playback from WC Connect.";

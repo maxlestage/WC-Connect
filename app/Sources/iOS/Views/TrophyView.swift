@@ -35,7 +35,9 @@ struct TrophyView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(AchievementEngine.rank(unlockedCount: unlocked.count))
                 .font(.title2.weight(.bold))
-            Text("\(unlocked.count) haut\(unlocked.count > 1 ? "s" : "") fait\(unlocked.count > 1 ? "s" : "") sur \(Achievement.allCases.count)")
+            Text(unlocked.count > 1
+                 ? "%@ hauts faits sur %@".wcLocalized(String(unlocked.count), String(Achievement.allCases.count))
+                 : "%@ haut fait sur %@".wcLocalized(String(unlocked.count), String(Achievement.allCases.count)))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             ProgressView(value: Double(unlocked.count), total: Double(Achievement.allCases.count))
@@ -255,12 +257,12 @@ struct RecapCard: View {
                 .foregroundStyle(.white)
 
             VStack(alignment: .leading, spacing: 8) {
-                line("Temps total", WCFormat.duration(stats.totalDuration))
-                line("Visites", "\(stats.total)")
-                line("Record", WCFormat.duration(stats.longestDuration))
-                line("Créneau favori", stats.busiestHour.map { "\($0) h" } ?? "—")
+                line("Temps total".wcLocalized, WCFormat.duration(stats.totalDuration))
+                line("Visites".wcLocalized, "\(stats.total)")
+                line("Record".wcLocalized, WCFormat.duration(stats.longestDuration))
+                line("Créneau favori".wcLocalized, stats.busiestHour.map { WCFormat.hourLabel($0) } ?? "—")
                 if let topBadge {
-                    line("Dernier haut fait", topBadge.title)
+                    line("Dernier haut fait".wcLocalized, topBadge.title)
                 }
             }
 
@@ -315,12 +317,12 @@ struct CertificateCard: View {
             Divider()
 
             HStack(spacing: 18) {
-                field("Record", WCFormat.duration(longest))
-                field("Visites", "\(total)")
-                field("Hauts faits", "\(badges)")
+                field("Record".wcLocalized, WCFormat.duration(longest))
+                field("Visites".wcLocalized, "\(total)")
+                field("Hauts faits".wcLocalized, "\(badges)")
             }
 
-            Text("Délivré par WC Connect le \(Date().formatted(date: .abbreviated, time: .omitted)). Sans aucune valeur.")
+            Text("Délivré par WC Connect le %@. Sans aucune valeur.".wcLocalized(Date().formatted(date: .abbreviated, time: .omitted)))
                 .font(.caption2)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)

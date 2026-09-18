@@ -4,6 +4,10 @@ import XCTest
 
 final class AbsurdStatsTests: XCTestCase {
 
+    /// Séparateur décimal attendu : celui de la langue de l'appareil, puisque
+    /// les conversions le suivent désormais.
+    private var separator: String { Locale.current.decimalSeparator ?? "." }
+
     func testEquivalencesAreAlwaysProvided() {
         let items = AbsurdStats.equivalences(totalDuration: 0, visitCount: 0)
         XCTAssertEqual(items.count, 8)
@@ -24,14 +28,16 @@ final class AbsurdStatsTests: XCTestCase {
     func testNegativeDurationIsClamped() {
         let items = AbsurdStats.equivalences(totalDuration: -500, visitCount: -3)
         XCTAssertEqual(items.first { $0.id == "episodes" }?.value, "0")
-        XCTAssertEqual(items.first { $0.id == "paper" }?.value, "0,0 m")
+        XCTAssertEqual(items.first { $0.id == "paper" }?.value, "0\(separator)0 m")
     }
 
-    func testDecimalsUseAFrenchComma() {
+    func testDecimalsFollowTheDeviceLanguage() {
         let items = AbsurdStats.equivalences(totalDuration: 3 * 3600, visitCount: 5)
         let tgv = items.first { $0.id == "tgv" }?.value ?? ""
-        XCTAssertTrue(tgv.contains(","), "séparateur décimal inattendu : \(tgv)")
-        XCTAssertFalse(tgv.contains("."))
+        XCTAssertTrue(tgv.contains(separator), "séparateur décimal inattendu : \(tgv)")
+        if separator != "." {
+            XCTAssertFalse(tgv.contains("."), "le point ne devrait pas subsister : \(tgv)")
+        }
     }
 
     func testWalkingDistanceSwitchesFromMetresToKilometres() {
@@ -39,13 +45,13 @@ final class AbsurdStatsTests: XCTestCase {
         XCTAssertEqual(short.first { $0.id == "walk" }?.value.hasSuffix(" m"), true)
 
         let long = AbsurdStats.equivalences(totalDuration: 3600, visitCount: 1)
-        XCTAssertEqual(long.first { $0.id == "walk" }?.value, "5,0 km")
+        XCTAssertEqual(long.first { $0.id == "walk" }?.value, "5\(separator)0 km")
     }
 
     func testPaperSwitchesToKilometres() {
         // 5 feuilles de 12 cm par visite : 2 000 visites font 1,2 km.
         let items = AbsurdStats.equivalences(totalDuration: 0, visitCount: 2_000)
-        XCTAssertEqual(items.first { $0.id == "paper" }?.value, "1,20 km")
+        XCTAssertEqual(items.first { $0.id == "paper" }?.value, "1\(separator)20 km")
     }
 
     func testLifetimeDaysMatchTheArithmetic() {

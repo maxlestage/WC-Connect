@@ -94,7 +94,7 @@ public struct StopVisitIntent: LiveActivityIntent {
             return .result(dialog: "Aucune visite en cours.")
         }
         let duration = WCFormat.duration(session.finalDuration ?? 0)
-        return .result(dialog: "Visite enregistrée : \(duration).")
+        return .result(dialog: IntentDialog(stringLiteral: "Visite enregistrée : %@.".wcLocalized(duration)))
     }
 }
 
@@ -116,7 +116,7 @@ public struct ToggleVisitIntent: LiveActivityIntent {
         store.liveActivity = LiveActivityController.shared
         #endif
         if let session = store.stop() {
-            return .result(dialog: "Visite enregistrée : \(WCFormat.duration(session.finalDuration ?? 0)).")
+            return .result(dialog: IntentDialog(stringLiteral: "Visite enregistrée : %@.".wcLocalized(WCFormat.duration(session.finalDuration ?? 0))))
         }
         store.start(source: .widget)
         return .result(dialog: "Chronomètre lancé.")
@@ -152,7 +152,7 @@ public struct LogVisitIntent: AppIntent {
             source: .widget
         )
         store.add(session)
-        return .result(dialog: "Visite de \(minutes) min enregistrée.")
+        return .result(dialog: IntentDialog(stringLiteral: "Visite de %@ min enregistrée.".wcLocalized(String(minutes))))
     }
 }
 #endif

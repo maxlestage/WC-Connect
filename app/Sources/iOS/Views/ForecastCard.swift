@@ -29,11 +29,11 @@ struct ForecastCard: View {
                 .foregroundStyle(.secondary)
 
             HStack(spacing: 0) {
-                gauge("Pression", "\(forecast.pressure) hPa")
+                gauge("Pression".wcLocalized, "\(forecast.pressure) hPa")
                 Divider().frame(height: 30)
-                gauge("Averses", "\(forecast.showerRisk) %")
+                gauge("Averses".wcLocalized, "\(forecast.showerRisk) %")
                 Divider().frame(height: 30)
-                gauge("Visibilité", forecast.visibility.components(separatedBy: ",").first ?? "—")
+                gauge("Visibilité".wcLocalized, forecast.visibility.components(separatedBy: ",").first ?? "—")
             }
 
             Label(forecast.wind, systemImage: "wind")
@@ -56,7 +56,7 @@ struct ForecastCard: View {
 
             if let nextVisit {
                 Label {
-                    Text("Prochaine visite prévue vers \(WCFormat.time(nextVisit.date)) — fiabilité \(nextVisit.reliability) %")
+                    Text("Prochaine visite prévue vers %@ — fiabilité %@ %%".wcLocalized(WCFormat.time(nextVisit.date), String(nextVisit.reliability)))
                 } icon: {
                     Image(systemName: "calendar.badge.clock")
                 }

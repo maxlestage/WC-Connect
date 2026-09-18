@@ -42,7 +42,7 @@ struct ComfortRating: View {
                         guard editable else { return }
                         value = (value == index) ? 0 : index
                     }
-                    .accessibilityLabel("\(index) sur 5")
+                    .accessibilityLabel("%@ sur 5".wcLocalized(String(index)))
             }
         }
         .font(.title3)

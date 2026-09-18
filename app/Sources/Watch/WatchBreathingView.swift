@@ -28,7 +28,7 @@ struct WatchBreathingView: View {
                 .foregroundStyle(WCTheme.accent)
             Text(pattern.title)
                 .font(.headline)
-            Text("Sans apnée, \(WCFormat.duration(pattern.totalDuration))")
+            Text("Sans apnée, %@".wcLocalized(WCFormat.duration(pattern.totalDuration)))
                 .font(.caption2)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)

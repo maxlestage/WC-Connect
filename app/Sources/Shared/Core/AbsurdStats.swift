@@ -35,49 +35,49 @@ public enum AbsurdStats {
             Equivalence(
                 id: "episodes",
                 value: count(total / Unit.episode),
-                label: "épisodes de série regardés assis",
+                label: "épisodes de série regardés assis".wcLocalized,
                 symbol: "tv.fill"
             ),
             Equivalence(
                 id: "songs",
                 value: count(total / Unit.song),
-                label: "chansons écoutées en entier",
+                label: "chansons écoutées en entier".wcLocalized,
                 symbol: "music.note"
             ),
             Equivalence(
                 id: "eggs",
                 value: count(total / Unit.softBoiledEgg),
-                label: "œufs à la coque, minutés à la perfection",
+                label: "œufs à la coque, minutés à la perfection".wcLocalized,
                 symbol: "oval.portrait.fill"
             ),
             Equivalence(
                 id: "tgv",
                 value: decimal(total / Unit.tgv),
-                label: "trajets Paris – Lyon en TGV",
+                label: "trajets Paris – Lyon en TGV".wcLocalized,
                 symbol: "tram.fill"
             ),
             Equivalence(
                 id: "laundry",
                 value: decimal(total / Unit.laundry),
-                label: "cycles de lave-linge",
+                label: "cycles de lave-linge".wcLocalized,
                 symbol: "washer.fill"
             ),
             Equivalence(
                 id: "marathon",
                 value: decimal(total / Unit.marathon),
-                label: "records du monde du marathon",
+                label: "records du monde du marathon".wcLocalized,
                 symbol: "figure.run"
             ),
             Equivalence(
                 id: "walk",
                 value: distance(total),
-                label: "parcourus si vous aviez marché plutôt qu'attendu",
+                label: "parcourus si vous aviez marché plutôt qu'attendu".wcLocalized,
                 symbol: "figure.walk"
             ),
             Equivalence(
                 id: "paper",
                 value: paper(visitCount),
-                label: "de papier déroulé, à vue de nez",
+                label: "de papier déroulé, à vue de nez".wcLocalized,
                 symbol: "scroll.fill"
             )
         ]
@@ -87,12 +87,12 @@ public enum AbsurdStats {
     public static func headline(totalDuration: TimeInterval) -> String {
         let hours = totalDuration / 3600
         if hours < 1 {
-            return "Vous avez passé \(WCFormat.duration(totalDuration)) sur le trône. C'est un début."
+            return "Vous avez passé %@ sur le trône. C'est un début.".wcLocalized(WCFormat.duration(totalDuration))
         }
         if hours < 24 {
-            return String(format: "Vous avez passé %.1f heures sur le trône. Un bon film, quoi.", hours)
+            return String(format: "Vous avez passé %.1f heures sur le trône. Un bon film, quoi.".wcLocalized, hours)
         }
-        return String(format: "Vous avez passé %.1f jours entiers sur le trône. Assumez.", hours / 24)
+        return String(format: "Vous avez passé %.1f jours entiers sur le trône. Assumez.".wcLocalized, hours / 24)
     }
 
     /// Projection sur une vie entière, au rythme actuel.
@@ -109,12 +109,12 @@ public enum AbsurdStats {
     public static func lifetimeSentence(averagePerDay: Double, averageDuration: TimeInterval) -> String {
         let days = lifetimeDays(averagePerDay: averagePerDay, averageDuration: averageDuration)
         guard days >= 0.5 else {
-            return "À ce rythme, votre vie entière y passera moins d'une journée. Suspect."
+            return "À ce rythme, votre vie entière y passera moins d'une journée. Suspect.".wcLocalized
         }
         if days < 30 {
-            return String(format: "À ce rythme, vous y passerez %.0f jours sur cinquante ans.", days)
+            return String(format: "À ce rythme, vous y passerez %.0f jours sur cinquante ans.".wcLocalized, days)
         }
-        return String(format: "À ce rythme, vous y passerez %.1f mois de votre vie. Assis.", days / 30)
+        return String(format: "À ce rythme, vous y passerez %.1f mois de votre vie. Assis.".wcLocalized, days / 30)
     }
 
     // MARK: - Mise en forme
@@ -123,25 +123,31 @@ public enum AbsurdStats {
         "\(Int(value.rounded(.down)))"
     }
 
+    /// Séparateur décimal de la langue courante : virgule en français, point
+    /// en anglais.
+    private static var separator: String {
+        Locale.current.decimalSeparator ?? "."
+    }
+
     private static func decimal(_ value: Double) -> String {
-        String(format: "%.2f", value).replacingOccurrences(of: ".", with: ",")
+        String(format: "%.2f", value).replacingOccurrences(of: ".", with: separator)
     }
 
     /// Marche de loisir : 5 km/h.
     private static func distance(_ seconds: Double) -> String {
         let km = seconds / 3600 * 5
         if km < 1 {
-            return "\(Int((km * 1000).rounded())) m"
+            return "%@ m".wcLocalized(String(Int((km * 1000).rounded())))
         }
-        return String(format: "%.1f km", km).replacingOccurrences(of: ".", with: ",")
+        return String(format: "%.1f km", km).replacingOccurrences(of: ".", with: separator)
     }
 
     /// Estimation très approximative : cinq feuilles de 12 cm par visite.
     private static func paper(_ visits: Int) -> String {
         let meters = Double(max(0, visits)) * 5 * 0.12
         if meters < 1_000 {
-            return String(format: "%.1f m", meters).replacingOccurrences(of: ".", with: ",")
+            return String(format: "%.1f m", meters).replacingOccurrences(of: ".", with: separator)
         }
-        return String(format: "%.2f km", meters / 1_000).replacingOccurrences(of: ".", with: ",")
+        return String(format: "%.2f km", meters / 1_000).replacingOccurrences(of: ".", with: separator)
     }
 }

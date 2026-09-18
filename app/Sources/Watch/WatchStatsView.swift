@@ -18,11 +18,11 @@ struct WatchStatsView: View {
                     .foregroundStyle(.secondary)
                 }
             }
-            row("Aujourd'hui", "\(stats.today)", "sun.max.fill")
-            row("Par jour", stats.total > 0 ? String(format: "%.1f", stats.averagePerDay) : "—", "calendar")
-            row("Moyenne", stats.total > 0 ? WCFormat.duration(stats.averageDuration) : "—", "timer")
-            row("Série", stats.streakDays > 0 ? "\(stats.streakDays) j" : "—", "flame.fill")
-            row("Total", "\(stats.total)", "number")
+            row("Aujourd'hui".wcLocalized, "\(stats.today)", "sun.max.fill")
+            row("Par jour".wcLocalized, stats.total > 0 ? String(format: "%.1f", stats.averagePerDay) : "—", "calendar")
+            row("Moyenne".wcLocalized, stats.total > 0 ? WCFormat.duration(stats.averageDuration) : "—", "timer")
+            row("Série".wcLocalized, stats.streakDays > 0 ? "\(stats.streakDays) j" : "—", "flame.fill")
+            row("Total".wcLocalized, "\(stats.total)", "number")
         }
         .navigationTitle("Stats")
     }

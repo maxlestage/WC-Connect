@@ -1,0 +1,3 @@
+/* Chaînes de l'Info.plist — français */
+"CFBundleDisplayName" = "WC Connect";
+"NSAppleMusicUsageDescription" = "Pour afficher le morceau en cours et piloter la lecture depuis WC Connect.";
