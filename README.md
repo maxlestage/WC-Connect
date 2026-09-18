@@ -125,9 +125,6 @@ Tout se fait dans le navigateur du téléphone, sans ligne de commande :
 
 1. **Appuyez sur le bouton ci-dessus.** Heroku lit `app.json` à la racine du
    dépôt et prépare l'application tout seul.
-   *(Avant la fusion de la branche de travail, utilisez
-   [ce lien](https://heroku.com/deploy?template=https://github.com/maxlestage/WC-Connect/tree/claude/toilet-app-live-activity-vn1mn5)
-   qui pointe sur la branche `claude/toilet-app-live-activity-vn1mn5`.)*
 2. **Connectez-vous à Heroku** (ou créez un compte). Heroku n'a plus d'offre
    gratuite : il faut une carte et un dyno Eco, environ 5 $ par mois pour
    toutes vos applications.
