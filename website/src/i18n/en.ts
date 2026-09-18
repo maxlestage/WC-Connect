@@ -12,6 +12,9 @@ export const en: Dictionary = {
     label: "Main navigation",
     skip: "Skip to content",
     cta: "Availability",
+    open: "Open the menu",
+    close: "Close the menu",
+    languageLabel: "Language",
     links: [
       { href: "#fonctions", label: "Features" },
       { href: "#aide", label: "Help" },
@@ -24,6 +27,14 @@ export const en: Dictionary = {
       { href: "#meteo", label: "Forecast" },
       { href: "#faq", label: "FAQ" },
     ],
+  },
+
+  theme: {
+    label: "Theme",
+    light: "Light",
+    dark: "Dark",
+    auto: "Automatic",
+    hint: "“Automatic” follows your device setting, including its switch to dark in the evening.",
   },
 
   hero: {

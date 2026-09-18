@@ -3,12 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  // Applique le thème choisi avant le premier rendu. Sans ça, un thème clair
+  // choisi sur un appareil réglé en sombre provoquerait un éclair sombre au
+  // chargement. En « automatique », aucun attribut n'est posé : la feuille de
+  // style suit alors la requête de média.
+  try {
+    var choix = localStorage.getItem("wc-connect-theme");
+    if (choix === "light" || choix === "dark") {
+      document.documentElement.setAttribute("data-theme", choix);
+    }
+  } catch (erreur) {
+    // Stockage indisponible : l'appareil décide, comme en « automatique ».
+  }
+</script>
 <title>WC Connect — le suivi de vos pauses, sur iPhone et Apple Watch</title>
 <meta name="description" content="WC Connect chronomètre vos passages aux toilettes, aide quand ça coince (posture, respiration guidée, ambiances sonores), affiche une Live Activity et se pilote depuis l'Apple Watch. 100 % hors ligne.">
 <meta name="theme-color" content="#1c66c7">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/social-card.png">
-<!-- __SITE_URL__ est remplacé par le serveur Express par l'origine réellement
+<!-- __SITE_URL__ est remplacé par website/server.js par l'origine réellement
      servie : les aperçus de partage fonctionnent sur n'importe quel domaine. -->
 <link rel="canonical" href="__SITE_URL__/">
 <meta property="og:type" content="website">

@@ -28,8 +28,13 @@
     "Helvetica Neue", Arial, sans-serif;
 }
 
+/* Thème sombre, dans deux situations : l'appareil le demande et aucun choix
+   n'a été fait (« Automatique »), ou le thème sombre a été choisi
+   explicitement. Les valeurs sont écrites deux fois parce qu'une requête de
+   média et un sélecteur ne se combinent pas en CSS ; elles doivent rester
+   identiques. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --accent: #52a8ff;
     --accent-strong: #2f7fd6;
     --accent-soft: rgba(82, 168, 255, 0.16);
@@ -46,6 +51,28 @@
     --shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.9);
   }
 }
+
+:root[data-theme="dark"] {
+  --accent: #52a8ff;
+  --accent-strong: #2f7fd6;
+  --accent-soft: rgba(82, 168, 255, 0.16);
+  --mint: #3ddbb0;
+  --amber: #f0b64b;
+
+  --bg: #0b1020;
+  --surface: #121a2e;
+  --surface-2: #18223a;
+  --ink: #f3f6fc;
+  --ink-2: #b6c0d6;
+  --ink-3: #8b96ae;
+  --line: rgba(255, 255, 255, 0.12);
+  --shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.9);
+}
+
+/* Les contrôles du navigateur (champs, ascenseurs) suivent le choix, et pas
+   seulement les couleurs de la page. */
+:root[data-theme="dark"] { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }
 
 * { box-sizing: border-box; }
 
@@ -143,27 +170,155 @@ a { color: inherit; }
 .nav__links a { color: var(--ink-2); text-decoration: none; white-space: nowrap; }
 .nav__links a:hover { color: var(--ink); }
 
-/* La bascule de langue occupe de la place : on replie les liens un peu plus tôt. */
-@media (max-width: 960px) {
+.nav__wide { display: flex; align-items: center; gap: 10px; }
+
+/* --- Bouton burger --- */
+
+.burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.burger:hover { background: var(--surface-2); }
+.burger:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.burger__bars {
+  display: grid;
+  gap: 4px;
+  width: 18px;
+}
+.burger__bars span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+.burger--on .burger__bars span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.burger--on .burger__bars span:nth-child(2) { opacity: 0; }
+.burger--on .burger__bars span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* --- Panneau du menu --- */
+
+.menu {
+  display: none;
+  gap: 18px;
+  padding: 8px var(--gutter) 22px;
+  border-top: 1px solid var(--line);
+  /* Dix liens plus les réglages peuvent dépasser un petit écran : le panneau
+     défile au lieu de pousser la page. */
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.menu--on { display: grid; }
+
+.menu__links {
+  display: grid;
+  gap: 2px;
+}
+.menu__links a {
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1rem;
+}
+.menu__links a:last-child { border-bottom: 0; }
+.menu__links a:hover { color: var(--accent-strong); }
+
+.menu__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.menu__label {
+  font-size: 0.78rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+}
+.menu__hint {
+  margin: -8px 0 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+.menu__cta { justify-content: center; text-align: center; }
+
+/* Le panneau et son bouton remplacent les liens en ligne sous 1100 px : à dix
+   liens, la barre ne tient plus sur une ligne — c'est ce débordement qui
+   élargissait la page entière. Rien n'est perdu, tout passe par le menu. */
+@media (max-width: 1100px) {
   .nav__links { display: none; }
+  .nav__wide { display: none; }
+  .burger { display: inline-flex; }
   .nav__inner { justify-content: space-between; }
 }
 
-/* Entre 961 et 1140 px, les dix liens, la marque, la bascule et le bouton
-   partagent une seule ligne : on resserre plutôt que de laisser la page
-   déborder latéralement. */
-@media (min-width: 961px) and (max-width: 1140px) {
-  .nav__inner { gap: 12px; }
-  .nav__links { gap: 12px; font-size: 0.84rem; }
+/* Ouvert puis fenêtre élargie : le panneau s'effface, les liens reviennent. */
+@media (min-width: 1101px) {
+  .menu--on { display: none; }
 }
 
-/* Sous 560 px, la marque, la bascule et le bouton ne tiennent plus ensemble :
-   le bouton part, la section « disponibilité » restant accessible en
-   défilant. C'est ce débordement qui élargissait la page entière. */
 @media (max-width: 560px) {
-  .nav .btn--small { display: none; }
   .brand span { font-size: 0.95rem; }
   .nav__inner { min-height: 56px; }
+  .menu { max-height: calc(100vh - 56px); }
+}
+
+/* --- Sélecteur de thème --- */
+
+.theme {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+}
+.theme__choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 9px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.theme__choice:hover { color: var(--ink); }
+.theme__choice:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.theme__choice--on {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.18);
+}
+
+/* Dans la barre, seules les icônes : le texte prendrait la place des liens.
+   Le nom du thème reste donné par `title` et par le libellé accessible. */
+.nav__wide .theme__text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 @media (max-width: 380px) {

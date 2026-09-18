@@ -14,6 +14,9 @@ export const fr = {
     label: "Navigation principale",
     skip: "Aller au contenu",
     cta: "Disponibilité",
+    open: "Ouvrir le menu",
+    close: "Fermer le menu",
+    languageLabel: "Langue",
     links: [
       { href: "#fonctions", label: "Fonctions" },
       { href: "#aide", label: "Aide" },
@@ -26,6 +29,14 @@ export const fr = {
       { href: "#meteo", label: "Météo" },
       { href: "#faq", label: "FAQ" },
     ],
+  },
+
+  theme: {
+    label: "Thème",
+    light: "Clair",
+    dark: "Sombre",
+    auto: "Automatique",
+    hint: "« Automatique » suit le réglage de votre appareil, y compris son passage au sombre le soir.",
   },
 
   hero: {

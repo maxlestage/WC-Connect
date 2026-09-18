@@ -39,7 +39,7 @@ for (const locale of langues) {
     });
     await page.waitForTimeout(300);
 
-    const mesure = await page.evaluate((cible) => {
+    const mesurer = () => page.evaluate((cible) => {
       const coupables = [];
       for (const element of document.querySelectorAll("body *")) {
         const rect = element.getBoundingClientRect();
@@ -59,19 +59,34 @@ for (const locale of langues) {
       };
     }, width);
 
-    const conforme =
-      mesure.scrollWidth <= width + 1 &&
-      mesure.innerWidth === width &&
-      mesure.coupables.length === 0;
+    const verifier = async (etat) => {
+      const mesure = await mesurer();
+      const conforme =
+        mesure.scrollWidth <= width + 1 &&
+        mesure.innerWidth === width &&
+        mesure.coupables.length === 0;
 
-    if (!conforme) {
-      echecs += 1;
-      console.error(
-        `ÉCHEC ${locale} ${width}px : innerWidth=${mesure.innerWidth} scrollWidth=${mesure.scrollWidth}` +
-          (mesure.coupables.length ? ` — ${mesure.coupables.join(", ")}` : ""),
-      );
-    } else {
-      console.log(`ok ${locale} ${String(width).padStart(4)}px`);
+      if (!conforme) {
+        echecs += 1;
+        console.error(
+          `ÉCHEC ${locale} ${width}px ${etat} : innerWidth=${mesure.innerWidth} scrollWidth=${mesure.scrollWidth}` +
+            (mesure.coupables.length ? ` — ${mesure.coupables.join(", ")}` : ""),
+        );
+      } else {
+        console.log(`ok ${locale} ${String(width).padStart(4)}px ${etat}`);
+      }
+    };
+
+    await verifier("menu fermé");
+
+    // Le panneau du menu contient dix liens, le sélecteur de thème et la
+    // bascule de langue : c'est un candidat au débordement à part entière, et
+    // il faut l'ouvrir pour le mesurer.
+    const burger = page.locator(".burger");
+    if (await burger.isVisible()) {
+      await burger.click();
+      await page.waitForTimeout(250);
+      await verifier("menu ouvert");
     }
 
     await contexte.close();

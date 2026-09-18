@@ -285,6 +285,7 @@ package.json          racine de l'espace de travail npm (workspaces)
 website/
   index.html          point d'entrée Vite
   src/i18n/           dictionnaires fr.ts et en.ts, contexte de langue
+  src/theme/          thème clair / sombre / automatique, mémorisé
   src/components/     sections et maquettes
   src/hooks/          chronomètre de démo, respiration, apparitions
   tsconfig*.json      client et configuration Vite
@@ -300,6 +301,39 @@ mémorisée. `document.documentElement.lang` et le titre de la page suivent.
 `src/i18n/fr.ts` est la source de vérité : le type `Dictionary` en est déduit,
 donc `en.ts` doit couvrir exactement les mêmes clés — une traduction oubliée
 fait échouer la vérification des types, donc la CI.
+
+### Thème clair, sombre ou automatique
+
+Trois choix explicites, dans le menu sur téléphone et dans la barre sur
+ordinateur (en icônes, le nom restant donné par l'infobulle et le libellé
+accessible).
+
+- `src/theme/` porte le choix, le mémorise dans `localStorage` et pose
+  `data-theme="light"` ou `"dark"` sur `<html>`. En **automatique**, aucun
+  attribut n'est posé : la feuille de style retombe sur
+  `prefers-color-scheme`, et l'appareil garde la main — y compris s'il bascule
+  au sombre en cours de visite (`matchMedia` est écouté).
+- Le sombre est donc défini deux fois dans `styles.css` : sous
+  `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) }`
+  pour l'automatique, et sous `:root[data-theme="dark"]` pour le choix
+  explicite. **Les deux blocs doivent rester identiques** — une requête de
+  média et un sélecteur ne se combinent pas en CSS.
+- `color-scheme` suit le choix, pour que les champs et les ascenseurs du
+  navigateur s'accordent à la page.
+- Un petit script en tête d'`index.html` applique l'attribut **avant le
+  premier rendu** : sans lui, un thème clair choisi sur un appareil réglé en
+  sombre provoquerait un éclair sombre au chargement.
+
+### Menu burger
+
+Sous 1100 px, les dix liens ne tiennent plus sur une ligne : ils passent dans
+un panneau ouvert par un bouton burger, avec le sélecteur de thème, la bascule
+de langue et le bouton d'appel. Rien n'est perdu, et la barre ne peut plus
+élargir la page — c'est ce débordement qui était le défaut le plus visible du
+site.
+
+`npm run check:overflow` mesure chaque largeur **deux fois**, menu fermé puis
+menu ouvert : le panneau est un candidat au débordement à part entière.
 
 ### En local
 

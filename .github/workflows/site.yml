@@ -108,7 +108,8 @@ jobs:
 
   mise-en-page:
     # Un site qui se balade latéralement sur un téléphone est un défaut : ce
-    # travail le vérifie à dix largeurs, dans les deux langues.
+    # travail le vérifie à quatorze largeurs, dans les deux langues, menu du
+    # burger fermé puis ouvert. Il contrôle aussi la cohérence du thème sombre.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -120,6 +121,9 @@ jobs:
 
       - name: Installer les dependances
         run: npm ci
+
+      - name: Verifier la coherence du theme sombre
+        run: npm run check:theme --workspace website
 
       - name: Installer Chromium
         run: npm exec --workspace website -- playwright install --with-deps chromium
