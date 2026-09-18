@@ -51,7 +51,18 @@ for (const width of largeurs) {
         const r = el.getBoundingClientRect();
         return { gauche: r.left, droite: r.right, haut: r.top, bas: r.bottom };
       };
+      // Part de progression réellement affichée par l'anneau et par la barre :
+      // elles décrivent la même visite et doivent donc concorder.
+      const anneau = document.querySelector(".hero__devices .ring__value");
+      const barre = document.querySelector(".hero__devices .bar span");
+      const circonference = 2 * Math.PI * 50;
+      const decalage = anneau ? parseFloat(getComputedStyle(anneau).strokeDashoffset) : NaN;
+      const largeurBarre = barre ? parseFloat(getComputedStyle(barre).width) : NaN;
+      const largeurPiste = barre ? parseFloat(getComputedStyle(barre.parentElement).width) : NaN;
+
       return {
+        partAnneau: Number.isFinite(decalage) ? 1 - decalage / circonference : null,
+        partBarre: Number.isFinite(largeurBarre) ? largeurBarre / largeurPiste : null,
         telephone: boite(".hero__devices .phone"),
         montre: boite(".hero__devices .watch"),
         cadran: boite(".hero__devices .ring"),
@@ -63,15 +74,27 @@ for (const width of largeurs) {
     });
 
     const etiquette = `${width}px / racine ${police}px`;
-    const manquant = Object.entries(mesure).find(([, v]) => v === null);
+    const structurels = ["telephone", "montre", "cadran", "bouton", "carte", "barre"];
+    const manquant = structurels.find((cle) => mesure[cle] === null);
     if (manquant) {
-      signaler(`${etiquette} : élément introuvable (${manquant[0]})`);
+      signaler(`${etiquette} : élément introuvable (${manquant})`);
       await contexte.close();
       continue;
     }
 
     const { telephone, montre, cadran, bouton, carte, barre, largeurPage } = mesure;
     const marge = 1;
+
+    // 0. L'anneau de la montre et la barre du téléphone décrivent la même
+    //    visite : un écart signale une valeur figée quelque part.
+    if (mesure.partAnneau === null || mesure.partBarre === null) {
+      signaler(`${etiquette} : progression non mesurable (anneau ou barre absent)`);
+    } else if (Math.abs(mesure.partAnneau - mesure.partBarre) > 0.03) {
+      signaler(
+        `${etiquette} : l'anneau affiche ${Math.round(mesure.partAnneau * 100)}% ` +
+          `alors que la barre affiche ${Math.round(mesure.partBarre * 100)}%`,
+      );
+    }
 
     // 1. La montre ne recouvre ni la carte ni la barre de progression.
     for (const [nom, cible] of [["la carte", carte], ["la barre", barre]]) {

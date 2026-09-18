@@ -652,9 +652,12 @@ a { color: inherit; }
 .ring__track { stroke: rgba(255, 255, 255, 0.16); }
 .ring__value {
   stroke: #4fb2ff;
-  stroke-dasharray: 314;
-  stroke-dashoffset: 180;
   transition: stroke-dashoffset 0.9s linear;
+  /* Ni `stroke-dasharray` ni `stroke-dashoffset` ici : c'est le composant qui
+     les calcule, en attributs SVG. Une déclaration CSS l'emporte sur un
+     attribut de présentation, donc les valeurs d'exemple qui traînaient ici
+     (314 et 180) figeaient l'anneau à 42,7 % — pendant que la barre du
+     téléphone, elle, avançait. `scripts/check-hero.mjs` compare les deux. */
 }
 .ring__label {
   position: absolute;

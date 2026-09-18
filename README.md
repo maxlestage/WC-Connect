@@ -350,11 +350,19 @@ de largeur : il vaut toujours la même chose. Positionnée en absolu au bord du
 conteneur, elle mordait sur la carte de la Live Activity dès que la colonne se
 resserrait.
 
+L'anneau de la montre reçoit son `stroke-dasharray` et son `stroke-dashoffset`
+du composant, en **attributs SVG**. La feuille de style ne doit donc pas les
+déclarer : une déclaration CSS l'emporte sur un attribut de présentation, et
+deux valeurs d'exemple qui traînaient là (314 et 180) figeaient l'anneau à
+42,7 % — pendant que la barre du téléphone, elle, avançait. La barre échappait
+au piège parce qu'elle passe par un `style` en ligne, qui gagne contre le CSS.
+
 `npm run check:hero` vérifie, à onze largeurs et trois tailles de texte du
 navigateur (16, 20 et 24 px, émulées par CDP comme le fait un téléphone), que
 la montre ne recouvre ni la carte ni la barre de progression, que son contenu
-tient dans son boîtier, que la carte tient dans l'écran du téléphone, et que
-la page ne déborde pas.
+tient dans son boîtier, que la carte tient dans l'écran du téléphone, que la
+page ne déborde pas, et que **l'anneau et la barre affichent la même
+progression** — elles décrivent la même visite.
 
 ### Grilles : toujours `minmax(0, 1fr)`
 
