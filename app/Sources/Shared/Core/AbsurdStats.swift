@@ -95,6 +95,28 @@ public enum AbsurdStats {
         return String(format: "Vous avez passé %.1f jours entiers sur le trône. Assumez.", hours / 24)
     }
 
+    /// Projection sur une vie entière, au rythme actuel.
+    public static func lifetimeDays(
+        averagePerDay: Double,
+        averageDuration: TimeInterval,
+        years: Int = 50
+    ) -> Double {
+        let perDay = max(0, averagePerDay) * max(0, averageDuration)
+        return perDay * 365 * Double(max(0, years)) / 86_400
+    }
+
+    /// Phrase de projection, à méditer.
+    public static func lifetimeSentence(averagePerDay: Double, averageDuration: TimeInterval) -> String {
+        let days = lifetimeDays(averagePerDay: averagePerDay, averageDuration: averageDuration)
+        guard days >= 0.5 else {
+            return "À ce rythme, votre vie entière y passera moins d'une journée. Suspect."
+        }
+        if days < 30 {
+            return String(format: "À ce rythme, vous y passerez %.0f jours sur cinquante ans.", days)
+        }
+        return String(format: "À ce rythme, vous y passerez %.1f mois de votre vie. Assis.", days / 30)
+    }
+
     // MARK: - Mise en forme
 
     private static func count(_ value: Double) -> String {

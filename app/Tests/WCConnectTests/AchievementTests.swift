@@ -156,6 +156,20 @@ final class AchievementTests: XCTestCase {
         XCTAssertEqual(Set(list), Set([.debut, .eclair, .noctambule, .avantLeCoq]))
     }
 
+    func testNewlyUnlockedListsOnlyTheGains() {
+        let before = [session(day: 1)]
+        let after = before + [session(day: 1, hour: 3, seconds: 30)]
+
+        let gains = AchievementEngine.newlyUnlocked(previous: before, current: after, calendar: calendar)
+        XCTAssertEqual(Set(gains), Set([.eclair, .noctambule, .avantLeCoq]))
+        XCTAssertFalse(gains.contains(.debut), "déjà acquis avant")
+    }
+
+    func testNewlyUnlockedIsEmptyWithoutProgress() {
+        let sessions = [session(day: 1)]
+        XCTAssertTrue(AchievementEngine.newlyUnlocked(previous: sessions, current: sessions, calendar: calendar).isEmpty)
+    }
+
     func testRanksCoverEveryCount() {
         var titles: Set<String> = []
         for count in 0...Achievement.allCases.count {

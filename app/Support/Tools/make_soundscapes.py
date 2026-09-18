@@ -134,6 +134,31 @@ GENERATORS = {
     "reunion": meeting,
 }
 
+def fanfare():
+    """Courte fanfare jouée au déblocage d'un haut fait (un seul passage)."""
+    notes = [(523.25, 0.0), (659.25, 0.16), (783.99, 0.32), (1046.50, 0.52)]
+    length = int(1.4 * RATE)
+    samples = [0.0] * length
+
+    for frequency, start in notes:
+        offset = int(start * RATE)
+        decay = 0.45 * RATE
+        for index in range(length - offset):
+            envelope = math.exp(-index / decay)
+            # Attaque douce, pour éviter le clic au démarrage de la note.
+            attack = min(1.0, index / (0.006 * RATE))
+            phase = 2.0 * math.pi * frequency * index / RATE
+            value = math.sin(phase) + 0.28 * math.sin(2.0 * phase)
+            samples[offset + index] += value * envelope * attack
+
+    # Extinction finale, pour ne pas couper net.
+    tail = int(0.08 * RATE)
+    for index in range(tail):
+        samples[length - tail + index] *= 1.0 - index / tail
+
+    return normalize(samples, peak=0.55)
+
+
 if __name__ == "__main__":
     root = pathlib.Path(__file__).resolve().parents[1] / "Audio"
     total = int((SECONDS + FADE) * RATE)
@@ -141,3 +166,4 @@ if __name__ == "__main__":
     for index, (name, generator) in enumerate(GENERATORS.items()):
         rng = random.Random(1_000 + index)
         write(root / f"{name}.wav", loopable(generator(total, rng), fade_samples))
+    write(root / "fanfare.wav", fanfare())

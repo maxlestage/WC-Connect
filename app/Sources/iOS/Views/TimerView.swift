@@ -12,6 +12,7 @@ struct TimerView: View {
     @State private var showBreathing = false
     @State private var showTips = false
     @State private var nudgeDismissed = false
+    @State private var unlockedBadge: Achievement?
 
     @StateObject private var soundscapes = SoundscapePlayer.shared
 
@@ -40,6 +41,12 @@ struct TimerView: View {
                 .padding(20)
             }
             .background(backdrop)
+            .overlay(alignment: .top) {
+                if let unlockedBadge {
+                    badgeBanner(unlockedBadge)
+                }
+            }
+            .sensoryFeedback(.success, trigger: unlockedBadge)
             .navigationTitle("WC Connect")
             .sheet(item: $sessionToAnnotate) { session in
                 EndVisitSheet(session: session) { updated in
@@ -151,7 +158,9 @@ struct TimerView: View {
         } else {
             VStack(spacing: 12) {
                 Button {
+                    let previous = store.sessions
                     sessionToAnnotate = store.stop()
+                    celebrate(previous: previous)
                 } label: {
                     Label("Terminer", systemImage: "checkmark")
                         .font(.headline)
@@ -170,6 +179,56 @@ struct TimerView: View {
                 .buttonStyle(.bordered)
             }
         }
+    }
+
+    // MARK: - Haut fait débloqué
+
+    /// Félicite au bon moment : un haut fait gagné à la visite précédente
+    /// déclenche fanfare, vibration et bandeau.
+    private func celebrate(previous: [ToiletSession]) {
+        guard let badge = AchievementEngine.newlyUnlocked(
+            previous: previous,
+            current: store.sessions
+        ).first else { return }
+
+        unlockedBadge = badge
+        soundscapes.playFanfare()
+        Task {
+            try? await Task.sleep(for: .seconds(5))
+            if unlockedBadge == badge {
+                unlockedBadge = nil
+            }
+        }
+    }
+
+    private func badgeBanner(_ badge: Achievement) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: badge.symbol)
+                .font(.title3)
+                .foregroundStyle(WCTheme.warn)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Haut fait débloqué")
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                Text(badge.title)
+                    .font(.subheadline.weight(.bold))
+            }
+            Spacer(minLength: 0)
+            Image(systemName: "xmark")
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(.tertiary)
+        }
+        .padding(14)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(WCTheme.warn.opacity(0.5), lineWidth: 1)
+        )
+        .padding(.horizontal, 20)
+        .shadow(radius: 12, y: 6)
+        .onTapGesture { unlockedBadge = nil }
+        .transition(.move(edge: .top).combined(with: .opacity))
+        .animation(.spring(duration: 0.4), value: unlockedBadge)
     }
 
     // MARK: - Coup de pouce

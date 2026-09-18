@@ -23,6 +23,7 @@ export const navLinks: readonly NavLink[] = [
   { href: "#watch", label: "Watch" },
   { href: "#suivi", label: "Suivi" },
   { href: "#palmares", label: "Palmarès" },
+  { href: "#meteo", label: "Météo" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -341,7 +342,39 @@ export const equivalences: readonly Equivalence[] = [
 
 export const funPoints: readonly string[] = [
   "Un titre honorifique qui évolue, d'« Anonyme des toilettes » à « Légende vivante »",
+  "Une fanfare et un bandeau quand un haut fait tombe",
   "Un certificat officiel à partager, sans aucune valeur légale",
   "Un mode trône caché : appuyez longuement sur le chronomètre",
   "Quatorze hauts faits à débloquer, calculés sur vos vraies visites",
+];
+
+// --- Météo intestinale -----------------------------------------------------
+
+export interface ForecastRow {
+  readonly label: string;
+  readonly value: string;
+}
+
+export const forecastDemo = {
+  title: "Variable",
+  summary: "Éclaircies alternant avec quelques passages nuageux. Rien d'alarmant.",
+  wind: "vent modéré de secteur sud",
+  rows: [
+    { label: "Pression", value: "1021 hPa" },
+    { label: "Averses", value: "34 %" },
+    { label: "Visibilité", value: "correcte" },
+  ] as readonly ForecastRow[],
+  persona: {
+    title: "L'Habitué du matin",
+    detail: "4 min 12 s en moyenne, avec une préférence marquée pour 8 h. Une horloge.",
+  },
+  prediction: "Prochaine visite prévue vers 8 h — fiabilité 37 %",
+  lifetime: "À ce rythme, vous y passerez 4,3 mois de votre vie. Assis.",
+} as const;
+
+export const weatherPoints: readonly string[] = [
+  "Un bulletin calculé sur la semaine écoulée, comparée à la précédente",
+  "Pression, risque d'averse, visibilité et vent — aucun sens, une vraie méthode",
+  "Un profil déduit de vos habitudes, du Sprinteur du matin à l'Ermite de la nuit",
+  "Une prévision de votre prochaine visite, avec une fiabilité honnêtement basse",
 ];

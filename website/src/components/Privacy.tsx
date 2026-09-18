@@ -3,7 +3,7 @@ import { Reveal } from "./Reveal";
 
 export function Privacy() {
   return (
-    <section className="section" id="confidentialite">
+    <section className="section section--alt" id="confidentialite">
       <div className="wrap narrow">
         <Reveal>
           <p className="eyebrow">Confidentialité</p>
