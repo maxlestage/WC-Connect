@@ -6,6 +6,7 @@ struct TimerView: View {
 
     @AppStorage("defaultKind", store: AppGroup.defaults) private var defaultKindRaw = SessionKind.standard.rawValue
     @AppStorage("defaultPlace", store: AppGroup.defaults) private var defaultPlaceRaw = Place.home.rawValue
+    @AppStorage("royalMode", store: AppGroup.defaults) private var royalMode = false
 
     @State private var sessionToAnnotate: ToiletSession?
     @State private var showBreathing = false
@@ -76,6 +77,11 @@ struct TimerView: View {
             ZStack {
                 ProgressRing(progress: goal > 0 ? elapsed / goal : 0, color: color)
                 VStack(spacing: 6) {
+                    if royalMode {
+                        Image(systemName: "crown.fill")
+                            .font(.title3)
+                            .foregroundStyle(WCTheme.warn)
+                    }
                     Text(session == nil ? "Prêt" : WCFormat.clock(elapsed))
                         .font(.system(size: session == nil ? 40 : 52, weight: .semibold, design: .rounded))
                         .monospacedDigit()
@@ -93,11 +99,21 @@ struct TimerView: View {
             }
             .frame(height: 260)
             .animation(.default, value: store.active?.id)
+            // Appui long sur le chronomètre : couronnement.
+            .onLongPressGesture(minimumDuration: 0.8) {
+                royalMode.toggle()
+            }
+            .sensoryFeedback(royalMode ? .success : .impact, trigger: royalMode)
         }
     }
 
     private func subtitle(for session: ToiletSession?) -> String {
-        guard let session else { return "Aucune visite en cours" }
+        guard let session else {
+            return royalMode ? "Le trône vous attend, Majesté" : "Aucune visite en cours"
+        }
+        if royalMode {
+            return "Sa Majesté siège · \(session.place.title)"
+        }
         return "\(session.kind.title) · \(session.place.title)"
     }
 

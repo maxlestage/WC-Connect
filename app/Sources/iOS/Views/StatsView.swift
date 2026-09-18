@@ -12,6 +12,7 @@ struct StatsView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     tiles
+                    trophyLink
                     weekChart
                     hourChart
                     placeBreakdown
@@ -56,6 +57,31 @@ struct StatsView: View {
                 color: WCTheme.warn
             )
         }
+    }
+
+    private var trophyLink: some View {
+        NavigationLink {
+            TrophyView()
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "rosette")
+                    .foregroundStyle(WCTheme.warn)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Palmarès")
+                        .font(.body.weight(.semibold))
+                    Text("Hauts faits, chiffres absurdes et certificat officiel.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.tertiary)
+            }
+            .padding(16)
+            .background(.quaternary.opacity(0.3), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Graphiques

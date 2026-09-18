@@ -22,6 +22,7 @@ export const navLinks: readonly NavLink[] = [
   { href: "#live", label: "Live Activity" },
   { href: "#watch", label: "Watch" },
   { href: "#suivi", label: "Suivi" },
+  { href: "#palmares", label: "Palmarès" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -115,6 +116,11 @@ export const questions: readonly Question[] = [
     question: "Faut-il un abonnement musique ?",
     answer:
       "Non. L'app ne diffuse aucun catalogue : elle pilote la lecture de votre bibliothèque ou de Musique, et ses trois ambiances sonores sont embarquées dans l'app. Les commandes fonctionnent même si vous refusez l'accès à la bibliothèque — seul l'affichage du titre en cours a besoin de cette autorisation.",
+  },
+  {
+    question: "Une ambiance « Réunion », vraiment ?",
+    answer:
+      "Vraiment. Un brouhaha de bureau avec quelques frappes de clavier, à lancer depuis les toilettes du travail. Comme les autres ambiances, elle est synthétisée et embarquée dans l'app. Ce que vous en faites ne nous regarde pas.",
   },
   {
     question: "Les conseils remplacent-ils un médecin ?",
@@ -253,9 +259,11 @@ export const soundscapes: readonly SoundscapeInfo[] = [
   { title: "Pluie", detail: "Couvre les bruits alentour" },
   { title: "Bruit brun", detail: "Grave et régulier, très masquant" },
   { title: "Souffle", detail: "Respire sur dix secondes" },
+  { title: "Réunion", detail: "Brouhaha de bureau et clavier" },
 ];
 
 export const soundPoints: readonly string[] = [
+  "Une ambiance « Réunion » — brouhaha et clavier — pour brouiller les pistes",
   "Les ambiances se superposent à votre musique au lieu de la couper",
   "Elles continuent quand l'écran se verrouille",
   "Lecture, pause et piste suivante de votre bibliothèque depuis l'app",
@@ -298,4 +306,42 @@ export const trackingPoints: readonly string[] = [
   "Confort noté de 1 à 5 et note libre en fin de visite",
   "Répartition maison / travail / dehors",
   "Export CSV complet, et suppression immédiate",
+];
+
+// --- Inutile, donc indispensable -------------------------------------------
+
+export interface Badge {
+  readonly title: string;
+  readonly detail: string;
+}
+
+export const badges: readonly Badge[] = [
+  { title: "Éclair", detail: "Une visite en moins de 45 secondes" },
+  { title: "Marathonien", detail: "Plus de vingt minutes. Respect." },
+  { title: "Noctambule", detail: "Une visite entre 2 h et 5 h" },
+  { title: "Globe-trotteur", detail: "Maison, travail et dehors le même jour" },
+  { title: "Horloge suisse", detail: "Trois jours de suite à la même heure" },
+  { title: "Le Penseur", detail: "Un quart d'heure, et un confort de 5 sur 5" },
+];
+
+export const badgeCount = 14;
+
+export interface Equivalence {
+  readonly value: string;
+  readonly label: string;
+}
+
+/** Exemple de conversion, pour un historique de quelques heures. */
+export const equivalences: readonly Equivalence[] = [
+  { value: "7", label: "épisodes de série regardés assis" },
+  { value: "45", label: "chansons écoutées en entier" },
+  { value: "1,38", label: "trajets Paris – Lyon en TGV" },
+  { value: "13,3 km", label: "parcourus si vous aviez marché" },
+];
+
+export const funPoints: readonly string[] = [
+  "Un titre honorifique qui évolue, d'« Anonyme des toilettes » à « Légende vivante »",
+  "Un certificat officiel à partager, sans aucune valeur légale",
+  "Un mode trône caché : appuyez longuement sur le chronomètre",
+  "Quatorze hauts faits à débloquer, calculés sur vos vraies visites",
 ];
