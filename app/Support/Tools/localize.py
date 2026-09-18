@@ -447,6 +447,81 @@ TRANSLATIONS.update({
         "%@ on average: you come not only for the function, but for the thinking. Mostly around %@.",
 })
 
+TRANSLATIONS.update({
+    # --- Hauts faits secrets, rang suprême ---
+    "Le Coup de minuit": "The Stroke of Midnight",
+    "Une visite dans les cinq premières minutes d'un jour nouveau.":
+        "A visit within the first five minutes of a new day.",
+    "Réveillon": "New Year's Eve",
+    "Une visite le 31 décembre ou le 1er janvier. Bonne année.":
+        "A visit on 31 December or 1 January. Happy new year.",
+    "3,14": "3.14",
+    "Une visite de 3 minutes et 14 secondes. Au hasard, évidemment.":
+        "A visit of exactly 3 minutes and 14 seconds. By chance, obviously.",
+    "Triplé": "Hat-trick",
+    "Trois visites en moins d'une heure. Tout va bien ?":
+        "Three visits in under an hour. Everything all right?",
+    "Jour sans fin": "Groundhog Day",
+    "Deux visites de durée rigoureusement identique, à la seconde.":
+        "Two visits of rigorously identical duration, to the second.",
+    "Secret": "Secret",
+    "À découvrir par accident.": "To be discovered by accident.",
+    "Divinité des latrines": "Deity of the Latrines",
+
+    # --- Haïku ---
+    "Haïku de la visite": "Haiku of the visit",
+    "Composé d'après la durée, l'heure et le lieu. Personne ne l'avait demandé.":
+        "Composed from the duration, the hour and the place. Nobody asked for it.",
+    "Le carrelage froid": "The cold tiled floor",
+    "La porte se referme": "The door swings shut again",
+    "Un souffle retenu": "A held-in breath waits",
+    "Lumière blafarde": "Wan and pallid light",
+    "Le silence s'installe": "Silence settles in for good",
+    "Loin du bruit du monde": "Far from the world's noise",
+    "l'affaire est réglée en un souffle": "the matter is settled in a breath",
+    "le devoir accompli sans attendre": "duty discharged without waiting",
+    "une parenthèse à peine ouverte": "a parenthesis barely opened",
+    "le temps s'étire paisiblement": "time stretches out peacefully here",
+    "les minutes coulent sans hâte": "the minutes flow without hurry",
+    "un moment volé à la journée": "a moment stolen from the day",
+    "le temps semble avoir renoncé": "time itself appears to have given up",
+    "les civilisations s'effondrent": "whole civilisations rise and fall",
+    "on médite sur le sens des choses": "one ponders the meaning of things",
+    "la journée peut commencer": "the day may now begin",
+    "le café attendra": "the coffee will wait",
+    "l'aube est complice": "dawn is an accomplice",
+    "le déjeuner refroidit": "lunch is going cold",
+    "la pause s'achève": "the break is ending",
+    "midi sonne ailleurs": "noon rings elsewhere",
+    "le travail patiente": "the work can wait",
+    "l'après-midi s'allonge": "the afternoon drags",
+    "personne n'a remarqué": "nobody noticed a thing",
+    "la nuit tombe dehors": "night falls outside",
+    "le canapé appelle": "the sofa is calling",
+    "le jour se referme": "the day folds itself shut",
+    "les étoiles témoignent": "the stars bear witness",
+    "nul ne saura jamais": "no one will ever know",
+    "la lune est discrète": "the moon is discreet",
+
+    # --- Couverture sonore et abstinence ---
+    "Couverture sonore": "Sound cover",
+    "Couper la couverture": "Stop the cover",
+    "Dernière visite il y a moins d'une heure. Le rythme est soutenu.":
+        "Last visit less than an hour ago. Brisk pace.",
+    "Vous tenez depuis %@. Rien d'anormal.": "You have held out for %@. Nothing unusual.",
+    "Vous tenez depuis %@. Le corps travaille en silence.":
+        "You have held out for %@. The body is working quietly.",
+    "Vous tenez depuis %@. Buvez un verre d'eau et marchez un peu.":
+        "You have held out for %@. Drink a glass of water and walk a little.",
+    "Vous tenez depuis %@. Au-delà de trois jours, un avis médical vaut mieux qu'un haut fait.":
+        "You have held out for %@. Beyond three days, medical advice beats an achievement.",
+
+    # --- Widget météo ---
+    "Météo intestinale": "Gut forecast",
+    "Le bulletin du jour, calculé sur votre semaine.":
+        "Today's bulletin, computed from your week.",
+})
+
 
 def escape(texte: str) -> str:
     return texte.replace("\\", "\\\\").replace('"', '\\"')

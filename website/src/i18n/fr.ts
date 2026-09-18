@@ -200,6 +200,7 @@ export const fr = {
     trackSubtitle: "Depuis votre bibliothèque",
     points: [
       "Une ambiance « Réunion » — brouhaha et clavier — pour brouiller les pistes",
+      "Une couverture sonore en un geste : la Réunion, à plein volume",
       "Les ambiances se superposent à votre musique au lieu de la couper",
       "Elles continuent quand l'écran se verrouille",
       "Lecture, pause et piste suivante de votre bibliothèque depuis l'app",
@@ -272,7 +273,9 @@ export const fr = {
     body: "14 hauts faits calculés sur vos vraies visites, des équivalences rigoureusement absurdes, un titre honorifique et un certificat à faire circuler auprès de gens qui ne l'ont pas demandé.",
     badgesAlt: "Exemples de hauts faits à débloquer",
     points: [
-      "Un titre honorifique qui évolue, d'« Anonyme des toilettes » à « Légende vivante »",
+      "Un titre honorifique qui évolue, d'« Anonyme des toilettes » à « Divinité des latrines »",
+      "Cinq hauts faits secrets, qui ne se dévoilent qu'au déblocage",
+      "Un haïku composé à la fin de chaque visite, d'après sa durée et son heure",
       "Une fanfare et un bandeau quand un haut fait tombe",
       "Un certificat officiel à partager, sans aucune valeur légale",
       "Un mode trône caché : appuyez longuement sur le chronomètre",
@@ -286,6 +289,11 @@ export const fr = {
       { title: "Horloge suisse", detail: "Trois jours de suite à la même heure" },
       { title: "Le Penseur", detail: "Un quart d'heure, et un confort de 5 sur 5" },
     ],
+    haiku: {
+      title: "Haïku de la visite",
+      lines: ["Le carrelage froid", "le temps s'étire paisiblement", "le café attendra"],
+      foot: "Composé d'après la durée, l'heure et le lieu. Personne ne l'avait demandé.",
+    },
     absurdTitle: "Votre temps, en unités plus parlantes",
     absurdFoot: "Exemple pour quelques heures d'historique.",
     equivalences: [
@@ -307,6 +315,7 @@ export const fr = {
       "Pression, risque d'averse, visibilité et vent — aucun sens, une vraie méthode",
       "Un profil déduit de vos habitudes, du Sprinteur du matin à l'Ermite de la nuit",
       "Une prévision de votre prochaine visite, avec une fiabilité honnêtement basse",
+      "Un widget d'écran d'accueil, pour consulter le bulletin sans ouvrir l'app",
     ],
     forecast: {
       condition: "Variable",
@@ -361,6 +370,10 @@ export const fr = {
       {
         question: "Puis-je récupérer mes données ?",
         answer: "Un export CSV est disponible dans les réglages : date de début, date de fin, durée, type, lieu, confort, appareil et note.",
+      },
+      {
+        question: "Un haïku, sérieusement ?",
+        answer: "Sérieusement. Trois vers composés à la fin de chaque visite, choisis d'après sa durée, son heure et son lieu — donc toujours les mêmes pour un même passage. Trente vers en stock, dans les deux langues. C'est la fonction la plus inutile de l'app, et elle y reste.",
       },
       {
         question: "C'est sérieux, ce truc ?",

@@ -78,14 +78,16 @@ struct TrophyView: View {
             LazyVGrid(columns: Array(repeating: GridItem(spacing: 12), count: 2), spacing: 12) {
                 ForEach(Achievement.allCases) { achievement in
                     let isUnlocked = unlocked.contains(achievement)
+                    // Un haut fait secret ne se dévoile qu'une fois obtenu.
+                    let masque = achievement.isSecret && !isUnlocked
                     VStack(alignment: .leading, spacing: 6) {
-                        Image(systemName: isUnlocked ? achievement.symbol : "lock.fill")
+                        Image(systemName: isUnlocked ? achievement.symbol : (masque ? "questionmark.circle.fill" : "lock.fill"))
                             .font(.title3)
                             .foregroundStyle(isUnlocked ? WCTheme.warn : Color.secondary)
-                        Text(achievement.title)
+                        Text(masque ? "Secret" : achievement.title)
                             .font(.subheadline.weight(.semibold))
                             .foregroundStyle(isUnlocked ? .primary : .secondary)
-                        Text(achievement.detail)
+                        Text(masque ? "À découvrir par accident." : achievement.detail)
                             .font(.caption2)
                             .foregroundStyle(.secondary)
                             .lineLimit(3, reservesSpace: true)

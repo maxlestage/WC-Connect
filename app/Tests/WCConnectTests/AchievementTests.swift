@@ -150,6 +150,63 @@ final class AchievementTests: XCTestCase {
         XCTAssertFalse(isUnlocked(.bureauDiscret, Array(work.dropLast())))
     }
 
+    // MARK: - Hauts faits secrets
+
+    func testCoupDeMinuit() {
+        XCTAssertTrue(isUnlocked(.coupDeMinuit, [session(day: 3, hour: 0, minute: 2)]))
+        XCTAssertFalse(isUnlocked(.coupDeMinuit, [session(day: 3, hour: 0, minute: 6)]))
+        XCTAssertFalse(isUnlocked(.coupDeMinuit, [session(day: 3, hour: 1, minute: 0)]))
+    }
+
+    func testReveillon() {
+        let saintSylvestre = calendar.date(from: DateComponents(year: 2026, month: 12, day: 31, hour: 22)) ?? Date()
+        let premierJanvier = calendar.date(from: DateComponents(year: 2027, month: 1, day: 1, hour: 2)) ?? Date()
+        let banal = calendar.date(from: DateComponents(year: 2026, month: 12, day: 30, hour: 22)) ?? Date()
+
+        for date in [saintSylvestre, premierJanvier] {
+            let visite = ToiletSession(startedAt: date, endedAt: date.addingTimeInterval(240))
+            XCTAssertTrue(isUnlocked(.reveillon, [visite]))
+        }
+        let ordinaire = ToiletSession(startedAt: banal, endedAt: banal.addingTimeInterval(240))
+        XCTAssertFalse(isUnlocked(.reveillon, [ordinaire]))
+    }
+
+    func testNombrePi() {
+        XCTAssertTrue(isUnlocked(.nombrePi, [session(day: 3, seconds: 194)]))
+        XCTAssertFalse(isUnlocked(.nombrePi, [session(day: 3, seconds: 195)]))
+    }
+
+    func testTriple() {
+        let serree = [
+            session(day: 4, hour: 9, minute: 0),
+            session(day: 4, hour: 9, minute: 20),
+            session(day: 4, hour: 9, minute: 50)
+        ]
+        XCTAssertTrue(isUnlocked(.triple, serree))
+
+        let etalee = [
+            session(day: 4, hour: 9, minute: 0),
+            session(day: 4, hour: 10, minute: 30),
+            session(day: 4, hour: 12, minute: 0)
+        ]
+        XCTAssertFalse(isUnlocked(.triple, etalee))
+    }
+
+    func testJourSansFin() {
+        let jumelles = [session(day: 5, hour: 8, seconds: 231), session(day: 5, hour: 18, seconds: 231)]
+        XCTAssertTrue(isUnlocked(.jourSansFin, jumelles))
+
+        let distinctes = [session(day: 5, hour: 8, seconds: 231), session(day: 5, hour: 18, seconds: 232)]
+        XCTAssertFalse(isUnlocked(.jourSansFin, distinctes))
+    }
+
+    func testLesSecretsSontMarquesCommeTels() {
+        let secrets = Achievement.allCases.filter(\.isSecret)
+        XCTAssertEqual(secrets.count, 5)
+        XCTAssertFalse(Achievement.debut.isSecret)
+        XCTAssertTrue(Achievement.nombrePi.isSecret)
+    }
+
     func testUnlockedListMatchesIndividualChecks() {
         let sessions = [session(day: 1, seconds: 30), session(day: 1, hour: 3)]
         let list = AchievementEngine.unlocked(sessions: sessions, calendar: calendar)
