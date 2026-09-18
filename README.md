@@ -17,7 +17,7 @@ Tout reste sur l'appareil : pas de compte, pas de serveur, pas de réseau.
 | **Palmarès** | 14 hauts faits, équivalences absurdes, titre honorifique et certificat partageable |
 | **Météo intestinale** | Bulletin calculé sur la semaine, profil, prévision de la prochaine visite |
 | **Siri** | « Je vais aux toilettes », « J'ai fini » via App Shortcuts |
-| **Site** | `website/`, React 18 + TypeScript (Vite), servi par Express, déployable sur Heroku |
+| **Site** | `website/`, React 18 + TypeScript (Vite), **entièrement statique** : aucun serveur |
 
 ## Structure du dépôt
 
@@ -164,17 +164,17 @@ python3 app/Support/Tools/make_icon.py
 
 ## Site de présentation
 
-Application **React 18 + TypeScript** (Vite) servie par un petit serveur
-**Express** écrit lui aussi en TypeScript, prête à être déployée sur **Heroku**.
+Application **React 18 + TypeScript** construite par **Vite** en fichiers
+statiques. Il n'y a **aucun serveur** : ni Node à l'exécution, ni conteneur, ni
+dyno. Un hébergeur de fichiers suffit.
 
 ```
 package.json          racine de l'espace de travail npm (workspaces)
-Procfile              web: node website/server-dist/server.js
 website/
   index.html          point d'entrée Vite
   src/                composants React, hooks, contenu typé, styles
-  server/server.ts    serveur Express (fichiers statiques + repli SPA)
-  tsconfig*.json      client, configuration Vite et serveur
+  tsconfig*.json      client et configuration Vite
+  dist/               résultat de la construction (non versionné)
 ```
 
 ### En local
@@ -182,114 +182,55 @@ website/
 ```bash
 npm install            # à la racine du dépôt (workspaces npm)
 npm run dev            # serveur de développement Vite, http://localhost:5173
-npm run typecheck      # TypeScript strict, client et configuration
-npm run build          # dist/ (client) + server-dist/ (serveur)
-npm start              # sert le build sur http://localhost:3000
+npm run typecheck      # TypeScript strict
+npm run build          # écrit website/dist/
+npm run preview        # relit le dossier construit
 ```
 
-### Déploiement sur Heroku depuis un téléphone (sans ordinateur)
+### Deux variables de construction
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/maxlestage/WC-Connect)
+| Variable | Rôle |
+|---|---|
+| `VITE_BASE` | sous-chemin de publication : `/WC-Connect/` sur GitHub Pages, `/` sur un domaine dédié |
+| `VITE_SITE_URL` | origine publique, injectée dans les balises Open Graph — elles exigent des URL absolues, et sans serveur c'est à la construction que ça se décide |
 
-Tout se fait dans le navigateur du téléphone, sans ligne de commande :
+### Publication, depuis un téléphone et sans serveur
 
-> Le bouton lit `app.json` par une URL publique : il ne fonctionne qu'avec un
-> dépôt public. Si vous rendez le dépôt privé, passez par « Dépôt privé »
-> ci-dessous — le déploiement depuis un téléphone reste possible, par une
-> autre porte.
+**GitHub Pages, automatique.** Le workflow `.github/workflows/pages.yml`
+construit et publie à chaque commit sur `master`. Une seule chose à faire, une
+fois, depuis le navigateur du téléphone : **Settings → Pages → Source →
+GitHub Actions**. Le site vit ensuite sur
+`https://<compte>.github.io/WC-Connect/` et se met à jour tout seul.
 
-1. **Appuyez sur le bouton ci-dessus.** Heroku lit `app.json` à la racine du
-   dépôt et prépare l'application tout seul.
-2. **Connectez-vous à Heroku** (ou créez un compte). Heroku n'a plus d'offre
-   gratuite : il faut une carte et un dyno Eco, environ 5 $ par mois pour
-   toutes vos applications.
-3. **Choisissez un nom** d'application et une région, puis **Deploy app**.
-   La construction dure une à deux minutes.
-4. **View** ouvre le site. C'est fini.
+> GitHub Pages sur un dépôt privé demande une offre payante. Sur un dépôt
+> privé et gratuit, préférez Cloudflare Pages ou Netlify ci-dessous.
 
-### Dépôt privé
+**Cloudflare Pages ou Netlify.** Connectez le dépôt depuis leur interface
+(dépôts privés acceptés, offres gratuites), avec :
 
-WC Connect n'est pas un projet open source : le site ne renvoie vers aucun
-dépôt, et le code n'est sous aucune licence ouverte. Pour rendre le dépôt privé
-depuis un téléphone : **GitHub → dépôt → Settings → General → Danger Zone →
-Change repository visibility → Make private**.
+- commande de construction : `npm ci && npm run build`
+- dossier publié : `website/dist`
+- variable `VITE_SITE_URL` : l'URL que l'hébergeur vous attribue
 
-Les deux hébergeurs s'en accommodent, car ils lisent le code par une connexion
-GitHub authentifiée et non par une URL publique :
+**Render.** `render.yaml` décrit déjà un site statique : *New → Blueprint*,
+puis *Apply*.
 
-- **Heroku** : *New → Create new app*, puis dans l'app *Deploy → Deployment
-  method → GitHub → Connect to GitHub*, choisissez `WC-Connect` et la branche,
-  enfin *Deploy Branch*. Tout se fait dans le navigateur du téléphone.
-- **Render** : *New → Blueprint*, connectez le dépôt privé, puis *Apply*.
-
-Sur un dépôt privé, les minutes GitHub Actions sont décomptées du quota
-gratuit (2 000 minutes par mois) ; le workflow du site consomme moins d'une
-minute par commit.
-
-### Redéployer à chaque modification, toujours depuis le téléphone
-
-Dans le tableau de bord Heroku : **votre app → Deploy → Deployment method →
-GitHub → Connect to GitHub**, choisissez le dépôt `WC-Connect` et la branche,
-puis **Enable Automatic Deploys**. Chaque commit poussé sur cette branche
-redéploie le site tout seul.
-
-À partir de là, le cycle complet tient dans le téléphone : vous demandez une
-modification à Claude Code depuis l'application mobile, le commit part sur
-GitHub, GitHub Actions vérifie que le site se construit (pastille verte ou
-rouge sur le commit, visible dans l'app GitHub), et Heroku met le site en ligne.
-
-En cas de souci, les journaux se lisent aussi depuis le navigateur :
-**votre app → More → View logs**.
-
-### Variante gratuite : Render, aussi depuis le téléphone
-
-Render lit `render.yaml` (offre gratuite, sonde sur `/healthz`, déploiement
-automatique à chaque commit) :
-
-1. Ouvrez [dashboard.render.com](https://dashboard.render.com) depuis le
-   téléphone, puis **New → Blueprint**.
-2. Connectez le dépôt `WC-Connect` et choisissez la branche.
-3. **Apply** : Render construit et met le site en ligne, puis redéploie à
-   chaque commit.
-
-### Et en ligne de commande, si un ordinateur repasse par là
-
-```bash
-heroku create mon-app-wc-connect
-heroku buildpacks:set heroku/nodejs
-git push heroku HEAD:main
-heroku open
-```
-
-### Ce que fait Heroku à la construction
-
-`npm ci` à la racine, puis `heroku-postbuild`
-(`npm run build --workspace website`), qui produit le client dans
-`website/dist/` et le serveur dans `website/server-dist/`. Heroku retire
-ensuite les dépendances de développement (Vite, TypeScript) — le serveur n'a
-besoin que d'Express et de `compression`. Le `Procfile` lance
-`node website/server-dist/server.js`, qui écoute sur `$PORT`.
-
-Le serveur sert les fichiers versionnés de `dist/assets` en cache long, renvoie
-`index.html` pour toute autre route et expose `/healthz` pour les sondes de
-disponibilité.
+Dans tous les cas, `website/dist` est un dossier de fichiers : il se dépose
+tel quel sur n'importe quel hébergement, y compris à la main.
 
 ### Aperçus de partage
 
-Les balises Open Graph exigent des URL absolues, alors que le domaine n'est
-connu qu'au déploiement : le serveur remplace le marqueur `__SITE_URL__` de
-`index.html` par l'origine réellement servie (en tenant compte du proxy
-d'Heroku ou de Render). Un en-tête `Host` invraisemblable est ignoré, et la
-variable d'environnement `SITE_URL` permet de forcer l'origine si vous
-utilisez un nom de domaine personnalisé.
-
-L'image de partage `website/public/social-card.png` (1200 × 630) est produite
-à partir du gabarit `website/scripts/social-card.html` :
+L'image `website/public/social-card.png` (1200 × 630) est produite à partir du
+gabarit `website/scripts/social-card.html` :
 
 ```bash
 npx playwright screenshot --viewport-size=1200,630 \
   website/scripts/social-card.html website/public/social-card.png
 ```
+
+Les balises Open Graph contiennent un marqueur `__SITE_URL__` que Vite
+remplace à la construction par `VITE_SITE_URL`. La CI vérifie qu'aucun
+marqueur ne subsiste et que l'URL de l'image est bien absolue.
 
 ## Vie privée
 
