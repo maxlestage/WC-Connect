@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { en } from "./en";
 import { fr, type Dictionary } from "./fr";
@@ -11,7 +11,6 @@ const STORAGE_KEY = "wc-connect-langue";
 interface LanguageContextValue {
   readonly language: Language;
   readonly t: Dictionary;
-  readonly toggle: () => void;
   readonly setLanguage: (language: Language) => void;
 }
 
@@ -46,13 +45,9 @@ export function LanguageProvider({ children }: { readonly children: ReactNode })
     }
   }, [language, dictionary]);
 
-  const toggle = useCallback(() => {
-    setLanguage((current) => (current === "fr" ? "en" : "fr"));
-  }, []);
-
   const value = useMemo<LanguageContextValue>(
-    () => ({ language, t: dictionary, toggle, setLanguage }),
-    [language, dictionary, toggle],
+    () => ({ language, t: dictionary, setLanguage }),
+    [language, dictionary],
   );
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
@@ -71,8 +66,8 @@ export function useT(): Dictionary {
   return useLanguageContext().t;
 }
 
-/** Langue courante et bascule, pour le bouton de la barre de navigation. */
+/** Langue courante et choix, pour le sélecteur de la barre et du menu. */
 export function useLanguage(): Omit<LanguageContextValue, "t"> {
-  const { language, toggle, setLanguage } = useLanguageContext();
-  return { language, toggle, setLanguage };
+  const { language, setLanguage } = useLanguageContext();
+  return { language, setLanguage };
 }

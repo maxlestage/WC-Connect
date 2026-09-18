@@ -7,13 +7,14 @@ export const fr = {
   code: "fr",
   htmlLang: "fr",
   documentTitle: "WC Connect — le suivi de vos pauses, sur iPhone et Apple Watch",
-  switchLabel: "Passer le site en anglais",
-  switchTo: "EN",
 
   nav: {
     label: "Navigation principale",
     skip: "Aller au contenu",
     cta: "Disponibilité",
+    open: "Ouvrir le menu",
+    close: "Fermer le menu",
+    languageLabel: "Langue",
     links: [
       { href: "#fonctions", label: "Fonctions" },
       { href: "#aide", label: "Aide" },
@@ -26,6 +27,20 @@ export const fr = {
       { href: "#meteo", label: "Météo" },
       { href: "#faq", label: "FAQ" },
     ],
+  },
+
+  /* Chaque langue est nommée dans sa propre langue, dans les deux
+     dictionnaires : c'est l'usage, et c'est ce qui permet de revenir en
+     arrière quand on est tombé sur la mauvaise. */
+  languages: { fr: "Français", en: "English" },
+  languageCodes: { fr: "FR", en: "EN" },
+
+  theme: {
+    label: "Thème",
+    light: "Clair",
+    dark: "Sombre",
+    auto: "Automatique",
+    hint: "« Automatique » suit le réglage de votre appareil, y compris son passage au sombre le soir.",
   },
 
   hero: {

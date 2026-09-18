@@ -285,6 +285,8 @@ package.json          racine de l'espace de travail npm (workspaces)
 website/
   index.html          point d'entrée Vite
   src/i18n/           dictionnaires fr.ts et en.ts, contexte de langue
+  src/theme/          thème clair / sombre / automatique, mémorisé
+  scripts/            contrôles Playwright et cohérence du thème sombre
   src/components/     sections et maquettes
   src/hooks/          chronomètre de démo, respiration, apparitions
   tsconfig*.json      client et configuration Vite
@@ -294,12 +296,97 @@ website/
 ### Bilingue
 
 Le site s'affiche en **français ou en anglais**. La langue est déduite du
-navigateur, modifiable par le bouton FR/EN de la barre de navigation, et
-mémorisée. `document.documentElement.lang` et le titre de la page suivent.
+navigateur, puis choisie explicitement — deux boutons, chaque langue nommée
+dans sa propre langue — dans le menu sur téléphone et dans la barre sur
+ordinateur (en codes `FR` / `EN`, le nom complet restant lu par les lecteurs
+d'écran). Le choix est mémorisé ; `document.documentElement.lang` et le titre
+de la page suivent.
+
+Deux choix plutôt qu'une bascule : un bouton portant le nom de l'autre langue
+oblige à deviner ce qu'il fait, et ne dit pas où l'on est.
 
 `src/i18n/fr.ts` est la source de vérité : le type `Dictionary` en est déduit,
 donc `en.ts` doit couvrir exactement les mêmes clés — une traduction oubliée
 fait échouer la vérification des types, donc la CI.
+
+### Thème clair, sombre ou automatique
+
+Trois choix explicites, dans le menu sur téléphone et dans la barre sur
+ordinateur (en icônes, le nom restant donné par l'infobulle et le libellé
+accessible).
+
+- `src/theme/` porte le choix, le mémorise dans `localStorage` et pose
+  `data-theme="light"` ou `"dark"` sur `<html>`. En **automatique**, aucun
+  attribut n'est posé : la feuille de style retombe sur
+  `prefers-color-scheme`, et l'appareil garde la main — y compris s'il bascule
+  au sombre en cours de visite (`matchMedia` est écouté).
+- Le sombre est donc défini deux fois dans `styles.css` : sous
+  `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) }`
+  pour l'automatique, et sous `:root[data-theme="dark"]` pour le choix
+  explicite. **Les deux blocs doivent rester identiques** — une requête de
+  média et un sélecteur ne se combinent pas en CSS.
+- `color-scheme` suit le choix, pour que les champs et les ascenseurs du
+  navigateur s'accordent à la page.
+- Un petit script en tête d'`index.html` applique l'attribut **avant le
+  premier rendu** : sans lui, un thème clair choisi sur un appareil réglé en
+  sombre provoquerait un éclair sombre au chargement.
+
+### Maquettes d'appareils
+
+Le téléphone et la montre du hero sont des **images d'appareils** : chacun
+porte `role="img"` et un texte de remplacement. Leur contenu est donc exprimé
+en `em`, à partir d'une échelle dérivée de la largeur du boîtier
+(`--taille`) :
+
+- tout grandit et rétrécit ensemble, et une **taille de texte système plus
+  grande ne fait plus déborder l'écran de son cadre** — c'était le défaut
+  visible sur téléphone ;
+- changer une maquette de taille, c'est changer `--taille`, rien d'autre.
+
+La montre n'a **pas de hauteur imposée** : elle suit son contenu, ce qui
+empêche le cadran et le bouton de sortir du boîtier. Elle est **dans le flux**,
+à droite du téléphone, et son chevauchement est une marge négative d'un cadre
+de largeur : il vaut toujours la même chose. Positionnée en absolu au bord du
+conteneur, elle mordait sur la carte de la Live Activity dès que la colonne se
+resserrait.
+
+`npm run check:hero` vérifie, à onze largeurs et trois tailles de texte du
+navigateur (16, 20 et 24 px, émulées par CDP comme le fait un téléphone), que
+la montre ne recouvre ni la carte ni la barre de progression, que son contenu
+tient dans son boîtier, que la carte tient dans l'écran du téléphone, et que
+la page ne déborde pas.
+
+### Grilles : toujours `minmax(0, 1fr)`
+
+Un `1fr` nu vaut `minmax(auto, 1fr)` : son minimum est la largeur du contenu,
+donc la colonne **refuse de rétrécir** et pousse la page. C'est la cause racine
+des débordements horizontaux de ce site — ils réapparaissaient à chaque
+nouveau contenu un peu large, ou dès que la taille de texte grandissait. Toutes
+les grilles à nombre de colonnes fixe utilisent désormais `minmax(0, 1fr)`.
+
+De même, les seuils de la barre de navigation sont en **`em`** et non en
+pixels : dans une requête de média, `em` suit la taille de texte par défaut du
+navigateur. En pixels, le seuil laissait les liens en ligne alors qu'ils
+étaient devenus une fois et demie plus larges.
+
+### Menu burger
+
+Sous 76,25em (1220 px à taille de texte normale), les dix liens ne tiennent
+plus sur une ligne avec les deux sélecteurs et le bouton d'appel : ils passent dans un panneau ouvert par un
+bouton burger, qui porte aussi le thème, la langue et l'appel. Rien n'est
+perdu, et la barre ne peut plus élargir la page — c'est ce débordement qui
+était le défaut le plus visible du site.
+
+Au-delà de 1160 px, `.wrap` plafonne à 1120 px : **la place disponible dans la
+barre n'augmente plus**. Ce qui tient à 1221 px tient donc à n'importe quelle
+largeur au-dessus, et les liens en ligne sont écrits compacts d'emblée
+(0,84 rem, 12 px de gouttière) plutôt que resserrés par une règle à borne
+haute — une telle borne rouvrait le débordement au-delà d'elle.
+
+`npm run check:overflow` mesure seize largeurs, dans les deux langues, et
+chacune **deux fois** : menu fermé puis menu ouvert. Le panneau est un
+candidat au débordement à part entière, et les largeurs autour de 1220 px sont
+celles où la barre est la plus serrée.
 
 ### En local
 

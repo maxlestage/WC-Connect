@@ -5,13 +5,14 @@ export const en: Dictionary = {
   code: "en",
   htmlLang: "en",
   documentTitle: "WC Connect — track your breaks, on iPhone and Apple Watch",
-  switchLabel: "Switch the site to French",
-  switchTo: "FR",
 
   nav: {
     label: "Main navigation",
     skip: "Skip to content",
     cta: "Availability",
+    open: "Open the menu",
+    close: "Close the menu",
+    languageLabel: "Language",
     links: [
       { href: "#fonctions", label: "Features" },
       { href: "#aide", label: "Help" },
@@ -24,6 +25,19 @@ export const en: Dictionary = {
       { href: "#meteo", label: "Forecast" },
       { href: "#faq", label: "FAQ" },
     ],
+  },
+
+  /* Same in both dictionaries: every language names itself in its own
+     language. Intentional, not a missing translation. */
+  languages: { fr: "Français", en: "English" },
+  languageCodes: { fr: "FR", en: "EN" },
+
+  theme: {
+    label: "Theme",
+    light: "Light",
+    dark: "Dark",
+    auto: "Automatic",
+    hint: "“Automatic” follows your device setting, including its switch to dark in the evening.",
   },
 
   hero: {
