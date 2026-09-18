@@ -1,0 +1,89 @@
+name: App
+
+# Compile et teste l'application iOS/watchOS sur un runner macOS : c'est la
+# seule vérification possible du code Swift, l'environnement de développement
+# n'ayant pas de toolchain Xcode.
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "app/**"
+      - ".github/workflows/app.yml"
+  pull_request:
+    paths:
+      - "app/**"
+      - ".github/workflows/app.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: app-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  swift:
+    runs-on: macos-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Environnement
+        run: |
+          sw_vers
+          xcodebuild -version
+          swift --version
+
+      - name: Installer XcodeGen
+        run: brew install xcodegen
+
+      - name: Générer le projet Xcode
+        working-directory: app
+        run: xcodegen generate --spec project.yml
+
+      - name: Choisir les simulateurs
+        id: simulateurs
+        run: |
+          set -euo pipefail
+          devices=$(xcrun simctl list devices available -j)
+          iphone=$(echo "$devices" | jq -r '[.devices[][] | select(.name | startswith("iPhone"))] | last | .udid')
+          watch=$(echo "$devices" | jq -r '[.devices[][] | select(.name | startswith("Apple Watch"))] | last | .udid')
+          echo "iphone=$iphone" >> "$GITHUB_OUTPUT"
+          echo "watch=$watch" >> "$GITHUB_OUTPUT"
+          echo "iPhone : $iphone"
+          echo "Apple Watch : $watch"
+
+      - name: Tests unitaires (logique partagée)
+        id: tests
+        working-directory: app
+        run: |
+          ../.github/scripts/xcodebuild.sh tests.log test \
+            -project WCConnect.xcodeproj \
+            -scheme WCConnectTests \
+            -destination "id=${{ steps.simulateurs.outputs.iphone }}"
+
+      - name: Construction de l'app iPhone (et de ses extensions)
+        if: always()
+        working-directory: app
+        run: |
+          ../.github/scripts/xcodebuild.sh iphone.log build \
+            -project WCConnect.xcodeproj \
+            -scheme WCConnect \
+            -destination "id=${{ steps.simulateurs.outputs.iphone }}"
+
+      - name: Construction de l'app Apple Watch
+        if: always()
+        working-directory: app
+        run: |
+          ../.github/scripts/xcodebuild.sh watch.log build \
+            -project WCConnect.xcodeproj \
+            -scheme WCConnectWatch \
+            -destination "id=${{ steps.simulateurs.outputs.watch }}"
+
+      - name: Journaux complets
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: journaux-xcodebuild
+          path: app/*.log
+          if-no-files-found: ignore
+          retention-days: 7

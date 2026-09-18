@@ -143,3 +143,12 @@ schemes:
         WCConnectWatchWidgets: all
     run:
       config: Debug
+
+  WCConnectTests:
+    build:
+      targets:
+        WCConnectTests: [test]
+    test:
+      config: Debug
+      targets:
+        - WCConnectTests
