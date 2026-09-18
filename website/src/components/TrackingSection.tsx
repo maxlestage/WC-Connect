@@ -1,48 +1,49 @@
-import { statTiles, trackingPoints, weekBars } from "../content";
+import { useT } from "../i18n";
+import { WEEK_TODAY_INDEX, WEEK_VALUES } from "../lib/demo";
 import { Checklist } from "./Checklist";
 import { Reveal } from "./Reveal";
 
 /** Section « Suivi » : historique, statistiques et export. */
 export function TrackingSection() {
-  const highest = Math.max(...weekBars.map((bar) => bar.value), 1);
+  const t = useT();
+  const highest = Math.max(...WEEK_VALUES, 1);
 
   return (
     <section className="section" id="suivi">
       <div className="wrap split split--reverse">
         <Reveal className="split__text">
-          <p className="eyebrow">Suivi</p>
-          <h2>De quoi voir ce qui se passe vraiment</h2>
-          <p>
-            Chaque visite enregistrée alimente un historique et des statistiques lisibles : durée
-            moyenne, créneau favori, série de jours suivis. De quoi repérer une tendance — ou
-            montrer quelque chose de concret à un médecin.
-          </p>
-          <Checklist items={trackingPoints} />
+          <p className="eyebrow">{t.tracking.eyebrow}</p>
+          <h2>{t.tracking.title}</h2>
+          <p>{t.tracking.body}</p>
+          <Checklist items={t.tracking.points} />
         </Reveal>
 
         <Reveal className="split__visual">
           <figure className="chart">
-            <figcaption>Visites des 7 derniers jours</figcaption>
+            <figcaption>{t.tracking.chartTitle}</figcaption>
             <div className="chart__plot">
-              {weekBars.map((bar, index) => (
-                <div className="chart__col" key={`${bar.label}-${index}`}>
-                  <div
-                    className={`chart__bar${bar.today ? " chart__bar--today" : ""}`}
-                    style={{ height: `${(bar.value / highest) * 100}%` }}
-                    data-tooltip={`${bar.value} visite${bar.value > 1 ? "s" : ""}`}
-                    role="img"
-                    aria-label={`${bar.value} visites`}
-                  >
-                    <span className="chart__value">{bar.value}</span>
+              {WEEK_VALUES.map((value, index) => {
+                const unit = value > 1 ? t.tracking.visitMany : t.tracking.visitOne;
+                return (
+                  <div className="chart__col" key={index}>
+                    <div
+                      className={`chart__bar${index === WEEK_TODAY_INDEX ? " chart__bar--today" : ""}`}
+                      style={{ height: `${(value / highest) * 100}%` }}
+                      data-tooltip={`${value} ${unit}`}
+                      role="img"
+                      aria-label={`${value} ${unit}`}
+                    >
+                      <span className="chart__value">{value}</span>
+                    </div>
+                    <span className="chart__label">{t.tracking.days[index]}</span>
                   </div>
-                  <span className="chart__label">{bar.label}</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </figure>
 
           <div className="tiles">
-            {statTiles.map((tile) => (
+            {t.tracking.tiles.map((tile) => (
               <div className="tile" key={tile.label}>
                 <strong>{tile.value}</strong>
                 <span>{tile.label}</span>

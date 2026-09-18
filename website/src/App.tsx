@@ -14,15 +14,17 @@ import { TrackingSection } from "./components/TrackingSection";
 import { WatchSection } from "./components/WatchSection";
 import { WeatherSection } from "./components/WeatherSection";
 import { useDemoTimer } from "./hooks/useDemoTimer";
+import { useT } from "./i18n";
 
 export default function App() {
   // Un seul chronomètre pour toutes les maquettes de la page.
   const elapsed = useDemoTimer();
+  const t = useT();
 
   return (
     <>
       <a className="skip-link" href="#contenu">
-        Aller au contenu
+        {t.nav.skip}
       </a>
 
       <Nav />

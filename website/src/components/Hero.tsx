@@ -1,3 +1,4 @@
+import { useT } from "../i18n";
 import { PhoneMockup } from "./PhoneMockup";
 import { Reveal } from "./Reveal";
 import { WatchMockup } from "./WatchMockup";
@@ -6,39 +7,31 @@ interface HeroProps {
   readonly elapsed: number;
 }
 
-const facts = [
-  { value: "1 geste", label: "pour démarrer" },
-  { value: "0 donnée", label: "envoyée en ligne" },
-  { value: "2 appareils", label: "synchronisés" },
-] as const;
-
 export function Hero({ elapsed }: HeroProps) {
+  const t = useT();
+
   return (
     <section className="hero">
       <div className="wrap hero__inner">
         <Reveal className="hero__text">
-          <p className="eyebrow">iPhone · Apple Watch · Live Activity</p>
+          <p className="eyebrow">{t.hero.eyebrow}</p>
           <h1>
-            Chaque pause
+            {t.hero.titleLine1}
             <br />
-            compte vraiment.
+            {t.hero.titleLine2}
           </h1>
-          <p className="lead">
-            WC&nbsp;Connect chronomètre vos passages aux toilettes d'un seul geste, affiche le temps
-            écoulé sur l'écran verrouillé et dans la Dynamic Island, et vous laisse tout piloter
-            depuis votre poignet. Sans compte, sans serveur, sans jugement.
-          </p>
+          <p className="lead">{t.hero.lead}</p>
           <div className="hero__cta">
             <a className="btn" href="#fonctions">
-              Découvrir l'app
+              {t.hero.primary}
             </a>
             <a className="btn btn--ghost" href="#live">
-              Voir la Live Activity
+              {t.hero.secondary}
             </a>
           </div>
           <ul className="hero__facts">
-            {facts.map((fact) => (
-              <li key={fact.value}>
+            {t.hero.facts.map((fact) => (
+              <li key={fact.label}>
                 <strong>{fact.value}</strong>
                 <span>{fact.label}</span>
               </li>

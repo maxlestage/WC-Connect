@@ -1,4 +1,5 @@
-import { DEMO_GOAL_SECONDS } from "../content";
+import { useT } from "../i18n";
+import { DEMO_GOAL_SECONDS } from "../lib/demo";
 import { formatClock, progressRatio } from "../lib/format";
 
 interface WatchMockupProps {
@@ -9,15 +10,12 @@ interface WatchMockupProps {
 const CIRCUMFERENCE = 2 * Math.PI * 50;
 
 export function WatchMockup({ elapsed }: WatchMockupProps) {
+  const t = useT();
   const clock = formatClock(elapsed);
   const ratio = progressRatio(elapsed, DEMO_GOAL_SECONDS);
 
   return (
-    <div
-      className="watch"
-      role="img"
-      aria-label={`Apple Watch affichant le chronomètre WC Connect, ${clock} écoulées`}
-    >
+    <div className="watch" role="img" aria-label={`${t.hero.watchAlt} — ${clock}`}>
       <div className="watch__screen">
         <div className="ring">
           <svg viewBox="0 0 120 120">
@@ -33,10 +31,10 @@ export function WatchMockup({ elapsed }: WatchMockupProps) {
           </svg>
           <div className="ring__label">
             <span>{clock}</span>
-            <small>Maison</small>
+            <small>{t.hero.watchPlace}</small>
           </div>
         </div>
-        <div className="watch__button">Terminer</div>
+        <div className="watch__button">{t.hero.watchButton}</div>
       </div>
     </div>
   );

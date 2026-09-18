@@ -1,0 +1,385 @@
+/**
+ * Version française : c'est la source de vérité du contenu du site.
+ * Le type `Dictionary` en est déduit, ce qui force la traduction anglaise à
+ * couvrir exactement les mêmes clés.
+ */
+export const fr = {
+  code: "fr",
+  htmlLang: "fr",
+  documentTitle: "WC Connect — le suivi de vos pauses, sur iPhone et Apple Watch",
+  switchLabel: "Passer le site en anglais",
+  switchTo: "EN",
+
+  nav: {
+    label: "Navigation principale",
+    skip: "Aller au contenu",
+    cta: "Disponibilité",
+    links: [
+      { href: "#fonctions", label: "Fonctions" },
+      { href: "#aide", label: "Aide" },
+      { href: "#detente", label: "Détente" },
+      { href: "#live", label: "Live Activity" },
+      { href: "#watch", label: "Watch" },
+      { href: "#suivi", label: "Suivi" },
+      { href: "#palmares", label: "Palmarès" },
+      { href: "#meteo", label: "Météo" },
+      { href: "#faq", label: "FAQ" },
+    ],
+  },
+
+  hero: {
+    eyebrow: "iPhone · Apple Watch · Live Activity",
+    titleLine1: "Chaque pause",
+    titleLine2: "compte vraiment.",
+    lead: "WC Connect chronomètre vos passages aux toilettes d'un seul geste, affiche le temps écoulé sur l'écran verrouillé et dans la Dynamic Island, et vous laisse tout piloter depuis votre poignet. Sans compte, sans serveur, sans jugement.",
+    primary: "Découvrir l'app",
+    secondary: "Voir la Live Activity",
+    facts: [
+      { value: "1 geste", label: "pour démarrer" },
+      { value: "0 donnée", label: "envoyée en ligne" },
+      { value: "2 appareils", label: "synchronisés" },
+    ],
+    phoneAlt: "Écran verrouillé d'un iPhone affichant la Live Activity de WC Connect",
+    watchAlt: "Apple Watch affichant le chronomètre WC Connect",
+    activityLabel: "Visite en cours",
+    activityMeta: "Standard · Maison",
+    lockTime: "9:41",
+    lockDate: "mercredi 18 mars",
+    watchPlace: "Maison",
+    watchButton: "Terminer",
+  },
+
+  features: {
+    title: "Tout ce qu'il faut, rien de plus",
+    lead: "Une app qui s'ouvre, s'utilise et se referme en moins de trois secondes.",
+    cards: [
+      {
+        title: "Chronomètre d'un geste",
+        description: "Un bouton, un anneau de progression, et c'est parti. Type de visite et lieu sont mémorisés d'une fois sur l'autre.",
+      },
+      {
+        title: "Live Activity",
+        description: "Le temps écoulé reste visible sur l'écran verrouillé et dans la Dynamic Island, avec un bouton « Terminer » directement dedans.",
+      },
+      {
+        title: "Apple Watch",
+        description: "App native au poignet : démarrer, terminer, consulter l'historique et les stats, avec retour haptique.",
+      },
+      {
+        title: "Widgets & complications",
+        description: "Visites du jour sur l'écran d'accueil, chronomètre sur l'écran verrouillé et sur le cadran de la montre.",
+      },
+      {
+        title: "Quand ça coince",
+        description: "Au bout de quelques minutes, l'app propose des gestes concrets — posture, pieds surélevés, ne pas pousser en bloquant sa respiration — et dit quand il vaut mieux consulter.",
+      },
+      {
+        title: "Respiration guidée",
+        description: "Trois rythmes animés, dont un sans apnée pensé pour le trône, avec un retour haptique au poignet pour garder les yeux fermés.",
+      },
+      {
+        title: "Ambiances & musique",
+        description: "Quatre boucles sonores embarquées qui se superposent à votre musique sans l'interrompre, et les commandes de lecture de votre bibliothèque dans l'app.",
+      },
+      {
+        title: "Statistiques claires",
+        description: "Durée moyenne, créneau favori, répartition maison / travail / dehors, série de jours suivis et graphiques sur 7 jours.",
+      },
+      {
+        title: "Siri & raccourcis",
+        description: "« Dis Siri, je vais aux toilettes. » Le chronomètre démarre, même écran verrouillé, sans ouvrir l'app.",
+      },
+    ],
+  },
+
+  help: {
+    eyebrow: "Quand ça coince",
+    title: "Des gestes concrets, au moment où ça bloque",
+    body: "Au bout de quelques minutes — avant les cinq minutes à partir desquelles il vaut mieux se relever — l'app propose trois gestes applicables assis, la respiration guidée et une ambiance sonore. La carte se masque d'un geste si vous n'en voulez pas.",
+    cardAlt: "Carte de conseils affichée par l'app pendant une visite",
+    cardTitle: "Ça coince ?",
+    immediate: ["Surélevez les pieds", "Penchez-vous vers l'avant", "Ne bloquez pas votre souffle"],
+    actions: { breathe: "Respirer", sound: "Ambiance" },
+    warningTitle: "Quand consulter",
+    redFlags: [
+      "Du sang dans les selles",
+      "Une douleur intense ou persistante",
+      "Des vomissements",
+      "Plus d'une semaine sans amélioration",
+    ],
+    disclaimer: "WC Connect n'est pas un dispositif médical et ne remplace pas l'avis d'un professionnel de santé. Les conseils de l'app sont des repères d'hygiène de vie, et elle indique les situations où il vaut mieux consulter.",
+    families: [
+      {
+        title: "Posture",
+        examples: [
+          "Surélever les pieds : genoux plus haut que les hanches",
+          "Se pencher vers l'avant, coudes sur les cuisses",
+          "Pieds à plat, genoux un peu écartés",
+        ],
+      },
+      {
+        title: "Respiration",
+        examples: [
+          "Ne jamais bloquer son souffle pour pousser",
+          "Gonfler le ventre à l'inspiration",
+          "Expirer longuement, comme sur une bougie",
+        ],
+      },
+      {
+        title: "Détente",
+        examples: [
+          "Relâcher épaules, mâchoire, plancher pelvien",
+          "Six respirations lentes avant de réessayer",
+          "Au bout de cinq minutes, se relever",
+        ],
+      },
+      {
+        title: "Habitudes",
+        examples: [
+          "Y aller dès que l'envie se présente",
+          "Profiter du réflexe d'après-repas",
+          "Des visites courtes, cinq à dix minutes",
+        ],
+      },
+      {
+        title: "Boire et manger",
+        examples: [
+          "Boire régulièrement dans la journée",
+          "Monter en fibres progressivement",
+          "Pruneaux, kiwis, poires",
+        ],
+      },
+      {
+        title: "Bouger",
+        examples: [
+          "Marcher dix à quinze minutes",
+          "Masser le ventre dans le sens des aiguilles",
+          "Étirer le bas du dos",
+        ],
+      },
+    ],
+  },
+
+  breath: {
+    eyebrow: "Détente",
+    title: "Respirer plutôt que pousser",
+    body: "Retenir son souffle pour pousser fait monter la pression et fatigue le périnée. L'app guide trois rythmes ; celui proposé pendant une visite est sans apnée, et la montre marque chaque phase d'un tapotement — de quoi suivre les yeux fermés.",
+    demoAlt: "Démonstration de la respiration guidée, rythme 4-6",
+    inhale: "Inspirez",
+    exhale: "Expirez",
+    caption: "Rythme réel de l'app : 4 secondes d'inspiration, 6 d'expiration.",
+    recommended: "sur le trône",
+    rhythms: [
+      {
+        title: "Ventre",
+        rhythm: "4-6",
+        detail: "Sans apnée : celui à utiliser sur le trône, puisque retenir son souffle revient à pousser.",
+        recommended: true,
+      },
+      {
+        title: "Carré",
+        rhythm: "4-4-4-4",
+        detail: "Quatre temps égaux, pour calmer le rythme et se recentrer.",
+        recommended: false,
+      },
+      {
+        title: "Détente",
+        rhythm: "4-7-8",
+        detail: "Expiration longue, pour relâcher les épaules et la mâchoire.",
+        recommended: false,
+      },
+    ],
+  },
+
+  sound: {
+    eyebrow: "Ambiances & musique",
+    title: "Votre musique, plus un fond sonore",
+    body: "WC Connect ne diffuse aucun catalogue : elle télécommande ce que vous écoutez déjà, Apple Music comprise. Et elle ajoute quatre ambiances synthétisées, qui se mélangent au morceau en cours sans l'interrompre.",
+    playerAlt: "Lecteur de l'app : morceau en cours et ambiances sonores",
+    trackTitle: "Votre morceau",
+    trackSubtitle: "Depuis votre bibliothèque",
+    points: [
+      "Une ambiance « Réunion » — brouhaha et clavier — pour brouiller les pistes",
+      "Les ambiances se superposent à votre musique au lieu de la couper",
+      "Elles continuent quand l'écran se verrouille",
+      "Lecture, pause et piste suivante de votre bibliothèque depuis l'app",
+      "Aucun catalogue diffusé, aucun abonnement requis : c'est votre musique",
+    ],
+    soundscapes: [
+      { title: "Pluie", detail: "Couvre les bruits alentour" },
+      { title: "Bruit brun", detail: "Grave et régulier, très masquant" },
+      { title: "Souffle", detail: "Respire sur dix secondes" },
+      { title: "Réunion", detail: "Brouhaha de bureau et clavier" },
+    ],
+  },
+
+  live: {
+    eyebrow: "Live Activity",
+    title: "Le chronomètre là où vous regardez déjà",
+    body: "Dès que la visite démarre, iOS affiche une Live Activity : écran verrouillé, Dynamic Island compacte, vue étendue au toucher. Le chronomètre est animé par le système — l'app reste fermée, la batterie ne bouge pas.",
+    points: [
+      "Bouton « Terminer » interactif, sans déverrouiller l'app",
+      "Barre de progression vers la durée cible du type de visite",
+      "Reprise automatique de l'activité si l'app est relancée",
+      "Reprise sur la pile intelligente de l'Apple Watch",
+    ],
+    kind: "Standard",
+    place: "Maison",
+    action: "Terminer",
+  },
+
+  watch: {
+    eyebrow: "Apple Watch",
+    title: "Le poignet suffit",
+    body: "L'app Watch est autonome : lancez la visite depuis le cadran, terminez-la d'un tapotement. Tout se resynchronise avec l'iPhone dès qu'il est à portée, y compris une visite démarrée hors de portée.",
+    points: [
+      "Chronomètre plein écran avec anneau de progression",
+      "Respiration guidée au poignet, rythmée par les haptiques",
+      "Historique et statistiques par défilement vertical",
+      "Complications : cercle, rectangle, coin et ligne",
+      "Retour haptique au démarrage et à la fin",
+    ],
+    complicationTitle: "Visite en cours",
+    complicationPlace: "Maison",
+    complicationInline: "WC · 3 aujourd'hui",
+  },
+
+  tracking: {
+    eyebrow: "Suivi",
+    title: "De quoi voir ce qui se passe vraiment",
+    body: "Chaque visite enregistrée alimente un historique et des statistiques lisibles : durée moyenne, créneau favori, série de jours suivis. De quoi repérer une tendance — ou montrer quelque chose de concret à un médecin.",
+    points: [
+      "Historique groupé par jour, filtrable par lieu",
+      "Confort noté de 1 à 5 et note libre en fin de visite",
+      "Répartition maison / travail / dehors",
+      "Export CSV complet, et suppression immédiate",
+    ],
+    chartTitle: "Visites des 7 derniers jours",
+    visitOne: "visite",
+    visitMany: "visites",
+    days: ["L", "M", "M", "J", "V", "S", "D"],
+    tiles: [
+      { value: "4 min 12 s", label: "Durée moyenne" },
+      { value: "8 h", label: "Créneau favori" },
+      { value: "12 j", label: "Série en cours" },
+      { value: "2,4", label: "Visites par jour" },
+    ],
+  },
+
+  fun: {
+    eyebrow: "Inutile, donc indispensable",
+    title: "Un palmarès pour un sujet qui n'en méritait pas",
+    body: "14 hauts faits calculés sur vos vraies visites, des équivalences rigoureusement absurdes, un titre honorifique et un certificat à faire circuler auprès de gens qui ne l'ont pas demandé.",
+    badgesAlt: "Exemples de hauts faits à débloquer",
+    points: [
+      "Un titre honorifique qui évolue, d'« Anonyme des toilettes » à « Légende vivante »",
+      "Une fanfare et un bandeau quand un haut fait tombe",
+      "Un certificat officiel à partager, sans aucune valeur légale",
+      "Un mode trône caché : appuyez longuement sur le chronomètre",
+      "Quatorze hauts faits à débloquer, calculés sur vos vraies visites",
+    ],
+    badges: [
+      { title: "Éclair", detail: "Une visite en moins de 45 secondes" },
+      { title: "Marathonien", detail: "Plus de vingt minutes. Respect." },
+      { title: "Noctambule", detail: "Une visite entre 2 h et 5 h" },
+      { title: "Globe-trotteur", detail: "Maison, travail et dehors le même jour" },
+      { title: "Horloge suisse", detail: "Trois jours de suite à la même heure" },
+      { title: "Le Penseur", detail: "Un quart d'heure, et un confort de 5 sur 5" },
+    ],
+    absurdTitle: "Votre temps, en unités plus parlantes",
+    absurdFoot: "Exemple pour quelques heures d'historique.",
+    equivalences: [
+      { value: "7", label: "épisodes de série regardés assis" },
+      { value: "45", label: "chansons écoutées en entier" },
+      { value: "1,38", label: "trajets Paris – Lyon en TGV" },
+      { value: "13,3 km", label: "parcourus si vous aviez marché" },
+    ],
+  },
+
+  weather: {
+    eyebrow: "Météo intestinale",
+    title: "Un bulletin que personne n'avait demandé",
+    body: "L'app compare la semaine écoulée à la précédente et en tire un bulletin complet : pression, risque d'averse, visibilité, vent. Aucune valeur prédictive, une vraie méthode de calcul. Elle en déduit aussi votre profil et l'heure de votre prochain passage.",
+    cardAlt: "Bulletin météo intestinal affiché par l'app",
+    kicker: "Météo intestinale",
+    points: [
+      "Un bulletin calculé sur la semaine écoulée, comparée à la précédente",
+      "Pression, risque d'averse, visibilité et vent — aucun sens, une vraie méthode",
+      "Un profil déduit de vos habitudes, du Sprinteur du matin à l'Ermite de la nuit",
+      "Une prévision de votre prochaine visite, avec une fiabilité honnêtement basse",
+    ],
+    forecast: {
+      condition: "Variable",
+      summary: "Éclaircies alternant avec quelques passages nuageux. Rien d'alarmant.",
+      wind: "vent modéré de secteur sud",
+      rows: [
+        { label: "Pression", value: "1021 hPa" },
+        { label: "Averses", value: "34 %" },
+        { label: "Visibilité", value: "correcte" },
+      ],
+      personaTitle: "L'Habitué du matin",
+      personaDetail: "4 min 12 s en moyenne, avec une préférence marquée pour 8 h. Une horloge.",
+      prediction: "Prochaine visite prévue vers 8 h — fiabilité 37 %",
+      lifetime: "À ce rythme, vous y passerez 4,3 mois de votre vie. Assis.",
+    },
+  },
+
+  privacy: {
+    eyebrow: "Confidentialité",
+    title: "Vos pauses ne regardent personne",
+    lead: "Aucun compte, aucune analyse, aucun serveur. L'historique vit dans un espace partagé entre l'app, les widgets et la montre, sur vos appareils uniquement. La synchronisation iPhone ↔ Watch passe par WatchConnectivity, en direct, d'appareil à appareil.",
+    tags: ["0 tracker", "0 requête réseau", "Export CSV", "Suppression immédiate"],
+  },
+
+  faq: {
+    title: "Questions fréquentes",
+    questions: [
+      {
+        question: "Faut-il un iPhone récent ?",
+        answer: "WC Connect demande iOS 17 et watchOS 10. La Dynamic Island s'affiche sur les modèles qui en disposent ; sur les autres, la Live Activity reste visible sur l'écran verrouillé.",
+      },
+      {
+        question: "L'app fonctionne-t-elle sans iPhone à proximité ?",
+        answer: "Oui. L'app Watch enregistre la visite localement et l'envoie à l'iPhone dès qu'il redevient joignable. Les doublons sont fusionnés automatiquement.",
+      },
+      {
+        question: "La Live Activity consomme-t-elle de la batterie ?",
+        answer: "Très peu : le chronomètre est rendu par le système à partir d'une date de départ. L'app n'est pas réveillée pour l'animer.",
+      },
+      {
+        question: "Faut-il un abonnement musique ?",
+        answer: "Non. L'app ne diffuse aucun catalogue : elle pilote la lecture de votre bibliothèque ou de Musique, et ses quatre ambiances sonores sont embarquées dans l'app. Les commandes fonctionnent même si vous refusez l'accès à la bibliothèque — seul l'affichage du titre en cours a besoin de cette autorisation.",
+      },
+      {
+        question: "Une ambiance « Réunion », vraiment ?",
+        answer: "Vraiment. Un brouhaha de bureau avec quelques frappes de clavier, à lancer depuis les toilettes du travail. Comme les autres ambiances, elle est synthétisée et embarquée dans l'app. Ce que vous en faites ne nous regarde pas.",
+      },
+      {
+        question: "Les conseils remplacent-ils un médecin ?",
+        answer: "Non, et l'app le dit. Ce sont des repères d'hygiène de vie — posture, respiration, hydratation, mouvement. L'app liste aussi les situations qui justifient un avis médical plutôt que des exercices : sang dans les selles, douleur intense, vomissements, ou une constipation qui dure plus d'une semaine.",
+      },
+      {
+        question: "Puis-je récupérer mes données ?",
+        answer: "Un export CSV est disponible dans les réglages : date de début, date de fin, durée, type, lieu, confort, appareil et note.",
+      },
+      {
+        question: "C'est sérieux, ce truc ?",
+        answer: "À moitié. Le sujet fait sourire, le code est sérieux : logique testée, données locales, interface native. À vous de voir dans quelle moitié vous vous situez.",
+      },
+    ],
+  },
+
+  cta: {
+    title: "Bientôt dans votre poche",
+    body: "WC Connect est en cours de développement, en privé. L'app arrivera sur iPhone et Apple Watch ; d'ici là, la bêta se fait sur invitation.",
+    action: "Revoir les fonctions",
+    legal: "Projet indépendant, non affilié à Apple. iPhone, Apple Watch, Siri et Dynamic Island sont des marques d'Apple Inc.",
+  },
+
+  footer: {
+    tagline: "Fait avec sérieux pour un sujet qui ne l'est pas.",
+  },
+};
+
+/** Forme du dictionnaire : toute traduction doit couvrir exactement ces clés. */
+export type Dictionary = typeof fr;
