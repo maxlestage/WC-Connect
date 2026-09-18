@@ -17,9 +17,11 @@ export interface Question {
 
 export const navLinks: readonly NavLink[] = [
   { href: "#fonctions", label: "Fonctions" },
+  { href: "#aide", label: "Quand ça coince" },
+  { href: "#detente", label: "Détente" },
   { href: "#live", label: "Live Activity" },
-  { href: "#watch", label: "Apple Watch" },
-  { href: "#confidentialite", label: "Confidentialité" },
+  { href: "#watch", label: "Watch" },
+  { href: "#suivi", label: "Suivi" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -110,6 +112,16 @@ export const questions: readonly Question[] = [
       "Très peu : le chronomètre est rendu par le système à partir d'une date de départ. L'app n'est pas réveillée pour l'animer.",
   },
   {
+    question: "Faut-il un abonnement musique ?",
+    answer:
+      "Non. L'app ne diffuse aucun catalogue : elle pilote la lecture de votre bibliothèque ou de Musique, et ses trois ambiances sonores sont embarquées dans l'app. Les commandes fonctionnent même si vous refusez l'accès à la bibliothèque — seul l'affichage du titre en cours a besoin de cette autorisation.",
+  },
+  {
+    question: "Les conseils remplacent-ils un médecin ?",
+    answer:
+      "Non, et l'app le dit. Ce sont des repères d'hygiène de vie — posture, respiration, hydratation, mouvement. L'app liste aussi les situations qui justifient un avis médical plutôt que des exercices : sang dans les selles, douleur intense, vomissements, ou une constipation qui dure plus d'une semaine.",
+  },
+  {
     question: "Puis-je récupérer mes données ?",
     answer:
       "Un export CSV est disponible dans les réglages : date de début, date de fin, durée, type, lieu, confort, appareil et note.",
@@ -123,3 +135,167 @@ export const questions: readonly Question[] = [
 
 /** Durée cible de la démo, en secondes (visite « Standard »). */
 export const DEMO_GOAL_SECONDS = 300;
+
+// --- Quand ça coince -------------------------------------------------------
+
+export interface TipFamily {
+  readonly title: string;
+  readonly examples: readonly string[];
+}
+
+export const tipFamilies: readonly TipFamily[] = [
+  {
+    title: "Posture",
+    examples: [
+      "Surélever les pieds : genoux plus haut que les hanches",
+      "Se pencher vers l'avant, coudes sur les cuisses",
+      "Pieds à plat, genoux un peu écartés",
+    ],
+  },
+  {
+    title: "Respiration",
+    examples: [
+      "Ne jamais bloquer son souffle pour pousser",
+      "Gonfler le ventre à l'inspiration",
+      "Expirer longuement, comme sur une bougie",
+    ],
+  },
+  {
+    title: "Détente",
+    examples: [
+      "Relâcher épaules, mâchoire, plancher pelvien",
+      "Six respirations lentes avant de réessayer",
+      "Au bout de cinq minutes, se relever",
+    ],
+  },
+  {
+    title: "Habitudes",
+    examples: [
+      "Y aller dès que l'envie se présente",
+      "Profiter du réflexe d'après-repas",
+      "Des visites courtes, cinq à dix minutes",
+    ],
+  },
+  {
+    title: "Boire et manger",
+    examples: [
+      "Boire régulièrement dans la journée",
+      "Monter en fibres progressivement",
+      "Pruneaux, kiwis, poires",
+    ],
+  },
+  {
+    title: "Bouger",
+    examples: [
+      "Marcher dix à quinze minutes",
+      "Masser le ventre dans le sens des aiguilles",
+      "Étirer le bas du dos",
+    ],
+  },
+];
+
+/** Trois des conseils applicables assis, tels que l'app les propose. */
+export const immediateTips: readonly string[] = [
+  "Surélevez les pieds",
+  "Penchez-vous vers l'avant",
+  "Ne bloquez pas votre souffle",
+];
+
+export const redFlags: readonly string[] = [
+  "Du sang dans les selles",
+  "Une douleur intense ou persistante",
+  "Des vomissements",
+  "Plus d'une semaine sans amélioration",
+];
+
+export const medicalDisclaimer =
+  "WC Connect n'est pas un dispositif médical et ne remplace pas l'avis d'un professionnel de santé. Les conseils de l'app sont des repères d'hygiène de vie, et elle indique les situations où il vaut mieux consulter.";
+
+// --- Détente ---------------------------------------------------------------
+
+export interface BreathingRhythm {
+  readonly title: string;
+  readonly rhythm: string;
+  readonly detail: string;
+  readonly recommended?: boolean;
+}
+
+export const breathingRhythms: readonly BreathingRhythm[] = [
+  {
+    title: "Ventre",
+    rhythm: "4-6",
+    detail: "Sans apnée : celui à utiliser sur le trône, puisque retenir son souffle revient à pousser.",
+    recommended: true,
+  },
+  {
+    title: "Carré",
+    rhythm: "4-4-4-4",
+    detail: "Quatre temps égaux, pour calmer le rythme et se recentrer.",
+  },
+  {
+    title: "Détente",
+    rhythm: "4-7-8",
+    detail: "Expiration longue, pour relâcher les épaules et la mâchoire.",
+  },
+];
+
+/** Rythme de la démonstration animée, identique à celui de l'app. */
+export const DEMO_BREATH = { inhale: 4, exhale: 6 } as const;
+
+// --- Son -------------------------------------------------------------------
+
+export interface SoundscapeInfo {
+  readonly title: string;
+  readonly detail: string;
+}
+
+export const soundscapes: readonly SoundscapeInfo[] = [
+  { title: "Pluie", detail: "Couvre les bruits alentour" },
+  { title: "Bruit brun", detail: "Grave et régulier, très masquant" },
+  { title: "Souffle", detail: "Respire sur dix secondes" },
+];
+
+export const soundPoints: readonly string[] = [
+  "Les ambiances se superposent à votre musique au lieu de la couper",
+  "Elles continuent quand l'écran se verrouille",
+  "Lecture, pause et piste suivante de votre bibliothèque depuis l'app",
+  "Aucun catalogue diffusé, aucun abonnement requis : c'est votre musique",
+];
+
+// --- Suivi -----------------------------------------------------------------
+
+export interface DayBar {
+  readonly label: string;
+  readonly value: number;
+  readonly today?: boolean;
+}
+
+/** Semaine de démonstration affichée par le graphique du suivi. */
+export const weekBars: readonly DayBar[] = [
+  { label: "L", value: 2 },
+  { label: "M", value: 3 },
+  { label: "M", value: 1 },
+  { label: "J", value: 2 },
+  { label: "V", value: 4 },
+  { label: "S", value: 2 },
+  { label: "D", value: 3, today: true },
+];
+
+export interface StatTile {
+  readonly value: string;
+  readonly label: string;
+}
+
+export const statTiles: readonly StatTile[] = [
+  { value: "4 min 12 s", label: "Durée moyenne" },
+  { value: "8 h", label: "Créneau favori" },
+  { value: "12 j", label: "Série en cours" },
+  { value: "2,4", label: "Visites par jour" },
+];
+
+export const trackingPoints: readonly string[] = [
+  "Historique groupé par jour, filtrable par lieu",
+  "Confort noté de 1 à 5 et note libre en fin de visite",
+  "Répartition maison / travail / dehors",
+  "Export CSV complet, et suppression immédiate",
+];

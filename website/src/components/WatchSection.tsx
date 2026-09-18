@@ -11,8 +11,8 @@ export function WatchSection({ elapsed }: WatchSectionProps) {
   const clock = formatClock(elapsed);
 
   return (
-    <section className="section" id="watch">
-      <div className="wrap split split--reverse">
+    <section className="section section--alt" id="watch">
+      <div className="wrap split">
         <Reveal className="split__text">
           <p className="eyebrow">Apple Watch</p>
           <h2>Le poignet suffit</h2>

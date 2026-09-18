@@ -12,8 +12,8 @@ export function LiveActivitySection({ elapsed }: LiveActivitySectionProps) {
   const clock = formatClock(elapsed);
 
   return (
-    <section className="section section--alt" id="live">
-      <div className="wrap split">
+    <section className="section" id="live">
+      <div className="wrap split split--reverse">
         <Reveal className="split__text">
           <p className="eyebrow">Live Activity</p>
           <h2>Le chronomètre là où vous regardez déjà</h2>
