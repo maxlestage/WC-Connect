@@ -8,9 +8,11 @@
 import { chromium } from "playwright";
 
 const url = process.argv[2] ?? process.env.SITE_CHECK_URL ?? "http://localhost:4173/";
-// Les largeurs autour de 960 px sont celles où la barre de navigation est
-// la plus serrée (les liens réapparaissent) : c'est là que ça déborde.
-const largeurs = [320, 360, 375, 390, 414, 430, 540, 768, 960, 961, 1000, 1024, 1100, 1280];
+// Les largeurs autour de 1220 px sont celles où la barre est la plus serrée
+// (les liens en ligne remplacent le menu) : c'est là que ça déborde. Au-delà
+// de 1160 px, `.wrap` plafonne, donc la place disponible n'augmente plus — ce
+// qui tient à 1221 px tient partout au-dessus.
+const largeurs = [320, 360, 375, 390, 414, 430, 540, 768, 960, 1024, 1100, 1160, 1220, 1221, 1280, 1440];
 const langues = ["fr-FR", "en-US"];
 
 const navigateur = await chromium.launch();

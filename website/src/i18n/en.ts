@@ -5,8 +5,6 @@ export const en: Dictionary = {
   code: "en",
   htmlLang: "en",
   documentTitle: "WC Connect — track your breaks, on iPhone and Apple Watch",
-  switchLabel: "Switch the site to French",
-  switchTo: "FR",
 
   nav: {
     label: "Main navigation",
@@ -28,6 +26,11 @@ export const en: Dictionary = {
       { href: "#faq", label: "FAQ" },
     ],
   },
+
+  /* Same in both dictionaries: every language names itself in its own
+     language. Intentional, not a missing translation. */
+  languages: { fr: "Français", en: "English" },
+  languageCodes: { fr: "FR", en: "EN" },
 
   theme: {
     label: "Theme",

@@ -9,18 +9,18 @@ export function ThemeSwitch() {
   return (
     // Un groupe de boutons bascule plutôt qu'un `radiogroup` : ce dernier
     // attend une navigation aux flèches, que rien n'implémenterait ici.
-    <div className="theme" role="group" aria-label={t.theme.label}>
+    <div className="switch" role="group" aria-label={t.theme.label}>
       {themeOptions.map((option) => (
         <button
           key={option}
           type="button"
           aria-pressed={theme === option}
-          className={option === theme ? "theme__choice theme__choice--on" : "theme__choice"}
+          className={option === theme ? "switch__choice switch__choice--on" : "switch__choice"}
           onClick={() => setTheme(option)}
           title={t.theme[option]}
         >
           <ThemeIcon theme={option} />
-          <span className="theme__text">{t.theme[option]}</span>
+          <span className="switch__text">{t.theme[option]}</span>
         </button>
       ))}
     </div>

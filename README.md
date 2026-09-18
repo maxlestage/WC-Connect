@@ -286,6 +286,7 @@ website/
   index.html          point d'entrée Vite
   src/i18n/           dictionnaires fr.ts et en.ts, contexte de langue
   src/theme/          thème clair / sombre / automatique, mémorisé
+  scripts/            contrôles Playwright et cohérence du thème sombre
   src/components/     sections et maquettes
   src/hooks/          chronomètre de démo, respiration, apparitions
   tsconfig*.json      client et configuration Vite
@@ -295,8 +296,14 @@ website/
 ### Bilingue
 
 Le site s'affiche en **français ou en anglais**. La langue est déduite du
-navigateur, modifiable par le bouton FR/EN de la barre de navigation, et
-mémorisée. `document.documentElement.lang` et le titre de la page suivent.
+navigateur, puis choisie explicitement — deux boutons, chaque langue nommée
+dans sa propre langue — dans le menu sur téléphone et dans la barre sur
+ordinateur (en codes `FR` / `EN`, le nom complet restant lu par les lecteurs
+d'écran). Le choix est mémorisé ; `document.documentElement.lang` et le titre
+de la page suivent.
+
+Deux choix plutôt qu'une bascule : un bouton portant le nom de l'autre langue
+oblige à deviner ce qu'il fait, et ne dit pas où l'on est.
 
 `src/i18n/fr.ts` est la source de vérité : le type `Dictionary` en est déduit,
 donc `en.ts` doit couvrir exactement les mêmes clés — une traduction oubliée
@@ -326,14 +333,22 @@ accessible).
 
 ### Menu burger
 
-Sous 1100 px, les dix liens ne tiennent plus sur une ligne : ils passent dans
-un panneau ouvert par un bouton burger, avec le sélecteur de thème, la bascule
-de langue et le bouton d'appel. Rien n'est perdu, et la barre ne peut plus
-élargir la page — c'est ce débordement qui était le défaut le plus visible du
-site.
+Sous 1220 px, les dix liens ne tiennent plus sur une ligne avec les deux
+sélecteurs et le bouton d'appel : ils passent dans un panneau ouvert par un
+bouton burger, qui porte aussi le thème, la langue et l'appel. Rien n'est
+perdu, et la barre ne peut plus élargir la page — c'est ce débordement qui
+était le défaut le plus visible du site.
 
-`npm run check:overflow` mesure chaque largeur **deux fois**, menu fermé puis
-menu ouvert : le panneau est un candidat au débordement à part entière.
+Au-delà de 1160 px, `.wrap` plafonne à 1120 px : **la place disponible dans la
+barre n'augmente plus**. Ce qui tient à 1221 px tient donc à n'importe quelle
+largeur au-dessus, et les liens en ligne sont écrits compacts d'emblée
+(0,84 rem, 12 px de gouttière) plutôt que resserrés par une règle à borne
+haute — une telle borne rouvrait le débordement au-delà d'elle.
+
+`npm run check:overflow` mesure seize largeurs, dans les deux langues, et
+chacune **deux fois** : menu fermé puis menu ouvert. Le panneau est un
+candidat au débordement à part entière, et les largeurs autour de 1220 px sont
+celles où la barre est la plus serrée.
 
 ### En local
 

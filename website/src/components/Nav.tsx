@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useLanguage, useT } from "../i18n";
+import { useT } from "../i18n";
+import { LanguageSwitch } from "./LanguageSwitch";
 import { useStuckNav } from "../hooks/useStuckNav";
 import { ThemeSwitch } from "./ThemeSwitch";
 
 export function Nav() {
   const isStuck = useStuckNav();
   const t = useT();
-  const { toggle } = useLanguage();
   const [open, setOpen] = useState(false);
 
   // Échap referme le menu : c'est attendu, et ça évite de rester coincé
@@ -39,9 +39,7 @@ export function Nav() {
         <div className="nav__actions">
           <div className="nav__wide">
             <ThemeSwitch />
-            <button type="button" className="lang" onClick={toggle} aria-label={t.switchLabel}>
-              {t.switchTo}
-            </button>
+            <LanguageSwitch />
             <a className="btn btn--small" href="#disponibilite">
               {t.nav.cta}
             </a>
@@ -81,9 +79,7 @@ export function Nav() {
 
         <div className="menu__row">
           <span className="menu__label">{t.nav.languageLabel}</span>
-          <button type="button" className="lang" onClick={toggle} aria-label={t.switchLabel}>
-            {t.switchTo}
-          </button>
+          <LanguageSwitch />
         </div>
 
         <a className="btn menu__cta" href="#disponibilite" onClick={() => setOpen(false)}>
