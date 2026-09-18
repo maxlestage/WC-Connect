@@ -1,4 +1,4 @@
-import { watchPoints } from "../content";
+import { useT } from "../i18n";
 import { formatClock } from "../lib/format";
 import { Checklist } from "./Checklist";
 import { Reveal } from "./Reveal";
@@ -8,20 +8,17 @@ interface WatchSectionProps {
 }
 
 export function WatchSection({ elapsed }: WatchSectionProps) {
+  const t = useT();
   const clock = formatClock(elapsed);
 
   return (
     <section className="section section--alt" id="watch">
       <div className="wrap split">
         <Reveal className="split__text">
-          <p className="eyebrow">Apple Watch</p>
-          <h2>Le poignet suffit</h2>
-          <p>
-            L'app Watch est autonome : lancez la visite depuis le cadran, terminez-la d'un
-            tapotement. Tout se resynchronise avec l'iPhone dès qu'il est à portée, y compris une
-            visite démarrée hors de portée.
-          </p>
-          <Checklist items={watchPoints} />
+          <p className="eyebrow">{t.watch.eyebrow}</p>
+          <h2>{t.watch.title}</h2>
+          <p>{t.watch.body}</p>
+          <Checklist items={t.watch.points} />
         </Reveal>
 
         <Reveal className="split__visual">
@@ -30,11 +27,11 @@ export function WatchSection({ elapsed }: WatchSectionProps) {
               <span>{clock}</span>
             </div>
             <div className="comp comp--rect">
-              <strong>Visite en cours</strong>
+              <strong>{t.watch.complicationTitle}</strong>
               <span>{clock}</span>
-              <small>Maison</small>
+              <small>{t.watch.complicationPlace}</small>
             </div>
-            <div className="comp comp--line">WC · 3 aujourd'hui</div>
+            <div className="comp comp--line">{t.watch.complicationInline}</div>
           </div>
         </Reveal>
       </div>

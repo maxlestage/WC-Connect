@@ -1,32 +1,30 @@
-import { soundPoints, soundscapes } from "../content";
+import { useT } from "../i18n";
 import { Checklist } from "./Checklist";
 import { Reveal } from "./Reveal";
 
 /** Section « Son » : ambiances embarquées et commande de votre musique. */
 export function SoundSection() {
+  const t = useT();
+
   return (
     <section className="section section--alt" id="son">
       <div className="wrap split">
         <Reveal className="split__text">
-          <p className="eyebrow">Ambiances &amp; musique</p>
-          <h2>Votre musique, plus un fond sonore</h2>
-          <p>
-            WC&nbsp;Connect ne diffuse aucun catalogue : elle télécommande ce que vous écoutez
-            déjà, Apple&nbsp;Music comprise. Et elle ajoute trois ambiances synthétisées, qui se
-            mélangent au morceau en cours sans l'interrompre.
-          </p>
-          <Checklist items={soundPoints} />
+          <p className="eyebrow">{t.sound.eyebrow}</p>
+          <h2>{t.sound.title}</h2>
+          <p>{t.sound.body}</p>
+          <Checklist items={t.sound.points} />
         </Reveal>
 
         <Reveal className="split__visual">
-          <div className="player" role="img" aria-label="Lecteur de l'app : morceau en cours et ambiances sonores">
+          <div className="player" role="img" aria-label={t.sound.playerAlt}>
             <div className="player__track">
               <div className="player__art" aria-hidden="true">
                 ♪
               </div>
               <div className="player__meta">
-                <strong>Votre morceau</strong>
-                <span>Depuis votre bibliothèque</span>
+                <strong>{t.sound.trackTitle}</strong>
+                <span>{t.sound.trackSubtitle}</span>
               </div>
               <div className="player__controls" aria-hidden="true">
                 <span>⏮</span>
@@ -36,7 +34,7 @@ export function SoundSection() {
             </div>
 
             <div className="player__sounds">
-              {soundscapes.map((sound, index) => (
+              {t.sound.soundscapes.map((sound, index) => (
                 <div className={`sound${index === 0 ? " sound--on" : ""}`} key={sound.title}>
                   <div className="sound__bars" aria-hidden="true">
                     {[0, 1, 2, 3].map((bar) => (

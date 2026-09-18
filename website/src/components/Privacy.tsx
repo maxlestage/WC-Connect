@@ -1,20 +1,18 @@
-import { privacyTags } from "../content";
+import { useT } from "../i18n";
 import { Reveal } from "./Reveal";
 
 export function Privacy() {
+  const t = useT();
+
   return (
     <section className="section section--alt" id="confidentialite">
       <div className="wrap narrow">
         <Reveal>
-          <p className="eyebrow">Confidentialité</p>
-          <h2>Vos pauses ne regardent personne</h2>
-          <p className="section__lead">
-            Aucun compte, aucune analyse, aucun serveur. L'historique vit dans un espace partagé
-            entre l'app, les widgets et la montre, sur vos appareils uniquement. La synchronisation
-            iPhone ↔ Watch passe par WatchConnectivity, en direct, d'appareil à appareil.
-          </p>
+          <p className="eyebrow">{t.privacy.eyebrow}</p>
+          <h2>{t.privacy.title}</h2>
+          <p className="section__lead">{t.privacy.lead}</p>
           <div className="pills">
-            {privacyTags.map((tag) => (
+            {t.privacy.tags.map((tag) => (
               <span className="pill pill--static" key={tag}>
                 {tag}
               </span>

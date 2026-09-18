@@ -17,7 +17,7 @@ Tout reste sur l'appareil : pas de compte, pas de serveur, pas de réseau.
 | **Palmarès** | 14 hauts faits, équivalences absurdes, titre honorifique et certificat partageable |
 | **Météo intestinale** | Bulletin calculé sur la semaine, profil, prévision de la prochaine visite |
 | **Siri** | « Je vais aux toilettes », « J'ai fini » via App Shortcuts |
-| **Site** | `website/`, React 18 + TypeScript (Vite), **entièrement statique** : aucun serveur |
+| **Site** | `website/`, React 18 + TypeScript (Vite), **statique** et **bilingue** français / anglais |
 
 ## Structure du dépôt
 
@@ -172,10 +172,22 @@ dyno. Un hébergeur de fichiers suffit.
 package.json          racine de l'espace de travail npm (workspaces)
 website/
   index.html          point d'entrée Vite
-  src/                composants React, hooks, contenu typé, styles
+  src/i18n/           dictionnaires fr.ts et en.ts, contexte de langue
+  src/components/     sections et maquettes
+  src/hooks/          chronomètre de démo, respiration, apparitions
   tsconfig*.json      client et configuration Vite
   dist/               résultat de la construction (non versionné)
 ```
+
+### Bilingue
+
+Le site s'affiche en **français ou en anglais**. La langue est déduite du
+navigateur, modifiable par le bouton FR/EN de la barre de navigation, et
+mémorisée. `document.documentElement.lang` et le titre de la page suivent.
+
+`src/i18n/fr.ts` est la source de vérité : le type `Dictionary` en est déduit,
+donc `en.ts` doit couvrir exactement les mêmes clés — une traduction oubliée
+fait échouer la vérification des types, donc la CI.
 
 ### En local
 

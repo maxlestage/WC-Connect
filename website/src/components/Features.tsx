@@ -1,20 +1,22 @@
-import { features } from "../content";
+import { useT } from "../i18n";
 import { Reveal } from "./Reveal";
 
 export function Features() {
+  const t = useT();
+
   return (
     <section className="section" id="fonctions">
       <div className="wrap">
-        <Reveal as="h2">Tout ce qu'il faut, rien de plus</Reveal>
+        <Reveal as="h2">{t.features.title}</Reveal>
         <Reveal as="p" className="section__lead">
-          Une app qui s'ouvre, s'utilise et se referme en moins de trois secondes.
+          {t.features.lead}
         </Reveal>
 
         <div className="grid">
-          {features.map((feature) => (
-            <Reveal as="article" className="card" key={feature.title}>
-              <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
+          {t.features.cards.map((card) => (
+            <Reveal as="article" className="card" key={card.title}>
+              <h3>{card.title}</h3>
+              <p>{card.description}</p>
             </Reveal>
           ))}
         </div>

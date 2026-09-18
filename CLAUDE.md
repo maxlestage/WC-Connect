@@ -6,8 +6,12 @@
   exige un terminal n'est pas une solution livrable — proposez toujours un
   chemin faisable dans un navigateur mobile, et dites-le quand ce n'est pas
   possible (la compilation Swift, par exemple, demande un Mac).
-- **Langue** : français partout — interface, commentaires, messages de commit,
+- **Langue de travail** : français partout — commentaires, messages de commit,
   descriptions de PR, réponses.
+- **Produit bilingue** : l'app et le site existent en français et en anglais.
+  Toute chaîne visible par l'utilisateur doit être ajoutée dans les deux
+  langues. Côté site, `src/i18n/fr.ts` est la source de vérité et le type
+  `Dictionary` force `en.ts` à la couvrir entièrement.
 
 ## Fusion automatique
 
