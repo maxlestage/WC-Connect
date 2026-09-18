@@ -31,7 +31,7 @@ struct RelaxView: View {
 
     private var breathingSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionTitle("Respiration guidée", symbol: "wind")
+            sectionTitle("Respiration guidée".wcLocalized, symbol: "wind")
             Text("Respirer lentement relâche le ventre et le périnée. Ne bloquez jamais votre souffle pour pousser.")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -81,7 +81,7 @@ struct RelaxView: View {
 
     private var soundscapeSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionTitle("Ambiances", symbol: "speaker.wave.2.fill")
+            sectionTitle("Ambiances".wcLocalized, symbol: "speaker.wave.2.fill")
             Text("Boucles embarquées, qui se superposent à votre musique sans l'interrompre.")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -138,7 +138,7 @@ struct RelaxView: View {
 
     private var musicSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionTitle("Votre musique", symbol: "music.note")
+            sectionTitle("Votre musique".wcLocalized, symbol: "music.note")
 
             if !music.canReadLibrary {
                 VStack(alignment: .leading, spacing: 10) {
@@ -168,8 +168,8 @@ struct RelaxView: View {
                 }
             } else {
                 Text(music.canReadLibrary
-                     ? "Rien en cours de lecture. Choisissez un morceau dans Musique, puis revenez ici."
-                     : "Lancez un morceau depuis Musique, puis pilotez-le d'ici.")
+                     ? "Rien en cours de lecture. Choisissez un morceau dans Musique, puis revenez ici.".wcLocalized
+                     : "Lancez un morceau depuis Musique, puis pilotez-le d'ici.".wcLocalized)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }

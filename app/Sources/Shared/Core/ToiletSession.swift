@@ -8,9 +8,9 @@ public enum SessionKind: String, Codable, CaseIterable, Hashable, Sendable {
 
     public var title: String {
         switch self {
-        case .quick: return "Express"
-        case .standard: return "Standard"
-        case .long: return "Longue"
+        case .quick: return "Express".wcLocalized
+        case .standard: return "Standard".wcLocalized
+        case .long: return "Longue".wcLocalized
         }
     }
 
@@ -40,9 +40,9 @@ public enum Place: String, Codable, CaseIterable, Hashable, Sendable {
 
     public var title: String {
         switch self {
-        case .home: return "Maison"
-        case .work: return "Travail"
-        case .outside: return "Dehors"
+        case .home: return "Maison".wcLocalized
+        case .work: return "Travail".wcLocalized
+        case .outside: return "Dehors".wcLocalized
         }
     }
 
@@ -63,9 +63,9 @@ public enum SessionSource: String, Codable, Hashable, Sendable {
 
     public var title: String {
         switch self {
-        case .phone: return "iPhone"
-        case .watch: return "Apple Watch"
-        case .widget: return "Widget"
+        case .phone: return "iPhone".wcLocalized
+        case .watch: return "Apple Watch".wcLocalized
+        case .widget: return "Widget".wcLocalized
         }
     }
 }

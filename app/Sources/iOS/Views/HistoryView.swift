@@ -43,7 +43,9 @@ struct HistoryView: View {
                         HStack {
                             Text(WCFormat.dayHeader(group.day))
                             Spacer()
-                            Text("\(group.sessions.count) visite\(group.sessions.count > 1 ? "s" : "")")
+                            Text(group.sessions.count > 1
+                                 ? "%@ visites".wcLocalized(String(group.sessions.count))
+                                 : "%@ visite".wcLocalized(String(group.sessions.count)))
                         }
                     }
                 }

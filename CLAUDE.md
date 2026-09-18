@@ -65,3 +65,9 @@ website/   site de présentation React 18 + TypeScript (Vite), statique
   croire à une vérification.
 - Les tests de `app/Tests/WCConnectTests` couvrent la logique pure et
   n'exigent pas d'application hôte.
+- **Traductions** : le français sert de clé. Toute chaîne visible ajoutée doit
+  être traduite dans `app/Support/Tools/localize.py`, puis les tables
+  régénérées (`python3 app/Support/Tools/localize.py`). Les chaînes calculées
+  passent par `String.wcLocalized` ; les littéraux SwiftUI sont traduits
+  automatiquement. `localize.py --check` et `LocalizationTests` échouent si une
+  clé manque.

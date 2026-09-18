@@ -20,12 +20,12 @@ public enum WCFormat {
         let minutes = (total % 3600) / 60
         let seconds = total % 60
         if hours > 0 {
-            return "\(hours) h \(String(format: "%02d", minutes)) min"
+            return "%@ h %@ min".wcLocalized(String(hours), String(format: "%02d", minutes))
         }
         if minutes > 0 {
-            return "\(minutes) min \(String(format: "%02d", seconds)) s"
+            return "%@ min %@ s".wcLocalized(String(minutes), String(format: "%02d", seconds))
         }
-        return "\(seconds) s"
+        return "%@ s".wcLocalized(String(seconds))
     }
 
     public static func time(_ date: Date) -> String {
@@ -33,12 +33,12 @@ public enum WCFormat {
     }
 
     public static func dayHeader(_ date: Date, now: Date = Date(), calendar: Calendar = .current) -> String {
-        if calendar.isDateInToday(date) { return "Aujourd'hui" }
-        if calendar.isDateInYesterday(date) { return "Hier" }
+        if calendar.isDateInToday(date) { return "Aujourd'hui".wcLocalized }
+        if calendar.isDateInYesterday(date) { return "Hier".wcLocalized }
         return date.formatted(.dateTime.weekday(.wide).day().month(.wide))
     }
 
     public static func hourLabel(_ hour: Int) -> String {
-        "\(hour) h"
+        "%@ h".wcLocalized(String(hour))
     }
 }

@@ -1,6 +1,7 @@
 name: WCConnect
 options:
   bundleIdPrefix: com.wcconnect
+  developmentLanguage: fr
   createIntermediateGroups: true
   groupSortPosition: top
   deploymentTarget:
@@ -31,6 +32,7 @@ targets:
       - path: Sources/iOS
       - path: Support/Assets.xcassets
       - path: Support/Audio
+      - path: Support/Localization
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.wcconnect.app
@@ -57,6 +59,7 @@ targets:
       - path: Sources/Shared/Core
       - path: Sources/Widgets
       - path: Support/Assets.xcassets
+      - path: Support/Localization
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.wcconnect.app.widgets
@@ -75,6 +78,7 @@ targets:
       - path: Sources/Shared/Sync
       - path: Sources/Watch
       - path: Support/WatchAssets.xcassets
+      - path: Support/Localization
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.wcconnect.app.watchkitapp
@@ -96,6 +100,7 @@ targets:
       - path: Sources/Widgets/TodayWidget.swift
       - path: Sources/WatchWidgets
       - path: Support/WatchAssets.xcassets
+      - path: Support/Localization
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.wcconnect.app.watchkitapp.widgets
@@ -114,6 +119,7 @@ targets:
     sources:
       - path: Sources/Shared/Core
       - path: Tests/WCConnectTests
+      - path: Support/Localization
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.wcconnect.tests

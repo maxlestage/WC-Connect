@@ -93,7 +93,7 @@ final class MusicRemote: ObservableObject {
             return
         }
         nowPlaying = NowPlaying(
-            title: item.title ?? "Titre inconnu",
+            title: item.title ?? "Titre inconnu".wcLocalized,
             artist: item.artist,
             artwork: item.artwork?.image(at: CGSize(width: 160, height: 160))
         )

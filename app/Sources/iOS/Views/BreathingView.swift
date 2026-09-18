@@ -52,9 +52,9 @@ struct BreathingView: View {
                 .foregroundStyle(.secondary)
 
             HStack(spacing: 18) {
-                labelled("Rythme", pattern.rhythm)
-                labelled("Cycles", "\(pattern.cycles)")
-                labelled("Durée", WCFormat.duration(pattern.totalDuration))
+                labelled("Rythme".wcLocalized, pattern.rhythm)
+                labelled("Cycles".wcLocalized, "\(pattern.cycles)")
+                labelled("Durée".wcLocalized, WCFormat.duration(pattern.totalDuration))
             }
 
             Spacer()
@@ -98,7 +98,7 @@ struct BreathingView: View {
                         .fill(WCTheme.accent.opacity(0.28))
                         .scaleEffect(state.scale)
                     VStack(spacing: 6) {
-                        Text(state.isFinished ? "Terminé" : state.phase.title)
+                        Text(state.isFinished ? "Terminé".wcLocalized : state.phase.title)
                             .font(.title2.weight(.semibold))
                         if !state.isFinished {
                             Text("\(Int(state.phaseRemaining.rounded(.up)))")
@@ -117,7 +117,7 @@ struct BreathingView: View {
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.secondary)
                 } else {
-                    Text("Cycle \(state.cycle) sur \(pattern.cycles)")
+                    Text("Cycle %@ sur %@".wcLocalized(String(state.cycle), String(pattern.cycles)))
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }

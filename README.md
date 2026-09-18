@@ -16,7 +16,7 @@ Tout reste sur l'appareil : pas de compte, pas de serveur, pas de réseau.
 | **Son** | Quatre ambiances embarquées qui se mélangent à votre musique, et commande de la musique du système |
 | **Palmarès** | 14 hauts faits, équivalences absurdes, titre honorifique et certificat partageable |
 | **Météo intestinale** | Bulletin calculé sur la semaine, profil, prévision de la prochaine visite |
-| **Siri** | « Je vais aux toilettes », « J'ai fini » via App Shortcuts |
+| **Siri** | « Je vais aux toilettes », « I'm going to the bathroom » et leurs variantes |
 | **Site** | `website/`, React 18 + TypeScript (Vite), **statique** et **bilingue** français / anglais |
 
 ## Structure du dépôt
@@ -107,6 +107,30 @@ app.json                     manifeste du bouton « Deploy to Heroku »
   comme le certificat.
 - **Fanfare et bandeau** au déblocage d'un haut fait : `fanfare.wav` est
   synthétisée par le même script que les ambiances.
+
+### Bilingue
+
+L'app s'affiche en **français ou en anglais**, selon la langue de l'appareil.
+
+- Le **français sert de clé** : les vues SwiftUI cherchent déjà leurs littéraux
+  dans la table `Localizable`, et `String.wcLocalized` fait de même pour les
+  chaînes calculées (titres de modèles, conseils, hauts faits, bulletin météo).
+- Les tables vivent dans `Support/Localization/<langue>.lproj/` et sont
+  embarquées dans les quatre cibles applicatives : `Bundle.main` diffère entre
+  l'app, ses extensions et la montre.
+- Elles sont générées depuis une correspondance unique :
+
+  ```bash
+  python3 app/Support/Tools/localize.py          # régénère les deux tables
+  python3 app/Support/Tools/localize.py --check  # échoue si une clé n'est pas traduite
+  ```
+
+- `LocalizationTests` vérifie dans la CI que les deux tables ont les mêmes
+  clés, qu'aucune traduction n'est vide, que la table française est bien
+  l'identité, que les trous de format correspondent, et que chaque conseil,
+  haut fait et signal d'alerte est traduit.
+- Le séparateur décimal suit la langue de l'appareil, plutôt qu'une virgule
+  imposée.
 
 ### Architecture en bref
 

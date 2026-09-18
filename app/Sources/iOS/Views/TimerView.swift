@@ -89,7 +89,7 @@ struct TimerView: View {
                             .font(.title3)
                             .foregroundStyle(WCTheme.warn)
                     }
-                    Text(session == nil ? "Prêt" : WCFormat.clock(elapsed))
+                    Text(session == nil ? "Prêt".wcLocalized : WCFormat.clock(elapsed))
                         .font(.system(size: session == nil ? 40 : 52, weight: .semibold, design: .rounded))
                         .monospacedDigit()
                         .contentTransition(.numericText())
@@ -116,10 +116,10 @@ struct TimerView: View {
 
     private func subtitle(for session: ToiletSession?) -> String {
         guard let session else {
-            return royalMode ? "Le trône vous attend, Majesté" : "Aucune visite en cours"
+            return royalMode ? "Le trône vous attend, Majesté".wcLocalized : "Aucune visite en cours".wcLocalized
         }
         if royalMode {
-            return "Sa Majesté siège · \(session.place.title)"
+            return "Sa Majesté siège · %@".wcLocalized(session.place.title)
         }
         return "\(session.kind.title) · \(session.place.title)"
     }
@@ -295,7 +295,7 @@ struct TimerView: View {
                     soundscapes.toggle(.rain)
                 } label: {
                     Label(
-                        soundscapes.current == .rain ? "Couper" : "Ambiance",
+                        soundscapes.current == .rain ? "Couper".wcLocalized : "Ambiance".wcLocalized,
                         systemImage: soundscapes.current == .rain ? "pause.fill" : "cloud.rain.fill"
                     )
                     .font(.subheadline)
@@ -325,15 +325,15 @@ struct TimerView: View {
     private var quickStats: some View {
         let stats = store.stats
         return HStack(spacing: 12) {
-            StatTile(value: "\(store.todayCount)", label: "Aujourd'hui", symbol: "sun.max.fill", color: WCTheme.warn)
+            StatTile(value: "\(store.todayCount)", label: "Aujourd'hui".wcLocalized, symbol: "sun.max.fill", color: WCTheme.warn)
             StatTile(
                 value: stats.total > 0 ? WCFormat.duration(stats.averageDuration) : "—",
-                label: "Durée moyenne",
+                label: "Durée moyenne".wcLocalized,
                 symbol: "timer"
             )
             StatTile(
                 value: stats.streakDays > 0 ? "\(stats.streakDays) j" : "—",
-                label: "Série en cours",
+                label: "Série en cours".wcLocalized,
                 symbol: "flame.fill",
                 color: WCTheme.mint
             )

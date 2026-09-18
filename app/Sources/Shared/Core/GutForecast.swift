@@ -16,8 +16,8 @@ public struct GutForecast: Hashable, Sendable {
 
     public static let unknown = GutForecast(
         symbol: "questionmark.circle",
-        title: "Bulletin indisponible",
-        summary: "Pas encore assez de visites pour établir des prévisions. Revenez après quelques passages.",
+        title: "Bulletin indisponible".wcLocalized,
+        summary: "Pas encore assez de visites pour établir des prévisions. Revenez après quelques passages.".wcLocalized,
         pressure: 1013,
         wind: "vent nul",
         visibility: "nulle",
@@ -76,28 +76,28 @@ public enum ForecastEngine {
         if averageDuration > 12 * 60 || rating <= 2 {
             return Condition(
                 symbol: "cloud.bolt.rain.fill",
-                title: "Tempête",
-                summary: "Conditions difficiles. Surélevez les pieds, respirez, et ne forcez pas : l'accalmie viendra."
+                title: "Tempête".wcLocalized,
+                summary: "Conditions difficiles. Surélevez les pieds, respirez, et ne forcez pas : l'accalmie viendra.".wcLocalized
             )
         }
         if averageDuration > 7 * 60 || rating < 3 {
             return Condition(
                 symbol: "cloud.rain.fill",
-                title: "Perturbé",
-                summary: "Le passage s'annonce laborieux. Une marche et un verre d'eau amélioreraient le front."
+                title: "Perturbé".wcLocalized,
+                summary: "Le passage s'annonce laborieux. Une marche et un verre d'eau amélioreraient le front.".wcLocalized
             )
         }
         if rating >= 4 && averageDuration <= 5 * 60 {
             return Condition(
                 symbol: "sun.max.fill",
-                title: "Grand beau",
-                summary: "Ciel dégagé sur l'ensemble du territoire. Profitez-en, ça ne durera pas."
+                title: "Grand beau".wcLocalized,
+                summary: "Ciel dégagé sur l'ensemble du territoire. Profitez-en, ça ne durera pas.".wcLocalized
             )
         }
         return Condition(
             symbol: "cloud.sun.fill",
-            title: "Variable",
-            summary: "Éclaircies alternant avec quelques passages nuageux. Rien d'alarmant."
+            title: "Variable".wcLocalized,
+            summary: "Éclaircies alternant avec quelques passages nuageux. Rien d'alarmant.".wcLocalized
         )
     }
 
@@ -113,18 +113,18 @@ public enum ForecastEngine {
 
     private static func wind(countRatio: Double) -> String {
         switch countRatio {
-        case ..<0.7: return "vent faible, tendance au calme"
-        case ..<1.3: return "vent modéré de secteur sud"
-        case ..<2.0: return "vent soutenu, rafales possibles"
-        default: return "vent de tempête, avis aux navigateurs"
+        case ..<0.7: return "vent faible, tendance au calme".wcLocalized
+        case ..<1.3: return "vent modéré de secteur sud".wcLocalized
+        case ..<2.0: return "vent soutenu, rafales possibles".wcLocalized
+        default: return "vent de tempête, avis aux navigateurs".wcLocalized
         }
     }
 
     private static func visibility(comfort: Double?) -> String {
         switch comfort ?? 3 {
-        case ..<2.5: return "réduite, brouillard persistant"
-        case ..<4: return "correcte, quelques bancs de brume"
-        default: return "excellente, dix kilomètres"
+        case ..<2.5: return "réduite, brouillard persistant".wcLocalized
+        case ..<4: return "correcte, quelques bancs de brume".wcLocalized
+        default: return "excellente, dix kilomètres".wcLocalized
         }
     }
 

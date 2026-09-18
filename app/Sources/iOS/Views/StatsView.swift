@@ -32,32 +32,32 @@ struct StatsView: View {
 
     private var tiles: some View {
         LazyVGrid(columns: Array(repeating: GridItem(spacing: 12), count: 2), spacing: 12) {
-            StatTile(value: "\(stats.total)", label: "Visites enregistrées", symbol: "number")
+            StatTile(value: "\(stats.total)", label: "Visites enregistrées".wcLocalized, symbol: "number")
             StatTile(
                 value: stats.total > 0 ? String(format: "%.1f", stats.averagePerDay) : "—",
-                label: "Visites par jour",
+                label: "Visites par jour".wcLocalized,
                 symbol: "calendar",
                 color: WCTheme.mint
             )
             StatTile(
                 value: stats.total > 0 ? WCFormat.duration(stats.averageDuration) : "—",
-                label: "Durée moyenne",
+                label: "Durée moyenne".wcLocalized,
                 symbol: "timer"
             )
             StatTile(
                 value: stats.total > 0 ? WCFormat.duration(stats.longestDuration) : "—",
-                label: "Visite la plus longue",
+                label: "Visite la plus longue".wcLocalized,
                 symbol: "tortoise.fill",
                 color: WCTheme.warn
             )
             StatTile(
                 value: stats.busiestHour.map { WCFormat.hourLabel($0) } ?? "—",
-                label: "Créneau favori",
+                label: "Créneau favori".wcLocalized,
                 symbol: "clock.fill"
             )
             StatTile(
                 value: stats.averageComfort.map { String(format: "%.1f/5", $0) } ?? "—",
-                label: "Confort moyen",
+                label: "Confort moyen".wcLocalized,
                 symbol: "star.fill",
                 color: WCTheme.warn
             )
@@ -111,7 +111,7 @@ struct StatsView: View {
                     }
                 }
                 .accessibilityLabel(bucket.date.formatted(.dateTime.weekday(.wide)))
-                .accessibilityValue("\(bucket.count) visites")
+                .accessibilityValue("%@ visites".wcLocalized(String(bucket.count)))
             }
             .chartYAxis {
                 AxisMarks(position: .leading, values: .automatic(desiredCount: 3))
@@ -141,8 +141,8 @@ struct StatsView: View {
                 )
                 .cornerRadius(4)
                 .foregroundStyle(WCTheme.accentDeep.opacity(0.7))
-                .accessibilityLabel("\(bucket.hour) heures")
-                .accessibilityValue("\(bucket.count) visites")
+                .accessibilityLabel("%@ heures".wcLocalized(String(bucket.hour)))
+                .accessibilityValue("%@ visites".wcLocalized(String(bucket.count)))
             }
             .chartYAxis {
                 AxisMarks(position: .leading, values: .automatic(desiredCount: 3))

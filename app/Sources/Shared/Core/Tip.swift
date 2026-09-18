@@ -13,12 +13,12 @@ public enum TipCategory: String, CaseIterable, Identifiable, Hashable, Sendable 
 
     public var title: String {
         switch self {
-        case .posture: return "Posture"
-        case .breathing: return "Respiration"
-        case .relax: return "Détente"
-        case .habits: return "Habitudes"
-        case .food: return "Boire et manger"
-        case .movement: return "Bouger"
+        case .posture: return "Posture".wcLocalized
+        case .breathing: return "Respiration".wcLocalized
+        case .relax: return "Détente".wcLocalized
+        case .habits: return "Habitudes".wcLocalized
+        case .food: return "Boire et manger".wcLocalized
+        case .movement: return "Bouger".wcLocalized
         }
     }
 
@@ -57,42 +57,29 @@ public struct Tip: Identifiable, Hashable, Sendable {
 /// `redFlags` renvoie vers un professionnel dès que la situation le demande.
 public enum TipLibrary {
 
-    public static let disclaimer = """
-    WC Connect n'est pas un dispositif médical et ne remplace pas l'avis d'un \
-    professionnel de santé. Ces conseils sont des repères d'hygiène de vie.
-    """
+    public static var disclaimer: String { "WC Connect n'est pas un dispositif médical et ne remplace pas l'avis d'un professionnel de santé. Ces conseils sont des repères d'hygiène de vie.".wcLocalized }
 
     public static let all: [Tip] = [
         // Posture
         Tip(
             id: "posture-footstool",
             category: .posture,
-            title: "Surélevez les pieds",
-            detail: """
-            Un tabouret, un marchepied ou même une pile de livres suffit. \
-            Genoux plus haut que les hanches : le passage s'ouvre et l'effort \
-            diminue nettement.
-            """,
+            title: "Surélevez les pieds".wcLocalized,
+            detail: "Un tabouret, un marchepied ou même une pile de livres suffit. Genoux plus haut que les hanches : le passage s'ouvre et l'effort diminue nettement.".wcLocalized,
             isImmediate: true
         ),
         Tip(
             id: "posture-lean",
             category: .posture,
-            title: "Penchez-vous vers l'avant",
-            detail: """
-            Coudes sur les cuisses, dos droit plutôt qu'arrondi. Cette \
-            inclinaison aligne le rectum et fait le travail à votre place.
-            """,
+            title: "Penchez-vous vers l'avant".wcLocalized,
+            detail: "Coudes sur les cuisses, dos droit plutôt qu'arrondi. Cette inclinaison aligne le rectum et fait le travail à votre place.".wcLocalized,
             isImmediate: true
         ),
         Tip(
             id: "posture-feet",
             category: .posture,
-            title: "Pieds à plat, jambes écartées",
-            detail: """
-            Gardez les deux pieds posés et les genoux un peu écartés : sur la \
-            pointe des pieds, tout le bassin se crispe.
-            """,
+            title: "Pieds à plat, jambes écartées".wcLocalized,
+            detail: "Gardez les deux pieds posés et les genoux un peu écartés : sur la pointe des pieds, tout le bassin se crispe.".wcLocalized,
             isImmediate: true
         ),
 
@@ -100,33 +87,22 @@ public enum TipLibrary {
         Tip(
             id: "breathing-no-valsalva",
             category: .breathing,
-            title: "Ne bloquez pas votre souffle",
-            detail: """
-            Pousser en retenant sa respiration fait monter la pression et \
-            fatigue le périnée, sans faire avancer les choses. Continuez à \
-            respirer, toujours.
-            """,
+            title: "Ne bloquez pas votre souffle".wcLocalized,
+            detail: "Pousser en retenant sa respiration fait monter la pression et fatigue le périnée, sans faire avancer les choses. Continuez à respirer, toujours.".wcLocalized,
             isImmediate: true
         ),
         Tip(
             id: "breathing-belly",
             category: .breathing,
-            title: "Respirez par le ventre",
-            detail: """
-            Inspirez en gonflant le ventre, expirez lentement par la bouche, \
-            bien plus longtemps que l'inspiration. C'est le diaphragme qui \
-            pousse, en douceur.
-            """,
+            title: "Respirez par le ventre".wcLocalized,
+            detail: "Inspirez en gonflant le ventre, expirez lentement par la bouche, bien plus longtemps que l'inspiration. C'est le diaphragme qui pousse, en douceur.".wcLocalized,
             isImmediate: true
         ),
         Tip(
             id: "breathing-candle",
             category: .breathing,
-            title: "Soufflez comme sur une bougie",
-            detail: """
-            Expirez par la bouche entrouverte comme pour faire vaciller une \
-            flamme sans l'éteindre : la pression reste basse et régulière.
-            """,
+            title: "Soufflez comme sur une bougie".wcLocalized,
+            detail: "Expirez par la bouche entrouverte comme pour faire vaciller une flamme sans l'éteindre : la pression reste basse et régulière.".wcLocalized,
             isImmediate: true
         ),
 
@@ -134,31 +110,22 @@ public enum TipLibrary {
         Tip(
             id: "relax-release",
             category: .relax,
-            title: "Relâchez ce qui se crispe",
-            detail: """
-            Épaules, mâchoire, plancher pelvien : serrer ferme le passage. \
-            Passez-les en revue un par un et laissez-les tomber.
-            """,
+            title: "Relâchez ce qui se crispe".wcLocalized,
+            detail: "Épaules, mâchoire, plancher pelvien : serrer ferme le passage. Passez-les en revue un par un et laissez-les tomber.".wcLocalized,
             isImmediate: true
         ),
         Tip(
             id: "relax-six-breaths",
             category: .relax,
-            title: "Six respirations avant de réessayer",
-            detail: """
-            Plutôt que de forcer, comptez six respirations lentes. L'exercice \
-            guidé de l'app est fait pour ça.
-            """,
+            title: "Six respirations avant de réessayer".wcLocalized,
+            detail: "Plutôt que de forcer, comptez six respirations lentes. L'exercice guidé de l'app est fait pour ça.".wcLocalized,
             isImmediate: true
         ),
         Tip(
             id: "relax-leave",
             category: .relax,
-            title: "Au bout de cinq minutes, levez-vous",
-            detail: """
-            Si rien ne vient, revenez plus tard : rester assis à pousser \
-            irrite et n'accélère rien. L'envie repassera.
-            """,
+            title: "Au bout de cinq minutes, levez-vous".wcLocalized,
+            detail: "Si rien ne vient, revenez plus tard : rester assis à pousser irrite et n'accélère rien. L'envie repassera.".wcLocalized,
             isImmediate: true
         ),
 
@@ -166,95 +133,66 @@ public enum TipLibrary {
         Tip(
             id: "habits-answer",
             category: .habits,
-            title: "Allez-y quand l'envie vient",
-            detail: """
-            Repousser l'envie laisse le temps à l'eau d'être réabsorbée : les \
-            selles durcissent et la fois suivante est plus difficile.
-            """
+            title: "Allez-y quand l'envie vient".wcLocalized,
+            detail: "Repousser l'envie laisse le temps à l'eau d'être réabsorbée : les selles durcissent et la fois suivante est plus difficile.".wcLocalized
         ),
         Tip(
             id: "habits-after-meal",
             category: .habits,
-            title: "Profitez de l'après-repas",
-            detail: """
-            Manger déclenche un réflexe qui met le colon en mouvement. Essayez \
-            vingt à trente minutes après un repas, à heure régulière.
-            """
+            title: "Profitez de l'après-repas".wcLocalized,
+            detail: "Manger déclenche un réflexe qui met le colon en mouvement. Essayez vingt à trente minutes après un repas, à heure régulière.".wcLocalized
         ),
         Tip(
             id: "habits-short",
             category: .habits,
-            title: "Des visites courtes",
-            detail: """
-            Cinq à dix minutes suffisent. Au-delà, on pousse par habitude plus \
-            que par besoin — et l'écran fait perdre la notion du temps.
-            """
+            title: "Des visites courtes".wcLocalized,
+            detail: "Cinq à dix minutes suffisent. Au-delà, on pousse par habitude plus que par besoin — et l'écran fait perdre la notion du temps.".wcLocalized
         ),
 
         // Boire et manger
         Tip(
             id: "food-water",
             category: .food,
-            title: "Buvez tout au long de la journée",
-            detail: """
-            L'eau est ce qui rend les fibres efficaces. Augmenter les fibres \
-            sans boire davantage peut même aggraver les choses.
-            """
+            title: "Buvez tout au long de la journée".wcLocalized,
+            detail: "L'eau est ce qui rend les fibres efficaces. Augmenter les fibres sans boire davantage peut même aggraver les choses.".wcLocalized
         ),
         Tip(
             id: "food-fiber",
             category: .food,
-            title: "Plus de fibres, mais progressivement",
-            detail: """
-            Fruits, légumes, légumineuses, céréales complètes : montez en \
-            douceur sur une à deux semaines, sinon ça ballonne.
-            """
+            title: "Plus de fibres, mais progressivement".wcLocalized,
+            detail: "Fruits, légumes, légumineuses, céréales complètes : montez en douceur sur une à deux semaines, sinon ça ballonne.".wcLocalized
         ),
         Tip(
             id: "food-classics",
             category: .food,
-            title: "Les classiques qui aident",
-            detail: """
-            Pruneaux, kiwis, poires, figues : connus pour faciliter le \
-            transit. Un verre d'eau tiède au réveil met souvent la machine en \
-            route.
-            """
+            title: "Les classiques qui aident".wcLocalized,
+            detail: "Pruneaux, kiwis, poires, figues : connus pour faciliter le transit. Un verre d'eau tiède au réveil met souvent la machine en route.".wcLocalized
         ),
 
         // Bouger
         Tip(
             id: "movement-walk",
             category: .movement,
-            title: "Marchez dix à quinze minutes",
-            detail: """
-            L'activité physique, même modeste, stimule le transit. Une marche \
-            après le repas vaut mieux qu'un long moment assis.
-            """
+            title: "Marchez dix à quinze minutes".wcLocalized,
+            detail: "L'activité physique, même modeste, stimule le transit. Une marche après le repas vaut mieux qu'un long moment assis.".wcLocalized
         ),
         Tip(
             id: "movement-massage",
             category: .movement,
-            title: "Massez-vous le ventre",
-            detail: """
-            À plat, avec la paume, dans le sens des aiguilles d'une montre : \
-            en bas à droite, puis le long des côtes, puis en bas à gauche. \
-            Quelques minutes, sans appuyer fort.
-            """,
+            title: "Massez-vous le ventre".wcLocalized,
+            detail: "À plat, avec la paume, dans le sens des aiguilles d'une montre : en bas à droite, puis le long des côtes, puis en bas à gauche. Quelques minutes, sans appuyer fort.".wcLocalized,
             isImmediate: true
         ),
         Tip(
             id: "movement-stretch",
             category: .movement,
-            title: "Étirez le bas du dos",
-            detail: """
-            Torsion assise, genoux ramenés vers la poitrine, position de \
-            l'enfant : ces étirements détendent la ceinture abdominale.
-            """
+            title: "Étirez le bas du dos".wcLocalized,
+            detail: "Torsion assise, genoux ramenés vers la poitrine, position de l'enfant : ces étirements détendent la ceinture abdominale.".wcLocalized
         )
     ]
 
     /// Signaux qui justifient un avis médical plutôt que des conseils.
-    public static let redFlags: [String] = [
+    public static var redFlags: [String] { [
         "Du sang dans les selles, ou des selles noires",
         "Une douleur abdominale intense, ou qui ne passe pas",
         "Des vomissements avec l'impossibilité d'aller à la selle ou d'émettre des gaz",
@@ -262,7 +200,7 @@ public enum TipLibrary {
         "Un changement durable et inexpliqué de votre transit, ou une perte de poids",
         "De la fièvre associée aux douleurs",
         "Chez un enfant, une personne âgée, pendant une grossesse, ou avec un traitement en cours : demandez conseil sans attendre"
-    ]
+    ].map(\.wcLocalized) }
 
     public static func tips(for category: TipCategory) -> [Tip] {
         all.filter { $0.category == category }
