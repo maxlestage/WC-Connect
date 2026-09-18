@@ -150,6 +150,17 @@ rouge sur le commit, visible dans l'app GitHub), et Heroku met le site en ligne.
 En cas de souci, les journaux se lisent aussi depuis le navigateur :
 **votre app → More → View logs**.
 
+### Variante gratuite : Render, aussi depuis le téléphone
+
+Render lit `render.yaml` (offre gratuite, sonde sur `/healthz`, déploiement
+automatique à chaque commit) :
+
+1. Ouvrez [dashboard.render.com](https://dashboard.render.com) depuis le
+   téléphone, puis **New → Blueprint**.
+2. Connectez le dépôt `WC-Connect` et choisissez la branche.
+3. **Apply** : Render construit et met le site en ligne, puis redéploie à
+   chaque commit.
+
 ### Et en ligne de commande, si un ordinateur repasse par là
 
 ```bash
@@ -171,6 +182,23 @@ besoin que d'Express et de `compression`. Le `Procfile` lance
 Le serveur sert les fichiers versionnés de `dist/assets` en cache long, renvoie
 `index.html` pour toute autre route et expose `/healthz` pour les sondes de
 disponibilité.
+
+### Aperçus de partage
+
+Les balises Open Graph exigent des URL absolues, alors que le domaine n'est
+connu qu'au déploiement : le serveur remplace le marqueur `__SITE_URL__` de
+`index.html` par l'origine réellement servie (en tenant compte du proxy
+d'Heroku ou de Render). Un en-tête `Host` invraisemblable est ignoré, et la
+variable d'environnement `SITE_URL` permet de forcer l'origine si vous
+utilisez un nom de domaine personnalisé.
+
+L'image de partage `website/public/social-card.png` (1200 × 630) est produite
+à partir du gabarit `website/scripts/social-card.html` :
+
+```bash
+npx playwright screenshot --viewport-size=1200,630 \
+  website/scripts/social-card.html website/public/social-card.png
+```
 
 ## Vie privée
 

@@ -11,6 +11,7 @@ on:
       - "package-lock.json"
       - "Procfile"
       - "app.json"
+      - "render.yaml"
       - ".github/workflows/site.yml"
   pull_request:
     paths:
@@ -19,6 +20,7 @@ on:
       - "package-lock.json"
       - "Procfile"
       - "app.json"
+      - "render.yaml"
       - ".github/workflows/site.yml"
 
 jobs:
@@ -51,4 +53,9 @@ jobs:
           done
           curl -fsS http://localhost:3000/healthz
           curl -fsS -o /dev/null http://localhost:3000/
+          curl -fsS -o /dev/null http://localhost:3000/social-card.png
+          # Les aperçus de partage exigent une URL absolue : le serveur doit
+          # avoir remplacé le marqueur __SITE_URL__.
+          curl -fsS http://localhost:3000/ | grep -q 'og:image" content="http'
+          ! curl -fsS http://localhost:3000/ | grep -q '__SITE_URL__'
           kill $SERVER_PID

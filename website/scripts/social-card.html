@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Carte de partage WC Connect</title>
+<!--
+  Gabarit de la carte de partage (1200 x 630). Pour régénérer l'image :
+  npx playwright screenshot --viewport-size=1200,630 \
+    website/scripts/social-card.html website/public/social-card.png
+-->
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    width: 1200px;
+    height: 630px;
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    padding: 72px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #f3f6fc;
+    background:
+      radial-gradient(70% 90% at 12% 6%, rgba(82, 168, 255, 0.34), transparent 66%),
+      linear-gradient(150deg, #0b1020 0%, #111c33 55%, #0b1020 100%);
+    overflow: hidden;
+  }
+  .text { flex: 1; min-width: 0; }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 18px;
+    white-space: nowrap;
+    font-weight: 700;
+    color: #6fc3ff;
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-size: 78px;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
+  p {
+    margin-top: 26px;
+    font-size: 27px;
+    line-height: 1.45;
+    color: #b6c0d6;
+    max-width: 19em;
+  }
+  .tags { display: flex; gap: 12px; margin-top: 34px; }
+  .tag {
+    font-size: 19px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .badge {
+    flex: none;
+    width: 300px;
+    height: 300px;
+    border-radius: 72px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(160deg, #4fb2ff, #1554a8);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.8);
+  }
+  .badge svg { width: 200px; height: 200px; }
+  .ring { fill: none; stroke: rgba(255, 255, 255, 0.55); stroke-width: 3.2; }
+</style>
+</head>
+<body>
+  <div class="text">
+    <p class="eyebrow">iPhone · Apple Watch · Live Activity</p>
+    <h1>Chaque pause<br>compte vraiment.</h1>
+    <p>Le suivi discret de vos passages aux toilettes. Chronomètre, Live Activity et Apple Watch, sans compte ni serveur.</p>
+    <div class="tags">
+      <span class="tag">Live Activity</span>
+      <span class="tag">Apple Watch</span>
+      <span class="tag">100 % hors ligne</span>
+    </div>
+  </div>
+  <div class="badge">
+    <svg viewBox="0 0 64 64">
+      <circle class="ring" cx="32" cy="32" r="25"></circle>
+      <path d="M32 13c6.6 7.5 10.6 12.9 10.6 17.9A10.6 10.6 0 0 1 21.4 30.9C21.4 25.9 25.4 20.5 32 13Z" fill="#ffffff"/>
+    </svg>
+  </div>
+</body>
+</html>
