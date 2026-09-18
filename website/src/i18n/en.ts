@@ -19,6 +19,7 @@ export const en: Dictionary = {
       { href: "#live", label: "Live Activity" },
       { href: "#watch", label: "Watch" },
       { href: "#suivi", label: "Tracking" },
+      { href: "#journal", label: "Journal" },
       { href: "#palmares", label: "Trophies" },
       { href: "#meteo", label: "Forecast" },
       { href: "#faq", label: "FAQ" },
@@ -82,6 +83,14 @@ export const en: Dictionary = {
       {
         title: "Clear statistics",
         description: "Average duration, favourite time slot, home / work / out split, running streak and seven-day charts.",
+      },
+      {
+        title: "Symptom journal",
+        description: "Consistency on the Bristol scale, perceived effort and symptoms recorded at the end of a visit. Enough to show a trend to a professional, and to export it to Health if you want to.",
+      },
+      {
+        title: "Goal & hydration",
+        description: "A modest weekly goal — regularity, short visits — and reminders to drink, scheduled locally in the time range you choose.",
       },
       {
         title: "Siri & shortcuts",
@@ -265,6 +274,45 @@ export const en: Dictionary = {
     ],
   },
 
+  journal: {
+    eyebrow: "Journal & goals",
+    title: "Notes that make for a real consultation",
+    body: "At the end of a visit, the app offers to record consistency on the Bristol scale, perceived effort and symptoms. Nothing is required, nothing is a diagnosis: it is a journal, to keep to yourself or to show to a professional. A symptom that deserves medical advice is flagged as such, without drama.",
+    points: [
+      "Bristol scale, types 1 to 7, with the matching tendency",
+      "Six symptoms in one tap, perceived effort from 0 to 5",
+      "A reminder to seek advice as soon as a symptom warrants it",
+      "Goal for the week: active days and average duration to hold",
+      "Local hydration reminders, in the time range you set",
+      "Optional export to Health, and extra columns in the CSV export",
+    ],
+    cardAlt: "Journal for one visit: consistency, effort and symptoms",
+    scaleTitle: "Consistency",
+    scaleFoot: "The usual classification. Types 1-2 lean towards constipation, 6-7 towards diarrhoea.",
+    scale: [
+      { value: "1", label: "Hard" },
+      { value: "2", label: "Lumpy" },
+      { value: "3", label: "Cracked" },
+      { value: "4", label: "Smooth" },
+      { value: "5", label: "Blobs" },
+      { value: "6", label: "Fluffy" },
+      { value: "7", label: "Liquid" },
+    ],
+    selected: "4",
+    selectedLabel: "Within the norm",
+    effortLabel: "Perceived effort",
+    effortValue: "2 / 5",
+    symptomsTitle: "Symptoms",
+    symptoms: ["Bloating", "Cramps", "Urgency", "Incomplete feeling", "Considerable effort", "Blood present"],
+    active: ["Bloating"],
+    disclaimer: "The app diagnoses nothing. A flagged symptom points to medical advice, never to a verdict.",
+    tiles: [
+      { title: "Goal for the week", value: "5 days out of 7", detail: "And visits under 6 minutes on average." },
+      { title: "Hydration reminders", value: "9 am · 1 pm · 4 pm · 8 pm", detail: "Local notifications, 2 to 8 a day." },
+      { title: "Health", value: "Optional export", detail: "Bloating, cramps, constipation, diarrhoea." },
+    ],
+  },
+
   fun: {
     eyebrow: "Useless, therefore essential",
     title: "A trophy room for a subject that deserved none",
@@ -276,6 +324,7 @@ export const en: Dictionary = {
       "A haiku composed at the end of every visit, from its duration and hour",
       "A fanfare and a banner when an achievement drops",
       "An official certificate to share, with no legal value whatsoever",
+      "A challenge card to send: your rank, your streak, and nothing to referee it",
       "A hidden throne mode: press and hold the timer",
       "Fourteen achievements to unlock, computed from your real visits",
     ],
@@ -334,8 +383,8 @@ export const en: Dictionary = {
   privacy: {
     eyebrow: "Privacy",
     title: "Your breaks are nobody's business",
-    lead: "No account, no analytics, no server. Your history lives in a space shared between the app, the widgets and the watch, on your devices only. iPhone ↔ Watch syncing goes through WatchConnectivity, directly, device to device.",
-    tags: ["0 trackers", "0 network requests", "CSV export", "Instant deletion"],
+    lead: "No account, no analytics, no server. Your history lives in a space shared between the app, the widgets and the watch, on your devices only. iPhone ↔ Watch syncing goes through WatchConnectivity, directly, device to device. Hydration reminders are notifications scheduled locally, and the export to Health only happens if you turn it on: the app writes to it, it reads nothing.",
+    tags: ["0 trackers", "0 network requests", "Write-only Health", "CSV export", "Instant deletion"],
   },
 
   faq: {
@@ -367,7 +416,11 @@ export const en: Dictionary = {
       },
       {
         question: "Can I get my data back?",
-        answer: "A CSV export is available in the settings: start date, end date, duration, type, place, comfort, device and note.",
+        answer: "A CSV export is available in the settings: start date, end date, duration, type, place, comfort, consistency, effort, symptoms, device and note.",
+      },
+      {
+        question: "What is the Bristol scale for?",
+        answer: "It is the usual classification for stool consistency, from type 1 to type 7. Recorded at the end of a visit, it is there to track a trend over several weeks — not to make a diagnosis. The app derives a tendency from it, and you can export symptoms to Health to show them to a professional.",
       },
       {
         question: "A haiku, seriously?",

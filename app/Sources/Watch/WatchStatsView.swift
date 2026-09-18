@@ -21,7 +21,7 @@ struct WatchStatsView: View {
             row("Aujourd'hui".wcLocalized, "\(stats.today)", "sun.max.fill")
             row("Par jour".wcLocalized, stats.total > 0 ? String(format: "%.1f", stats.averagePerDay) : "—", "calendar")
             row("Moyenne".wcLocalized, stats.total > 0 ? WCFormat.duration(stats.averageDuration) : "—", "timer")
-            row("Série".wcLocalized, stats.streakDays > 0 ? "\(stats.streakDays) j" : "—", "flame.fill")
+            row("Série".wcLocalized, stats.streakDays > 0 ? WCFormat.days(stats.streakDays) : "—", "flame.fill")
             row("Total".wcLocalized, "\(stats.total)", "number")
         }
         .navigationTitle("Stats")

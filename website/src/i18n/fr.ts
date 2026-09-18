@@ -21,6 +21,7 @@ export const fr = {
       { href: "#live", label: "Live Activity" },
       { href: "#watch", label: "Watch" },
       { href: "#suivi", label: "Suivi" },
+      { href: "#journal", label: "Journal" },
       { href: "#palmares", label: "Palmarès" },
       { href: "#meteo", label: "Météo" },
       { href: "#faq", label: "FAQ" },
@@ -84,6 +85,14 @@ export const fr = {
       {
         title: "Statistiques claires",
         description: "Durée moyenne, créneau favori, répartition maison / travail / dehors, série de jours suivis et graphiques sur 7 jours.",
+      },
+      {
+        title: "Journal des symptômes",
+        description: "Consistance sur l'échelle de Bristol, effort ressenti et symptômes notés en fin de visite. De quoi montrer une évolution à un professionnel, et l'exporter vers Santé si vous le voulez.",
+      },
+      {
+        title: "Objectif & hydratation",
+        description: "Un objectif hebdomadaire modeste — de la régularité, des visites courtes — et des rappels de boire, programmés localement dans le créneau que vous choisissez.",
       },
       {
         title: "Siri & raccourcis",
@@ -267,6 +276,45 @@ export const fr = {
     ],
   },
 
+  journal: {
+    eyebrow: "Journal & objectifs",
+    title: "Des notes qui préparent une vraie consultation",
+    body: "En fin de visite, l'app propose de noter la consistance sur l'échelle de Bristol, l'effort ressenti et les symptômes. Rien n'est obligatoire, rien n'est un diagnostic : c'est un journal, à garder pour soi ou à montrer à un professionnel. Un symptôme qui mérite un avis médical est signalé comme tel, sans dramatiser.",
+    points: [
+      "Échelle de Bristol des types 1 à 7, avec la tendance associée",
+      "Six symptômes en un geste, effort ressenti de 0 à 5",
+      "Un rappel d'avis médical dès qu'un symptôme le justifie",
+      "Objectif de la semaine : jours actifs et durée moyenne à tenir",
+      "Rappels d'hydratation locaux, dans le créneau que vous fixez",
+      "Export facultatif vers Santé, et colonnes ajoutées à l'export CSV",
+    ],
+    cardAlt: "Journal d'une visite : consistance, effort et symptômes",
+    scaleTitle: "Consistance",
+    scaleFoot: "Classification usuelle. Les types 1-2 tirent vers la constipation, 6-7 vers la diarrhée.",
+    scale: [
+      { value: "1", label: "Dures" },
+      { value: "2", label: "Grumeaux" },
+      { value: "3", label: "Fissures" },
+      { value: "4", label: "Lisse" },
+      { value: "5", label: "Morceaux" },
+      { value: "6", label: "Flocons" },
+      { value: "7", label: "Liquide" },
+    ],
+    selected: "4",
+    selectedLabel: "Dans la norme",
+    effortLabel: "Effort ressenti",
+    effortValue: "2 / 5",
+    symptomsTitle: "Symptômes",
+    symptoms: ["Ballonnements", "Crampes", "Urgence", "Sensation incomplète", "Effort important", "Présence de sang"],
+    active: ["Ballonnements"],
+    disclaimer: "L'app ne diagnostique rien. Un symptôme signalé renvoie vers un avis médical, jamais vers un verdict.",
+    tiles: [
+      { title: "Objectif de la semaine", value: "5 jours sur 7", detail: "Et des visites sous 6 minutes en moyenne." },
+      { title: "Rappels d'hydratation", value: "9 h · 13 h · 16 h · 20 h", detail: "Notifications locales, de 2 à 8 par jour." },
+      { title: "Santé", value: "Export facultatif", detail: "Ballonnements, crampes, constipation, diarrhée." },
+    ],
+  },
+
   fun: {
     eyebrow: "Inutile, donc indispensable",
     title: "Un palmarès pour un sujet qui n'en méritait pas",
@@ -278,6 +326,7 @@ export const fr = {
       "Un haïku composé à la fin de chaque visite, d'après sa durée et son heure",
       "Une fanfare et un bandeau quand un haut fait tombe",
       "Un certificat officiel à partager, sans aucune valeur légale",
+      "Une carte de défi à envoyer : votre rang, votre série, et rien pour arbitrer",
       "Un mode trône caché : appuyez longuement sur le chronomètre",
       "Quatorze hauts faits à débloquer, calculés sur vos vraies visites",
     ],
@@ -336,8 +385,8 @@ export const fr = {
   privacy: {
     eyebrow: "Confidentialité",
     title: "Vos pauses ne regardent personne",
-    lead: "Aucun compte, aucune analyse, aucun serveur. L'historique vit dans un espace partagé entre l'app, les widgets et la montre, sur vos appareils uniquement. La synchronisation iPhone ↔ Watch passe par WatchConnectivity, en direct, d'appareil à appareil.",
-    tags: ["0 tracker", "0 requête réseau", "Export CSV", "Suppression immédiate"],
+    lead: "Aucun compte, aucune analyse, aucun serveur. L'historique vit dans un espace partagé entre l'app, les widgets et la montre, sur vos appareils uniquement. La synchronisation iPhone ↔ Watch passe par WatchConnectivity, en direct, d'appareil à appareil. Les rappels d'hydratation sont des notifications programmées localement, et l'export vers Santé ne part que si vous l'activez : l'app y écrit, elle ne lit rien.",
+    tags: ["0 tracker", "0 requête réseau", "Santé en écriture seule", "Export CSV", "Suppression immédiate"],
   },
 
   faq: {
@@ -369,7 +418,11 @@ export const fr = {
       },
       {
         question: "Puis-je récupérer mes données ?",
-        answer: "Un export CSV est disponible dans les réglages : date de début, date de fin, durée, type, lieu, confort, appareil et note.",
+        answer: "Un export CSV est disponible dans les réglages : date de début, date de fin, durée, type, lieu, confort, consistance, effort, symptômes, appareil et note.",
+      },
+      {
+        question: "À quoi sert l'échelle de Bristol ?",
+        answer: "C'est la classification usuelle de la consistance des selles, des types 1 à 7. Notée en fin de visite, elle sert à suivre une évolution sur plusieurs semaines — pas à poser un diagnostic. L'app en tire une tendance, et vous pouvez exporter les symptômes vers Santé pour les montrer à un professionnel.",
       },
       {
         question: "Un haïku, sérieusement ?",

@@ -5,6 +5,7 @@ struct TrophyView: View {
     @EnvironmentObject private var store: SessionStore
     @State private var certificate: Image?
     @State private var recap: Image?
+    @State private var challenge: Image?
 
     private var persona: Persona { PersonaEngine.persona(sessions: store.sessions) }
 
@@ -22,6 +23,7 @@ struct TrophyView: View {
                 badges
                 absurdStats
                 recapSection
+                challengeSection
                 certificateSection
             }
             .padding(20)
@@ -181,6 +183,41 @@ struct TrophyView: View {
         }
     }
 
+    // MARK: - Défi
+
+    private var challengeSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Défier quelqu'un")
+                .font(.headline)
+            Text("Une carte à envoyer à qui vous voudrez. Aucun serveur, aucun classement : juste une image et votre parole.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            ChallengeCard(rank: AchievementEngine.rank(unlockedCount: unlocked.count), stats: stats)
+
+            if let challenge {
+                ShareLink(item: challenge, preview: SharePreview("Défi WC Connect", image: challenge)) {
+                    Label("Envoyer le défi", systemImage: "paperplane.fill")
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                }
+                .buttonStyle(.borderedProminent)
+            } else {
+                Button {
+                    challenge = render(ChallengeCard(
+                        rank: AchievementEngine.rank(unlockedCount: unlocked.count),
+                        stats: stats
+                    ))
+                } label: {
+                    Label("Préparer le défi", systemImage: "wand.and.stars")
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                }
+                .buttonStyle(.bordered)
+            }
+        }
+    }
+
     // MARK: - Certificat
 
     private var certificateSection: some View {
@@ -240,6 +277,59 @@ struct TrophyView: View {
         renderer.scale = 3
         guard let image = renderer.uiImage else { return nil }
         return Image(uiImage: image)
+    }
+}
+
+/// Carte de défi : des chiffres, et rien pour les vérifier.
+struct ChallengeCard: View {
+    let rank: String
+    let stats: Stats
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Image(systemName: "flag.checkered")
+                Text("Défi")
+                    .font(.caption.weight(.bold))
+                Spacer()
+                Text("WC Connect")
+                    .font(.caption2.weight(.semibold))
+                    .opacity(0.7)
+            }
+            .foregroundStyle(.white)
+
+            Text(rank)
+                .font(.title3.weight(.bold))
+                .foregroundStyle(.white)
+
+            HStack(spacing: 16) {
+                field("Visites".wcLocalized, "\(stats.total)")
+                field("Moyenne".wcLocalized, WCFormat.duration(stats.averageDuration))
+                field("Série".wcLocalized, WCFormat.days(stats.streakDays))
+            }
+
+            Text("Battez ça. Sans serveur pour arbitrer, il faudra se croire sur parole.")
+                .font(.caption2)
+                .foregroundStyle(.white.opacity(0.85))
+        }
+        .padding(18)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            LinearGradient(colors: [WCTheme.warn, WCTheme.accentDeep], startPoint: .topLeading, endPoint: .bottomTrailing),
+            in: RoundedRectangle(cornerRadius: 18, style: .continuous)
+        )
+    }
+
+    private func field(_ titre: String, _ valeur: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(valeur)
+                .font(.subheadline.weight(.semibold))
+                .monospacedDigit()
+            Text(titre)
+                .font(.caption2)
+                .opacity(0.8)
+        }
+        .foregroundStyle(.white)
     }
 }
 

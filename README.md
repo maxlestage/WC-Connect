@@ -36,7 +36,8 @@ app/
 website/
   index.html                 point d'entrée Vite
   src/                       app React + TypeScript (composants, hooks, styles)
-  server/server.ts           serveur Express (statique + repli SPA)
+  server.js                  serveur de fichiers sans dépendance (statique + repli SPA)
+  scripts/                   contrôles Playwright (débordement, aperçus de partage)
 package.json, Procfile       espace de travail npm et démarrage Heroku
 app.json                     manifeste du bouton « Deploy to Heroku »
 .github/workflows/site.yml   construction du site vérifiée à chaque commit
@@ -58,6 +59,36 @@ app.json                     manifeste du bouton « Deploy to Heroku »
   l'interface anime un cercle, la montre ajoute un tapotement par phase. Le
   rythme conseillé pendant une visite est sans apnée, parce que retenir son
   souffle revient à pousser.
+
+### Journal, objectifs et Santé
+
+- `Bristol` — l'**échelle de Bristol** (types 1 à 7) avec le détail de chaque
+  type et la tendance associée (constipation, norme, diarrhée). Proposée en fin
+  de visite, jamais obligatoire.
+- `Symptom` — six symptômes en un geste : ballonnements, crampes, urgence,
+  sensation incomplète, effort important, présence de sang. Seul le dernier
+  porte `needsAdvice` : il déclenche, dans la feuille de fin de visite, un
+  renvoi vers un avis médical — pas un verdict.
+- `ToiletSession` gagne `bristol`, `effort` et `symptoms`. Ces champs sont
+  **facultatifs** : les historiques enregistrés avant le journal se décodent
+  sans perte (`JournalTests` le vérifie).
+- `StatsEngine` agrège la répartition par type de Bristol, le compte par
+  symptôme et l'effort moyen. La carte **Journal** des statistiques les affiche,
+  et signale les types hors norme.
+- `WeeklyGoal` / `GoalEngine` — un **objectif de la semaine** modeste : un
+  nombre de jours actifs sur sept et une durée moyenne à ne pas dépasser.
+  `GoalProgress` en tire un avancement et un résumé en une phrase. Réglable
+  dans les réglages, persisté dans l'espace partagé.
+- `HydrationSchedule` / `HydrationReminders` — de 2 à 8 **rappels de boire** par
+  jour, répartis dans le créneau choisi, programmés en local
+  (`UNCalendarNotificationTrigger`). Le calcul des heures est pur, donc testé ;
+  la reprogrammation efface d'abord les anciens rappels pour ne pas les
+  accumuler.
+- `HealthExport` — **export facultatif vers Santé** : la tendance Bristol
+  devient un échantillon `constipation` ou `diarrhea`, les symptômes des
+  échantillons `bloating` et `abdominalCramps`. L'app demande l'écriture
+  seulement : elle n'accède à aucune donnée de santé existante.
+- L'export CSV porte les nouvelles colonnes : `confort,bristol,effort,symptomes`.
 
 ### Son et musique
 
@@ -120,6 +151,9 @@ app.json                     manifeste du bouton « Deploy to Heroku »
   comme le certificat.
 - **Fanfare et bandeau** au déblocage d'un haut fait : `fanfare.wav` est
   synthétisée par le même script que les ambiances.
+- **Carte de défi** partageable : votre rang, vos visites, votre moyenne et
+  votre série, rendus en image. Aucun serveur, aucun classement — il faudra se
+  croire sur parole.
 
 ### Bilingue
 
@@ -147,13 +181,17 @@ L'app s'affiche en **français ou en anglais**, selon la langue de l'appareil.
 
 ### Architecture en bref
 
-- `ToiletSession` — une visite : début, fin, type, lieu, confort, note, appareil.
+- `ToiletSession` — une visite : début, fin, type, lieu, confort, note,
+  appareil, et le journal facultatif (consistance, effort, symptômes).
 - `SessionStorage` — instantané JSON (`SessionState`) dans le conteneur App Group,
   lisible sans `@MainActor` pour que les widgets s'en servent directement.
 - `SessionStore` — source de vérité `@MainActor` de l'app ; écrit sur disque,
   pousse l'état vers la Watch et rafraîchit les widgets à chaque changement.
-- `StatsEngine` — calculs purs (moyennes, série de jours, créneaux horaires),
-  couverts par les tests.
+- `StatsEngine` — calculs purs (moyennes, série de jours, créneaux horaires,
+  agrégats du journal), couverts par les tests.
+- `GoalEngine` et `HydrationSchedule` — également purs, donc testables sans
+  simulateur : ils vivent dans `Shared/Core`, seuls les effets de bord
+  (notifications, HealthKit) restent dans `iOS/`.
 - `LiveActivityController` — démarre, met à jour et clôt la Live Activity ;
   branché sur le store via le protocole `LiveActivityCoordinating`, ce qui garde
   le store compilable sur watchOS.
@@ -202,8 +240,10 @@ python3 app/Support/Tools/make_icon.py
 ## Site de présentation
 
 Application **React 18 + TypeScript** construite par **Vite** en fichiers
-statiques. Il n'y a **aucun serveur** : ni Node à l'exécution, ni conteneur, ni
-dyno. Un hébergeur de fichiers suffit.
+statiques, servie par `website/server.js` — un serveur Node **sans aucune
+dépendance** (uniquement des modules intégrés), ce qui permet le déploiement sur
+Heroku. Les fichiers construits se posent aussi tels quels sur un simple
+hébergeur de fichiers, sans Node à l'exécution.
 
 ```
 package.json          racine de l'espace de travail npm (workspaces)
@@ -311,12 +351,17 @@ entre l'app, ses extensions et la montre. La synchronisation iPhone ↔ Watch
 utilise WatchConnectivity, d'appareil à appareil. Aucune requête réseau n'est
 effectuée par l'app, et un export CSV permet de tout récupérer.
 
+Deux autorisations sont demandées, et seulement si vous activez la fonction
+correspondante : les **notifications**, pour les rappels d'hydratation
+programmés localement, et l'**écriture dans Santé**, pour y déposer les
+symptômes notés. L'app ne demande aucune autorisation de lecture dans Santé.
+
 ## Pistes d'évolution
 
-- Rappels de bonne hydratation (notifications locales)
-- Export vers l'app Santé
-- Objectifs et badges hebdomadaires
-- Localisation anglaise (l'app est aujourd'hui en français)
+- Rétrospective mensuelle, sur le modèle du bilan annuel
+- Graphique d'évolution de la consistance sur plusieurs semaines
+- Widget dédié à l'objectif de la semaine
+- Verrouillage de l'historique par Face ID
 
 ## Crédits
 

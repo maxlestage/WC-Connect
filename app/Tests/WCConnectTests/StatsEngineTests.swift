@@ -119,4 +119,49 @@ final class StatsEngineTests: XCTestCase {
         XCTAssertEqual(stats.byPlace[.home], 1)
         XCTAssertNil(stats.byPlace[.outside])
     }
+
+    // MARK: - Journal
+
+    private func journal(day: Int, hour: Int = 9, bristol: Bristol?, effort: Int? = nil, symptoms: [Symptom]? = nil) -> ToiletSession {
+        let start = date(day, hour: hour)
+        return ToiletSession(
+            startedAt: start,
+            endedAt: start.addingTimeInterval(4 * 60),
+            bristol: bristol,
+            effort: effort,
+            symptoms: symptoms
+        )
+    }
+
+    func testJournalAgregeConsistanceEtSymptomes() {
+        let sessions = [
+            journal(day: 10, bristol: .one, effort: 4, symptoms: [.straining, .incomplete]),
+            journal(day: 10, hour: 12, bristol: .one, effort: 2, symptoms: [.straining]),
+            journal(day: 10, hour: 16, bristol: .four, symptoms: [])
+        ]
+        let stats = StatsEngine.compute(sessions: sessions, now: date(10), calendar: calendar)
+
+        XCTAssertEqual(stats.byBristol[.one], 2)
+        XCTAssertEqual(stats.byBristol[.four], 1)
+        XCTAssertNil(stats.byBristol[.seven])
+        XCTAssertEqual(stats.bySymptom[.straining], 2)
+        XCTAssertEqual(stats.bySymptom[.incomplete], 1)
+        XCTAssertNil(stats.bySymptom[.blood])
+        XCTAssertEqual(stats.averageEffort ?? 0, 3, accuracy: 0.001)
+    }
+
+    func testJournalVideNeProduitAucuneAgregation() {
+        let sessions = [session(day: 10), session(day: 10, hour: 15)]
+        let stats = StatsEngine.compute(sessions: sessions, now: date(10), calendar: calendar)
+
+        XCTAssertTrue(stats.byBristol.isEmpty)
+        XCTAssertTrue(stats.bySymptom.isEmpty)
+        XCTAssertNil(stats.averageEffort)
+    }
+
+    func testStatsVidesNOntPasDeJournal() {
+        XCTAssertTrue(Stats.empty.byBristol.isEmpty)
+        XCTAssertTrue(Stats.empty.bySymptom.isEmpty)
+        XCTAssertNil(Stats.empty.averageEffort)
+    }
 }

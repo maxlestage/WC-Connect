@@ -8,7 +8,9 @@
 import { chromium } from "playwright";
 
 const url = process.argv[2] ?? process.env.SITE_CHECK_URL ?? "http://localhost:4173/";
-const largeurs = [320, 360, 375, 390, 414, 430, 540, 768, 1024, 1280];
+// Les largeurs autour de 960 px sont celles où la barre de navigation est
+// la plus serrée (les liens réapparaissent) : c'est là que ça déborde.
+const largeurs = [320, 360, 375, 390, 414, 430, 540, 768, 960, 961, 1000, 1024, 1100, 1280];
 const langues = ["fr-FR", "en-US"];
 
 const navigateur = await chromium.launch();

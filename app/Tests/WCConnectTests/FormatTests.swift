@@ -35,4 +35,11 @@ final class FormatTests: XCTestCase {
         XCTAssertLessThan(SessionKind.quick.goal, SessionKind.standard.goal)
         XCTAssertLessThan(SessionKind.standard.goal, SessionKind.long.goal)
     }
+
+    func testJoursSuiventLaLangue() {
+        // La table française est l'identité : on vérifie la forme, pas la
+        // traduction (couverte par LocalizationTests).
+        XCTAssertEqual(WCFormat.days(12), "12 j")
+        XCTAssertEqual(WCFormat.days(0), "0 j")
+    }
 }

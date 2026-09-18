@@ -11,12 +11,14 @@ struct StatsView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
+                    goalCard
                     ForecastCard(
                         forecast: ForecastEngine.forecast(sessions: store.sessions),
                         nextVisit: ForecastEngine.nextVisit(sessions: store.sessions),
                         persona: PersonaEngine.persona(sessions: store.sessions)
                     )
                     tiles
+                    journalCard
                     trophyLink
                     weekChart
                     hourChart
@@ -61,6 +63,107 @@ struct StatsView: View {
                 symbol: "star.fill",
                 color: WCTheme.warn
             )
+        }
+    }
+
+    /// Objectif hebdomadaire : régularité et visites courtes.
+    private var goalCard: some View {
+        let progres = GoalEngine.progress(sessions: store.sessions, goal: WeeklyGoal.stored)
+        return VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Label("Objectif de la semaine", systemImage: "target")
+                    .font(.headline)
+                Spacer()
+                if progres.isReached {
+                    Image(systemName: "checkmark.seal.fill")
+                        .foregroundStyle(WCTheme.mint)
+                }
+            }
+            ProgressView(value: progres.regularity)
+                .tint(progres.isReached ? WCTheme.mint : WCTheme.accent)
+            Text(progres.summary)
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.quaternary.opacity(0.3), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+    }
+
+    /// Journal : consistance et symptômes, quand ils ont été renseignés.
+    @ViewBuilder
+    private var journalCard: some View {
+        let bristol = stats.byBristol
+        let symptomes = stats.bySymptom
+
+        if !bristol.isEmpty || !symptomes.isEmpty {
+            VStack(alignment: .leading, spacing: 14) {
+                Label("Journal", systemImage: "list.clipboard.fill")
+                    .font(.headline)
+
+                if !bristol.isEmpty {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Consistance")
+                            .font(.subheadline.weight(.semibold))
+                        ForEach(Bristol.allCases) { type in
+                            let compte = bristol[type] ?? 0
+                            let total = max(bristol.values.reduce(0, +), 1)
+                            if compte > 0 {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    HStack {
+                                        Text("\(type.title) · \(type.detail)")
+                                            .font(.caption)
+                                        Spacer()
+                                        Text("\(compte)")
+                                            .font(.caption.weight(.semibold))
+                                            .monospacedDigit()
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    ProgressView(value: Double(compte) / Double(total))
+                                        .tint(type.isNotable ? WCTheme.warn : WCTheme.accent)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if !symptomes.isEmpty {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Symptômes notés")
+                            .font(.subheadline.weight(.semibold))
+                        ForEach(Symptom.allCases) { symptome in
+                            let compte = symptomes[symptome] ?? 0
+                            if compte > 0 {
+                                HStack {
+                                    Label(symptome.title, systemImage: symptome.symbol)
+                                        .font(.caption)
+                                        .foregroundStyle(symptome.needsAdvice ? WCTheme.warn : .primary)
+                                    Spacer()
+                                    Text("\(compte)")
+                                        .font(.caption.weight(.semibold))
+                                        .monospacedDigit()
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if let effort = stats.averageEffort {
+                    Text("Effort moyen : %@/5".wcLocalized(String(format: "%.1f", effort)))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
+                if symptomes.keys.contains(where: \.needsAdvice) {
+                    Text("Un symptôme noté justifie un avis médical. L'app ne diagnostique rien : montrez ce journal à un professionnel.")
+                        .font(.caption2)
+                        .foregroundStyle(WCTheme.warn)
+                }
+            }
+            .padding(16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.quaternary.opacity(0.3), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
     }
 

@@ -121,4 +121,48 @@ final class SessionStoreTests: XCTestCase {
         XCTAssertTrue(lines[1].contains("240"))
         XCTAssertTrue(lines[1].contains("\"\"guillemets\"\""))
     }
+
+    func testExportCSVPorteLesColonnesDuJournal() {
+        let store = makeStore()
+        let start = Date().addingTimeInterval(-600)
+        store.add(ToiletSession(
+            startedAt: start,
+            endedAt: start.addingTimeInterval(240),
+            comfort: 3,
+            bristol: .two,
+            effort: 4,
+            symptoms: [.straining, .incomplete]
+        ))
+
+        let lines = store.exportCSV().split(separator: "\n").map(String.init)
+        let entetes = lines[0].split(separator: ",").map(String.init)
+        XCTAssertEqual(
+            entetes,
+            ["debut", "fin", "duree_secondes", "type", "lieu", "confort",
+             "bristol", "effort", "symptomes", "appareil", "note"]
+        )
+
+        // La note est le dernier champ et contient des virgules potentielles :
+        // on compare les colonnes qui précèdent, séparateur par séparateur.
+        let colonnes = lines[1].split(separator: ",", omittingEmptySubsequences: false).map(String.init)
+        XCTAssertEqual(colonnes.count, entetes.count)
+        XCTAssertEqual(colonnes[5], "3")
+        XCTAssertEqual(colonnes[6], "2")
+        XCTAssertEqual(colonnes[7], "4")
+        XCTAssertEqual(colonnes[8], "straining incomplete")
+    }
+
+    func testExportCSVLaisseLesColonnesDuJournalVidesSiRienNEstNote() {
+        let store = makeStore()
+        let start = Date().addingTimeInterval(-600)
+        store.add(ToiletSession(startedAt: start, endedAt: start.addingTimeInterval(120)))
+
+        let lines = store.exportCSV().split(separator: "\n").map(String.init)
+        let colonnes = lines[1].split(separator: ",", omittingEmptySubsequences: false).map(String.init)
+        XCTAssertEqual(colonnes.count, 11)
+        XCTAssertEqual(colonnes[5], "")
+        XCTAssertEqual(colonnes[6], "")
+        XCTAssertEqual(colonnes[7], "")
+        XCTAssertEqual(colonnes[8], "")
+    }
 }

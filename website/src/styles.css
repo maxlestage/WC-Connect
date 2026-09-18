@@ -149,6 +149,14 @@ a { color: inherit; }
   .nav__inner { justify-content: space-between; }
 }
 
+/* Entre 961 et 1140 px, les dix liens, la marque, la bascule et le bouton
+   partagent une seule ligne : on resserre plutôt que de laisser la page
+   déborder latéralement. */
+@media (min-width: 961px) and (max-width: 1140px) {
+  .nav__inner { gap: 12px; }
+  .nav__links { gap: 12px; font-size: 0.84rem; }
+}
+
 /* Sous 560 px, la marque, la bascule et le bouton ne tiennent plus ensemble :
    le bouton part, la section « disponibilité » restant accessible en
    défilant. C'est ce débordement qui élargissait la page entière. */
@@ -1146,3 +1154,133 @@ main section[id] { scroll-margin-top: 80px; }
   color: var(--ink);
 }
 .haiku__foot { margin: 10px 0 0; font-size: 0.72rem; color: var(--ink-3); }
+
+/* --- Journal des symptômes --- */
+
+.journal {
+  width: min(380px, 100%);
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.journal__title {
+  margin: 0 0 10px;
+  font-size: 0.72rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+}
+.journal__title + .journal__symptoms { margin-top: 0; }
+
+.journal__scale {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+.journal__step {
+  padding: 8px 2px;
+  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid transparent;
+  text-align: center;
+  /* Les libellés complets passent par l'attribut title : pas de survol
+     obligatoire pour comprendre, et pas de débordement horizontal. */
+  overflow: hidden;
+}
+.journal__step strong { display: block; font-size: 0.95rem; }
+.journal__step span {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.58rem;
+  line-height: 1.2;
+  color: var(--ink-3);
+  overflow-wrap: break-word;
+}
+.journal__step--on {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.journal__step--on strong { color: var(--accent-strong); }
+.journal__step--on span { color: var(--ink-2); }
+
+.journal__foot { margin: 10px 0 0; font-size: 0.7rem; color: var(--ink-3); }
+
+.journal__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 14px 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.82rem;
+  color: var(--ink-2);
+}
+.journal__row strong { font-size: 1.05rem; color: var(--ink); }
+
+.journal__symptoms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.journal__symptom {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  font-size: 0.72rem;
+  color: var(--ink-3);
+}
+.journal__symptom--on {
+  background: rgba(192, 125, 10, 0.14);
+  border-color: var(--amber);
+  color: var(--amber);
+  font-weight: 600;
+}
+
+.journal__disclaimer {
+  margin: 14px 0 0;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  color: var(--ink-3);
+}
+
+.journal__tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+  margin-top: 36px;
+}
+.journal__tile {
+  padding: 18px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.journal__tile-title {
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+}
+.journal__tile strong { display: block; font-size: 1.1rem; }
+.journal__tile span {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--ink-2);
+}
+
+@media (max-width: 420px) {
+  /* Sept colonnes deviennent illisibles : on passe à deux rangées. */
+  .journal__scale { grid-template-columns: repeat(4, 1fr); }
+}

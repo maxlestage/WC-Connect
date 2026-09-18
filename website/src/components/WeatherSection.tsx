@@ -8,7 +8,7 @@ export function WeatherSection() {
   const bulletin = t.weather.forecast;
 
   return (
-    <section className="section" id="meteo">
+    <section className="section section--alt" id="meteo">
       <div className="wrap split split--reverse">
         <Reveal className="split__text">
           <p className="eyebrow">{t.weather.eyebrow}</p>
