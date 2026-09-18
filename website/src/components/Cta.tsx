@@ -15,7 +15,6 @@ export function Cta() {
               {t.cta.action}
             </a>
           </div>
-          <p className="fine">{t.cta.legal}</p>
         </Reveal>
       </div>
     </section>

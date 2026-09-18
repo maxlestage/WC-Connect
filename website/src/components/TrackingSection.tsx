@@ -29,7 +29,7 @@ export function TrackingSection() {
                     <div
                       className={`chart__bar${index === WEEK_TODAY_INDEX ? " chart__bar--today" : ""}`}
                       style={{ height: `${(value / highest) * 100}%` }}
-                      data-tooltip={`${value} ${unit}`}
+                      title={`${value} ${unit}`}
                       role="img"
                       aria-label={`${value} ${unit}`}
                     >

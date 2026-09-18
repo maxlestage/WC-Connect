@@ -117,6 +117,24 @@ public enum AbsurdStats {
         return String(format: "À ce rythme, vous y passerez %.1f mois de votre vie. Assis.".wcLocalized, days / 30)
     }
 
+    /// Commentaire sur le temps écoulé depuis la dernière visite.
+    public static func abstinence(_ interval: TimeInterval) -> String {
+        let heures = max(0, interval) / 3600
+        if heures < 1 {
+            return "Dernière visite il y a moins d'une heure. Le rythme est soutenu.".wcLocalized
+        }
+        if heures < 6 {
+            return "Vous tenez depuis %@. Rien d'anormal.".wcLocalized(WCFormat.duration(interval))
+        }
+        if heures < 24 {
+            return "Vous tenez depuis %@. Le corps travaille en silence.".wcLocalized(WCFormat.duration(interval))
+        }
+        if heures < 72 {
+            return "Vous tenez depuis %@. Buvez un verre d'eau et marchez un peu.".wcLocalized(WCFormat.duration(interval))
+        }
+        return "Vous tenez depuis %@. Au-delà de trois jours, un avis médical vaut mieux qu'un haut fait.".wcLocalized(WCFormat.duration(interval))
+    }
+
     // MARK: - Mise en forme
 
     private static func count(_ value: Double) -> String {

@@ -76,6 +76,20 @@ final class AbsurdStatsTests: XCTestCase {
             .contains("mois"))
     }
 
+    func testAbstinenceAdaptsToTheDelay() {
+        XCTAssertTrue(AbsurdStats.abstinence(600).contains("moins d'une heure"))
+        XCTAssertTrue(AbsurdStats.abstinence(3 * 3600).contains("Rien d'anormal"))
+        XCTAssertTrue(AbsurdStats.abstinence(12 * 3600).contains("silence"))
+        XCTAssertTrue(AbsurdStats.abstinence(48 * 3600).contains("verre d'eau"))
+        // Au-delà de trois jours, l'app renvoie vers un avis médical plutôt que
+        // vers une plaisanterie.
+        XCTAssertTrue(AbsurdStats.abstinence(96 * 3600).contains("avis médical"))
+    }
+
+    func testAbstinenceClampsNegativeDelays() {
+        XCTAssertFalse(AbsurdStats.abstinence(-100).isEmpty)
+    }
+
     func testHeadlineAdaptsToTheScale() {
         XCTAssertTrue(AbsurdStats.headline(totalDuration: 120).contains("début"))
         XCTAssertTrue(AbsurdStats.headline(totalDuration: 3 * 3600).contains("heures"))

@@ -34,6 +34,7 @@ struct TimerView: View {
                     controls
                     helpNudge
                     quickStats
+                    abstinence
                     if let last = store.lastSession, store.active == nil {
                         lastVisitCard(last)
                     }
@@ -154,6 +155,8 @@ struct TimerView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
+
+                coverButton
             }
         } else {
             VStack(spacing: 12) {
@@ -318,6 +321,40 @@ struct TimerView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(WCTheme.warn.opacity(0.12), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         .transition(.opacity.combined(with: .move(edge: .bottom)))
+    }
+
+    /// Couverture sonore : une réunion de bureau, à plein volume, en un geste.
+    private var coverButton: some View {
+        Button {
+            if soundscapes.current == .meeting {
+                soundscapes.stop()
+            } else {
+                soundscapes.volume = 1
+                soundscapes.play(.meeting)
+            }
+        } label: {
+            Label(
+                soundscapes.current == .meeting ? "Couper la couverture" : "Couverture sonore",
+                systemImage: soundscapes.current == .meeting ? "speaker.slash.fill" : "person.3.fill"
+            )
+            .font(.subheadline)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 8)
+        }
+        .buttonStyle(.bordered)
+        .tint(WCTheme.mint)
+    }
+
+    /// Temps écoulé depuis la dernière visite, commenté.
+    @ViewBuilder
+    private var abstinence: some View {
+        if store.active == nil, let last = store.lastSession, let fin = last.endedAt {
+            Text(AbsurdStats.abstinence(Date().timeIntervalSince(fin)))
+                .font(.footnote)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity)
+        }
     }
 
     // MARK: - Résumés

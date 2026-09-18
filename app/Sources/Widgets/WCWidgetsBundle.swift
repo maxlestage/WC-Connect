@@ -6,5 +6,6 @@ struct WCWidgetsBundle: WidgetBundle {
     var body: some Widget {
         VisitLiveActivity()
         TodayWidget()
+        ForecastWidget()
     }
 }

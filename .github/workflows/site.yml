@@ -105,3 +105,36 @@ jobs:
 
           kill $serveur
           echo "serveur Heroku conforme"
+
+  mise-en-page:
+    # Un site qui se balade latéralement sur un téléphone est un défaut : ce
+    # travail le vérifie à dix largeurs, dans les deux langues.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: npm
+
+      - name: Installer les dependances
+        run: npm ci
+
+      - name: Installer Chromium
+        run: npm exec --workspace website -- playwright install --with-deps chromium
+
+      - name: Construire le site
+        run: npm run build
+
+      - name: Verifier l'absence de debordement horizontal
+        run: |
+          set -euo pipefail
+          PORT=4173 node website/server.js &
+          serveur=$!
+          for essai in $(seq 1 20); do
+            if curl -fsS -o /dev/null http://localhost:4173/healthz; then break; fi
+            sleep 1
+          done
+          npm run check:overflow --workspace website -- http://localhost:4173/
+          kill $serveur

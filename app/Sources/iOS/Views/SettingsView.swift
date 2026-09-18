@@ -52,6 +52,9 @@ struct SettingsView: View {
 
                 Section {
                     LabeledContent("Version", value: appVersion)
+                    LabeledContent("Conçu et développé par", value: "Maxime Nathan Lestage")
+                } header: {
+                    Text("Crédits")
                 } footer: {
                     Text("Toutes les données restent sur vos appareils : stockage local partagé entre l'app, les widgets et la Watch. Aucun compte, aucun serveur.")
                 }

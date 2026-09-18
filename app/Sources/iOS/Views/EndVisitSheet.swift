@@ -47,6 +47,20 @@ struct EndVisitSheet: View {
                         .padding(.vertical, 4)
                 }
 
+                Section {
+                    VStack(alignment: .leading, spacing: 4) {
+                        ForEach(HaikuEngine.haiku(for: session).lines, id: \.self) { vers in
+                            Text(vers)
+                                .font(.callout.italic())
+                        }
+                    }
+                    .padding(.vertical, 4)
+                } header: {
+                    Text("Haïku de la visite")
+                } footer: {
+                    Text("Composé d'après la durée, l'heure et le lieu. Personne ne l'avait demandé.")
+                }
+
                 Section("Note") {
                     TextField("Optionnel", text: $note, axis: .vertical)
                         .lineLimit(1...4)

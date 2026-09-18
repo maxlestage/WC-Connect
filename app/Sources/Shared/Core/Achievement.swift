@@ -17,8 +17,22 @@ public enum Achievement: String, CaseIterable, Identifiable, Hashable, Sendable 
     case double
     case journeeChargee
     case bureauDiscret
+    // Secrets : masqués dans l'interface tant qu'ils ne sont pas débloqués.
+    case coupDeMinuit
+    case reveillon
+    case nombrePi
+    case triple
+    case jourSansFin
 
     public var id: String { rawValue }
+
+    /// Un haut fait secret ne dévoile son intitulé qu'une fois obtenu.
+    public var isSecret: Bool {
+        switch self {
+        case .coupDeMinuit, .reveillon, .nombrePi, .triple, .jourSansFin: return true
+        default: return false
+        }
+    }
 
     public var title: String {
         switch self {
@@ -36,6 +50,11 @@ public enum Achievement: String, CaseIterable, Identifiable, Hashable, Sendable 
         case .double: return "Doublé".wcLocalized
         case .journeeChargee: return "Journée chargée".wcLocalized
         case .bureauDiscret: return "Discrétion au bureau".wcLocalized
+        case .coupDeMinuit: return "Le Coup de minuit".wcLocalized
+        case .reveillon: return "Réveillon".wcLocalized
+        case .nombrePi: return "3,14".wcLocalized
+        case .triple: return "Triplé".wcLocalized
+        case .jourSansFin: return "Jour sans fin".wcLocalized
         }
     }
 
@@ -55,6 +74,11 @@ public enum Achievement: String, CaseIterable, Identifiable, Hashable, Sendable 
         case .double: return "Deux visites en moins de trente minutes.".wcLocalized
         case .journeeChargee: return "Cinq visites dans la même journée.".wcLocalized
         case .bureauDiscret: return "Vingt visites au travail. Personne n'a rien remarqué.".wcLocalized
+        case .coupDeMinuit: return "Une visite dans les cinq premières minutes d'un jour nouveau.".wcLocalized
+        case .reveillon: return "Une visite le 31 décembre ou le 1er janvier. Bonne année.".wcLocalized
+        case .nombrePi: return "Une visite de 3 minutes et 14 secondes. Au hasard, évidemment.".wcLocalized
+        case .triple: return "Trois visites en moins d'une heure. Tout va bien ?".wcLocalized
+        case .jourSansFin: return "Deux visites de durée rigoureusement identique, à la seconde.".wcLocalized
         }
     }
 
@@ -74,6 +98,11 @@ public enum Achievement: String, CaseIterable, Identifiable, Hashable, Sendable 
         case .double: return "arrow.triangle.2.circlepath"
         case .journeeChargee: return "flame.fill"
         case .bureauDiscret: return "building.2.fill"
+        case .coupDeMinuit: return "clock.badge.exclamationmark.fill"
+        case .reveillon: return "party.popper.fill"
+        case .nombrePi: return "function"
+        case .triple: return "3.circle.fill"
+        case .jourSansFin: return "repeat.circle.fill"
         }
     }
 }
@@ -137,6 +166,34 @@ public enum AchievementEngine {
 
         case .bureauDiscret:
             return finished.filter { $0.place == .work }.count >= 20
+
+        case .coupDeMinuit:
+            return finished.contains {
+                let heure = calendar.component(.hour, from: $0.startedAt)
+                let minute = calendar.component(.minute, from: $0.startedAt)
+                return heure == 0 && minute < 5
+            }
+
+        case .reveillon:
+            return finished.contains {
+                let jour = calendar.component(.day, from: $0.startedAt)
+                let mois = calendar.component(.month, from: $0.startedAt)
+                return (mois == 12 && jour == 31) || (mois == 1 && jour == 1)
+            }
+
+        case .nombrePi:
+            return finished.contains { Int(($0.finalDuration ?? 0).rounded()) == 194 }
+
+        case .triple:
+            let debuts = finished.map(\.startedAt).sorted()
+            guard debuts.count >= 3 else { return false }
+            return (0...(debuts.count - 3)).contains { index in
+                debuts[index + 2].timeIntervalSince(debuts[index]) < 3_600
+            }
+
+        case .jourSansFin:
+            let durees = finished.compactMap { $0.finalDuration.map { Int($0.rounded()) } }
+            return Set(durees).count < durees.count
         }
     }
 
@@ -166,7 +223,8 @@ public enum AchievementEngine {
         case 3...5: return "Habitué".wcLocalized
         case 6...8: return "Vétéran du trône".wcLocalized
         case 9...11: return "Maître du transit".wcLocalized
-        default: return "Légende vivante".wcLocalized
+        case 12...15: return "Légende vivante".wcLocalized
+        default: return "Divinité des latrines".wcLocalized
         }
     }
 

@@ -198,6 +198,7 @@ export const en: Dictionary = {
     trackSubtitle: "From your library",
     points: [
       "A “Meeting” soundscape — office chatter and keyboard — to cover your tracks",
+      "One-tap sound cover: the Meeting loop, at full volume",
       "Soundscapes layer over your music instead of cutting it",
       "They keep playing when the screen locks",
       "Play, pause and skip your own library from inside the app",
@@ -270,7 +271,9 @@ export const en: Dictionary = {
     body: "14 achievements computed from your real visits, rigorously absurd equivalences, an honorary title and a certificate to pass around to people who never asked for it.",
     badgesAlt: "Examples of achievements to unlock",
     points: [
-      "An honorary title that evolves, from “Bathroom Nobody” to “Living Legend”",
+      "An honorary title that evolves, from “Bathroom Nobody” to “Deity of the Latrines”",
+      "Five secret achievements, revealed only when unlocked",
+      "A haiku composed at the end of every visit, from its duration and hour",
       "A fanfare and a banner when an achievement drops",
       "An official certificate to share, with no legal value whatsoever",
       "A hidden throne mode: press and hold the timer",
@@ -284,6 +287,11 @@ export const en: Dictionary = {
       { title: "Swiss clock", detail: "Three days in a row at the same time" },
       { title: "The Thinker", detail: "A quarter of an hour, and comfort 5 out of 5" },
     ],
+    haiku: {
+      title: "Haiku of the visit",
+      lines: ["The cold tiled floor", "time stretches out peacefully here", "the coffee will wait"],
+      foot: "Composed from the duration, the hour and the place. Nobody asked for it.",
+    },
     absurdTitle: "Your time, in more telling units",
     absurdFoot: "Example for a few hours of history.",
     equivalences: [
@@ -305,6 +313,7 @@ export const en: Dictionary = {
       "Pressure, chance of showers, visibility and wind — meaningless, properly calculated",
       "A profile drawn from your habits, from Morning Sprinter to Hermit of the Night",
       "A forecast of your next visit, with honestly low confidence",
+      "A Home Screen widget, to read the bulletin without opening the app",
     ],
     forecast: {
       condition: "Changeable",
@@ -361,6 +370,10 @@ export const en: Dictionary = {
         answer: "A CSV export is available in the settings: start date, end date, duration, type, place, comfort, device and note.",
       },
       {
+        question: "A haiku, seriously?",
+        answer: "Seriously. Three lines composed at the end of every visit, picked from its duration, hour and place — so always the same for the same visit. Thirty lines in stock, in both languages. It is the most useless feature in the app, and it is staying.",
+      },
+      {
         question: "Is this thing serious?",
         answer: "Half of it. The subject raises a smile, the code doesn't: tested logic, local data, native interface. Which half you're in is up to you.",
       },
@@ -376,5 +389,46 @@ export const en: Dictionary = {
 
   footer: {
     tagline: "Made seriously, about something that isn't.",
+    description:
+      "Discreet tracking of your breaks, on iPhone and Apple\u00a0Watch. No data ever leaves your devices.",
+    columns: [
+      {
+        title: "The product",
+        links: [
+          { href: "#fonctions", label: "Features" },
+          { href: "#live", label: "Live Activity" },
+          { href: "#watch", label: "Apple Watch" },
+          { href: "#suivi", label: "Tracking and stats" },
+        ],
+      },
+      {
+        title: "Wellbeing",
+        links: [
+          { href: "#aide", label: "When it won't come" },
+          { href: "#detente", label: "Guided breathing" },
+          { href: "#son", label: "Soundscapes and music" },
+        ],
+      },
+      {
+        title: "Learn more",
+        links: [
+          { href: "#palmares", label: "Trophies" },
+          { href: "#meteo", label: "Gut forecast" },
+          { href: "#confidentialite", label: "Privacy" },
+          { href: "#faq", label: "Frequently asked questions" },
+        ],
+      },
+    ],
+    creditsTitle: "Credits",
+    credits: "Designed and developed by %@.",
+    author: "Maxime Nathan Lestage",
+    statusTitle: "Availability",
+    status: "In private development. Beta by invitation.",
+    backToTop: "Back to top",
+    copyright: "© %@ WC Connect. All rights reserved.",
+    legal:
+      "Independent project, not affiliated with Apple. iPhone, Apple\u00a0Watch, Siri, Apple\u00a0Music and Dynamic Island are trademarks of Apple\u00a0Inc.",
+    medical:
+      "WC Connect is not a medical device and does not replace advice from a health professional.",
   },
 };

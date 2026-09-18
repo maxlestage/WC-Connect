@@ -14,7 +14,7 @@ Tout reste sur l'appareil : pas de compte, pas de serveur, pas de réseau.
 | **Widgets** | Écran d'accueil et écran verrouillé, bouton interactif (App Intents) |
 | **Aide & détente** | Conseils quand ça coince, respiration guidée, signaux qui doivent envoyer consulter |
 | **Son** | Quatre ambiances embarquées qui se mélangent à votre musique, et commande de la musique du système |
-| **Palmarès** | 14 hauts faits, équivalences absurdes, titre honorifique et certificat partageable |
+| **Palmarès** | 19 hauts faits dont 5 secrets, équivalences absurdes, titre honorifique, certificat et haïku |
 | **Météo intestinale** | Bulletin calculé sur la semaine, profil, prévision de la prochaine visite |
 | **Siri** | « Je vais aux toilettes », « I'm going to the bathroom » et leurs variantes |
 | **Site** | `website/`, React 18 + TypeScript (Vite), **bilingue**, servi par Heroku ou par n'importe quel hébergeur de fichiers |
@@ -78,7 +78,20 @@ app.json                     manifeste du bouton « Deploy to Heroku »
 
 ### Inutile, donc indispensable
 
-- `AchievementEngine` — 14 hauts faits calculés sur l'historique (« Éclair »
+- `HaikuEngine` — un **haïku** composé à la fin de chaque visite : trois vers
+  choisis d'après la durée, l'heure et le lieu, avec l'identifiant de la visite
+  pour graine. Le même passage donne toujours le même poème. Trente vers,
+  traduits.
+- **Cinq hauts faits secrets** (`isSecret`) dont l'intitulé reste masqué avant
+  déblocage : coup de minuit, réveillon, 3 min 14 s pile, trois visites en une
+  heure, deux durées rigoureusement identiques.
+- **Couverture sonore** : un geste lance l'ambiance « Réunion » à plein volume
+  depuis l'écran principal.
+- **Widget Météo** sur l'écran d'accueil et l'écran verrouillé.
+- `AbsurdStats.abstinence` — le temps écoulé depuis la dernière visite,
+  commenté. Au-delà de trois jours, l'app renvoie vers un avis médical plutôt
+  que vers une plaisanterie.
+- `AchievementEngine` — 19 hauts faits calculés sur l'historique (« Éclair »
   sous 45 secondes, « Marathonien » au-delà de vingt minutes, « Horloge
   suisse » pour trois jours de suite à la même heure, « Globe-trotteur » pour
   les trois lieux le même jour…). Calculs purs, couverts par les tests.
@@ -304,6 +317,10 @@ effectuée par l'app, et un export CSV permet de tout récupérer.
 - Export vers l'app Santé
 - Objectifs et badges hebdomadaires
 - Localisation anglaise (l'app est aujourd'hui en français)
+
+## Crédits
+
+Conçu et développé par **Maxime Nathan Lestage**.
 
 ---
 

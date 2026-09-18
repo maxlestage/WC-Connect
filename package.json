@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Dépôt WC Connect : application iOS/watchOS et site de présentation statique.",
+  "author": "Maxime Nathan Lestage",
   "workspaces": [
     "website"
   ],

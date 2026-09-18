@@ -26,6 +26,16 @@ export function FunSection() {
             ))}
           </div>
 
+          <div className="haiku">
+            <p className="haiku__head">{t.fun.haiku.title}</p>
+            {t.fun.haiku.lines.map((vers) => (
+              <p className="haiku__line" key={vers}>
+                {vers}
+              </p>
+            ))}
+            <p className="haiku__foot">{t.fun.haiku.foot}</p>
+          </div>
+
           <div className="absurd">
             <p className="absurd__head">{t.fun.absurdTitle}</p>
             <ul>
