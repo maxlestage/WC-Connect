@@ -1,23 +1,18 @@
 import { Reveal } from "./Reveal";
 
-const REPO_URL = "https://github.com/maxlestage/WC-Connect";
-
 export function Cta() {
   return (
-    <section className="cta" id="telecharger">
+    <section className="cta" id="disponibilite">
       <div className="wrap narrow">
         <Reveal>
-          <h2>Prêt à chronométrer ?</h2>
+          <h2>Bientôt dans votre poche</h2>
           <p>
-            Le projet est open source : clonez le dépôt, ouvrez le projet Xcode, et lancez l'app sur
-            votre iPhone et votre Watch.
+            WC&nbsp;Connect est en cours de développement, en privé. L'app arrivera sur iPhone et
+            Apple&nbsp;Watch ; d'ici là, la bêta se fait sur invitation.
           </p>
           <div className="hero__cta hero__cta--center">
-            <a className="btn" href={REPO_URL}>
-              Voir le dépôt
-            </a>
-            <a className="btn btn--ghost" href={`${REPO_URL}#installation`}>
-              Instructions d'installation
+            <a className="btn btn--ghost" href="#fonctions">
+              Revoir les fonctions
             </a>
           </div>
           <p className="fine">

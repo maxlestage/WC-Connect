@@ -123,6 +123,11 @@ npm start              # sert le build sur http://localhost:3000
 
 Tout se fait dans le navigateur du téléphone, sans ligne de commande :
 
+> Le bouton lit `app.json` par une URL publique : il ne fonctionne qu'avec un
+> dépôt public. Si vous rendez le dépôt privé, passez par « Dépôt privé »
+> ci-dessous — le déploiement depuis un téléphone reste possible, par une
+> autre porte.
+
 1. **Appuyez sur le bouton ci-dessus.** Heroku lit `app.json` à la racine du
    dépôt et prépare l'application tout seul.
 2. **Connectez-vous à Heroku** (ou créez un compte). Heroku n'a plus d'offre
@@ -131,6 +136,25 @@ Tout se fait dans le navigateur du téléphone, sans ligne de commande :
 3. **Choisissez un nom** d'application et une région, puis **Deploy app**.
    La construction dure une à deux minutes.
 4. **View** ouvre le site. C'est fini.
+
+### Dépôt privé
+
+WC Connect n'est pas un projet open source : le site ne renvoie vers aucun
+dépôt, et le code n'est sous aucune licence ouverte. Pour rendre le dépôt privé
+depuis un téléphone : **GitHub → dépôt → Settings → General → Danger Zone →
+Change repository visibility → Make private**.
+
+Les deux hébergeurs s'en accommodent, car ils lisent le code par une connexion
+GitHub authentifiée et non par une URL publique :
+
+- **Heroku** : *New → Create new app*, puis dans l'app *Deploy → Deployment
+  method → GitHub → Connect to GitHub*, choisissez `WC-Connect` et la branche,
+  enfin *Deploy Branch*. Tout se fait dans le navigateur du téléphone.
+- **Render** : *New → Blueprint*, connectez le dépôt privé, puis *Apply*.
+
+Sur un dépôt privé, les minutes GitHub Actions sont décomptées du quota
+gratuit (2 000 minutes par mois) ; le workflow du site consomme moins d'une
+minute par commit.
 
 ### Redéployer à chaque modification, toujours depuis le téléphone
 

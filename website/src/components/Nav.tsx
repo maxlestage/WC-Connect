@@ -18,8 +18,8 @@ export function Nav() {
             </a>
           ))}
         </nav>
-        <a className="btn btn--small" href="#telecharger">
-          Télécharger
+        <a className="btn btn--small" href="#disponibilite">
+          Disponibilité
         </a>
       </div>
     </header>
