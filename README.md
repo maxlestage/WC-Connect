@@ -90,6 +90,40 @@ app.json                     manifeste du bouton « Deploy to Heroku »
   seulement : elle n'accède à aucune donnée de santé existante.
 - L'export CSV porte les nouvelles colonnes : `confort,bristol,effort,symptomes`.
 
+### Des rappels qui servent à quelque chose
+
+Quatre notifications locales, chacune adossée à une recommandation réelle. Rien
+ne sort de l'appareil ; tout se coupe indépendamment.
+
+- **Hydratation** (`HydrationSchedule` / `HydrationReminders`) — de 2 à 8
+  rappels par jour, répartis dans le créneau choisi. Boire est ce qui rend les
+  fibres efficaces, et c'est le plus facile à oublier.
+- **Régularité** (`RoutineSuggestion`) — un rappel quotidien à heure fixe, le
+  premier conseil contre la constipation. L'heure proposée est celle qui
+  ressort déjà de l'historique, avec une préférence pour le créneau du matin,
+  où le réflexe gastro-colique est le plus franc.
+- **Absence prolongée** (`AbsenceEngine`) — au-delà de deux à sept jours sans
+  visite (trois par défaut, le repère usuel), une alerte en fin d'après-midi
+  renvoie vers un avis médical. Elle se reprogramme à chaque visite
+  enregistrée, d'où qu'elle vienne.
+- **Temps assis** — un rappel pendant la visite au-delà de cinq à vingt minutes
+  (dix par défaut) : rester assis à pousser fatigue les veines. Il est annulé
+  dès que la visite se termine.
+
+Les trois derniers vivent dans `VisitReminders`. Ils sont branchés sur
+`RootView` et non sur les boutons : une visite peut aussi démarrer depuis un
+widget, Siri ou la montre.
+
+### Bilan pour le médecin
+
+`MedicalReportEngine` calcule, sur 30, 60 ou 90 jours : nombre de visites,
+jours avec visite, **plus longue absence** (la plus longue suite de jours
+consécutifs sans rien, bornes de la fenêtre comprises), fréquence
+hebdomadaire, durée moyenne, effort moyen, répartition de la consistance par
+tendance et compte par symptôme. `MedicalReportCard` en fait une page rendue
+par `ImageRenderer` et partageable — un CSV se lit mal en cabinet. Le bilan ne
+conclut rien : l'interprétation revient au professionnel, et la mention le dit.
+
 ### Son et musique
 
 - `SoundscapePlayer` lit en boucle trois ambiances embarquées (pluie, bruit
@@ -189,9 +223,10 @@ L'app s'affiche en **français ou en anglais**, selon la langue de l'appareil.
   pousse l'état vers la Watch et rafraîchit les widgets à chaque changement.
 - `StatsEngine` — calculs purs (moyennes, série de jours, créneaux horaires,
   agrégats du journal), couverts par les tests.
-- `GoalEngine` et `HydrationSchedule` — également purs, donc testables sans
-  simulateur : ils vivent dans `Shared/Core`, seuls les effets de bord
-  (notifications, HealthKit) restent dans `iOS/`.
+- `GoalEngine`, `HydrationSchedule`, `RoutineSuggestion`, `AbsenceEngine` et
+  `MedicalReportEngine` — également purs, donc testables sans simulateur : ils
+  vivent dans `Shared/Core`, seuls les effets de bord (notifications,
+  HealthKit) restent dans `iOS/`.
 - `LiveActivityController` — démarre, met à jour et clôt la Live Activity ;
   branché sur le store via le protocole `LiveActivityCoordinating`, ce qui garde
   le store compilable sur watchOS.
@@ -352,15 +387,16 @@ utilise WatchConnectivity, d'appareil à appareil. Aucune requête réseau n'est
 effectuée par l'app, et un export CSV permet de tout récupérer.
 
 Deux autorisations sont demandées, et seulement si vous activez la fonction
-correspondante : les **notifications**, pour les rappels d'hydratation
-programmés localement, et l'**écriture dans Santé**, pour y déposer les
-symptômes notés. L'app ne demande aucune autorisation de lecture dans Santé.
+correspondante : les **notifications**, pour les quatre rappels programmés
+localement (hydratation, régularité, absence, temps assis), et l'**écriture
+dans Santé**, pour y déposer les symptômes notés. L'app ne demande aucune
+autorisation de lecture dans Santé.
 
 ## Pistes d'évolution
 
-- Rétrospective mensuelle, sur le modèle du bilan annuel
 - Graphique d'évolution de la consistance sur plusieurs semaines
 - Widget dédié à l'objectif de la semaine
+- Bilan exporté en PDF plutôt qu'en image
 - Verrouillage de l'historique par Face ID
 
 ## Crédits
