@@ -383,10 +383,29 @@ largeur au-dessus, et les liens en ligne sont écrits compacts d'emblée
 (0,84 rem, 12 px de gouttière) plutôt que resserrés par une règle à borne
 haute — une telle borne rouvrait le débordement au-delà d'elle.
 
-`npm run check:overflow` mesure seize largeurs, dans les deux langues, et
-chacune **deux fois** : menu fermé puis menu ouvert. Le panneau est un
-candidat au débordement à part entière, et les largeurs autour de 1220 px sont
-celles où la barre est la plus serrée.
+Le panneau est borné par **`100dvh`** et non `100vh` : sur iOS, `100vh` mesure
+l'écran *sans* les barres du navigateur, si bien que le bas du panneau — donc
+le bouton d'appel — passait sous la barre d'outils de Safari, hors d'atteinte.
+Une ligne en `vh` précède celle en `dvh` pour les navigateurs qui l'ignorent,
+et la marge basse ajoute `env(safe-area-inset-bottom)`.
+
+Les dix liens sont sur **deux colonnes** : en une seule, ils repoussaient le
+bouton d'appel hors de l'écran, et il fallait défiler jusqu'au bout pour le
+trouver. Le bouton est placé juste après eux, avant les réglages — c'est
+l'action principale.
+
+Deux contrôles gardent tout ça :
+
+- `npm run check:overflow` mesure seize largeurs, dans les deux langues, et
+  chacune **deux fois** : menu fermé puis menu ouvert. Le panneau est un
+  candidat au débordement à part entière, et les largeurs autour de 1220 px
+  sont celles où la barre est la plus serrée.
+- `npm run check:menu` ouvre le panneau à quatre **hauteurs visibles** de
+  téléphone (barres du navigateur déduites, de 480 à 720 px) et vérifie que le
+  panneau tient dans l'écran et que le bouton d'appel est atteignable sans
+  défiler. `100vh` valant `100dvh` sous Chromium, c'est la seconde
+  vérification qui attrape les régressions ; elle a été testée en remettant
+  les liens sur une colonne.
 
 ### En local
 

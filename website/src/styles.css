@@ -211,19 +211,28 @@ a { color: inherit; }
 .menu {
   display: none;
   gap: 18px;
-  padding: 8px var(--gutter) 22px;
+  /* La marge basse tient compte de la zone réservée en bas de l'écran
+     (indicateur d'accueil) : sans elle, le bouton d'appel colle au bord. */
+  padding: 8px var(--gutter) calc(22px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--line);
-  /* Dix liens plus les réglages peuvent dépasser un petit écran : le panneau
-     défile au lieu de pousser la page. */
+  /* Le panneau défile plutôt que de pousser la page.
+     `dvh` et non `vh` : sur iOS, `100vh` mesure l'écran *sans* les barres du
+     navigateur, donc le bas du panneau — et donc le bouton d'appel — passait
+     dessous, hors d'atteinte. `dvh` suit la hauteur réellement visible. La
+     ligne en `vh` reste pour les navigateurs qui ignorent `dvh`. */
   max-height: calc(100vh - 64px);
+  max-height: calc(100dvh - 64px);
   overflow-y: auto;
   overscroll-behavior: contain;
 }
 .menu--on { display: grid; }
 
+/* Deux colonnes : en une seule, les dix liens repoussaient le bouton d'appel
+   hors de l'écran, et il fallait défiler jusqu'au bout pour le trouver. */
 .menu__links {
   display: grid;
-  gap: 2px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 18px;
 }
 .menu__links a {
   padding: 12px 4px;
@@ -232,7 +241,9 @@ a { color: inherit; }
   text-decoration: none;
   font-size: 1rem;
 }
-.menu__links a:last-child { border-bottom: 0; }
+/* La dernière ligne de chaque colonne n'a pas de trait : avec dix liens, ce
+   sont les deux derniers. */
+.menu__links a:nth-last-child(-n + 2) { border-bottom: 0; }
 .menu__links a:hover { color: var(--accent-strong); }
 
 .menu__row {
@@ -281,7 +292,10 @@ a { color: inherit; }
 @media (max-width: 35em) {
   .brand span { font-size: 0.95rem; }
   .nav__inner { min-height: 56px; }
-  .menu { max-height: calc(100vh - 56px); }
+  .menu {
+    max-height: calc(100vh - 56px);
+    max-height: calc(100dvh - 56px);
+  }
 }
 
 /* --- Sélecteurs segmentés (thème, langue) --- */

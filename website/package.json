@@ -14,7 +14,8 @@
     "serve": "npm run build && node server.js",
     "check:overflow": "node scripts/check-overflow.mjs",
     "check:theme": "node scripts/check-theme.mjs",
-    "check:hero": "node scripts/check-hero.mjs"
+    "check:hero": "node scripts/check-hero.mjs",
+    "check:menu": "node scripts/check-menu.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
