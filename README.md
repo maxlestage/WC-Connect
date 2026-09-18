@@ -13,7 +13,8 @@ Tout reste sur l'appareil : pas de compte, pas de serveur, pas de réseau.
 | **Apple Watch** | watchOS 10+, app native autonome + complications, synchronisation WatchConnectivity |
 | **Widgets** | Écran d'accueil et écran verrouillé, bouton interactif (App Intents) |
 | **Aide & détente** | Conseils quand ça coince, respiration guidée, signaux qui doivent envoyer consulter |
-| **Son** | Trois ambiances embarquées qui se mélangent à votre musique, et commande de la musique du système |
+| **Son** | Quatre ambiances embarquées qui se mélangent à votre musique, et commande de la musique du système |
+| **Palmarès** | 14 hauts faits, équivalences absurdes, titre honorifique et certificat partageable |
 | **Siri** | « Je vais aux toilettes », « J'ai fini » via App Shortcuts |
 | **Site** | `website/`, React 18 + TypeScript (Vite), servi par Express, déployable sur Heroku |
 
@@ -73,6 +74,24 @@ app.json                     manifeste du bouton « Deploy to Heroku »
   ```bash
   python3 app/Support/Tools/make_soundscapes.py
   ```
+
+### Inutile, donc indispensable
+
+- `AchievementEngine` — 14 hauts faits calculés sur l'historique (« Éclair »
+  sous 45 secondes, « Marathonien » au-delà de vingt minutes, « Horloge
+  suisse » pour trois jours de suite à la même heure, « Globe-trotteur » pour
+  les trois lieux le même jour…). Calculs purs, couverts par les tests.
+- `AchievementEngine.rank(unlockedCount:)` — titre honorifique, d'« Anonyme des
+  toilettes » à « Légende vivante ».
+- `AbsurdStats` — le temps total converti en épisodes de série, chansons, œufs
+  à la coque, trajets Paris–Lyon, cycles de lave-linge, records du monde du
+  marathon, kilomètres à pied et mètres de papier.
+- Écran **Palmarès** (accessible depuis les statistiques) avec un certificat
+  rendu par `ImageRenderer` et partageable via `ShareLink`.
+- **Mode trône** : un appui long sur le chronomètre couronne la visite en cours.
+  C'est tout ce que ça fait.
+- Ambiance **Réunion** : brouhaha de bureau et frappes de clavier, synthétisés
+  comme les autres, à lancer depuis les toilettes du travail.
 
 ### Architecture en bref
 

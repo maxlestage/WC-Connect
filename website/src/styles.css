@@ -913,3 +913,47 @@ a { color: inherit; }
 
 /* Les ancres ne doivent pas passer sous la barre de navigation collante. */
 main section[id] { scroll-margin-top: 80px; }
+
+/* ---------- Palmarès ---------- */
+
+.badges {
+  width: min(380px, 100%);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.badge-card {
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--amber);
+}
+.badge-card strong { display: block; font-size: 0.88rem; }
+.badge-card span { font-size: 0.74rem; color: var(--ink-3); }
+
+.absurd {
+  width: min(380px, 100%);
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.absurd__head { font-size: 0.86rem; font-weight: 620; margin: 0 0 10px; color: var(--ink); }
+.absurd ul { list-style: none; padding: 0; margin: 0; }
+.absurd li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}
+.absurd li:last-child { border-bottom: none; }
+.absurd li strong {
+  min-width: 68px;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+.absurd li span { font-size: 0.84rem; color: var(--ink-2); }
+.absurd__foot { margin: 10px 0 0; font-size: 0.72rem; color: var(--ink-3); }

@@ -102,10 +102,36 @@ def write(path, samples):
     print(f"écrit {path.name} ({path.stat().st_size // 1024} Ko)")
 
 
+def meeting(count, rng):
+    """Réunion : brouhaha lointain et frappes de clavier, pour brouiller les pistes."""
+    murmur = one_pole_highpass(one_pole_lowpass(brown(count, rng), 700.0), 130.0)
+
+    clicks = [0.0] * count
+    position = 0
+    while position < count:
+        position += int(rng.uniform(0.15, 0.9) * RATE)
+        if position >= count:
+            break
+        length = int(0.012 * RATE)
+        decay = 0.0025 * RATE
+        for offset in range(length):
+            index = position + offset
+            if index < count:
+                clicks[index] += rng.gauss(0.0, 1.0) * math.exp(-offset / decay)
+    clicks = one_pole_highpass(clicks, 1_800.0)
+
+    mixed = [
+        0.78 * voice + 0.22 * click
+        for voice, click in zip(normalize(murmur), normalize(clicks))
+    ]
+    return normalize(mixed)
+
+
 GENERATORS = {
     "pluie": rain,
     "bruit-brun": brown,
     "souffle": swell,
+    "reunion": meeting,
 }
 
 if __name__ == "__main__":

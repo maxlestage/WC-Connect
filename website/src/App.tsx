@@ -3,6 +3,7 @@ import { Cta } from "./components/Cta";
 import { Faq } from "./components/Faq";
 import { Features } from "./components/Features";
 import { Footer } from "./components/Footer";
+import { FunSection } from "./components/FunSection";
 import { HelpSection } from "./components/HelpSection";
 import { Hero } from "./components/Hero";
 import { LiveActivitySection } from "./components/LiveActivitySection";
@@ -34,6 +35,7 @@ export default function App() {
         <LiveActivitySection elapsed={elapsed} />
         <WatchSection elapsed={elapsed} />
         <TrackingSection />
+        <FunSection />
         <Privacy />
         <Faq />
         <Cta />
