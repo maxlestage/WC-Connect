@@ -182,7 +182,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Temps assis")
                 } footer: {
-                    Text("Rester longtemps assis à pousser fatigue les veines du bas du corps. Le rappel arrive pendant la visite, et disparaît dès qu'elle se termine.")
+                    Text("Rester longtemps assis fatigue les veines, et met la peau sous pression — ce qui compte double quand on ne se lève pas. Le rappel arrive pendant la visite, et disparaît dès qu'elle se termine.")
                 }
 
                 Section {

@@ -8,6 +8,10 @@ public enum TipCategory: String, CaseIterable, Identifiable, Hashable, Sendable 
     case habits
     case food
     case movement
+    /// Pour qui ne se lève pas : fauteuil roulant, transfert, intestin
+    /// neurogène. Plusieurs conseils des autres familles — « levez-vous »,
+    /// « marchez », « allez-y quand l'envie vient » — ne s'y appliquent pas.
+    case seated
 
     public var id: String { rawValue }
 
@@ -19,6 +23,7 @@ public enum TipCategory: String, CaseIterable, Identifiable, Hashable, Sendable 
         case .habits: return "Habitudes".wcLocalized
         case .food: return "Boire et manger".wcLocalized
         case .movement: return "Bouger".wcLocalized
+        case .seated: return "Sans se lever".wcLocalized
         }
     }
 
@@ -30,6 +35,7 @@ public enum TipCategory: String, CaseIterable, Identifiable, Hashable, Sendable 
         case .habits: return "clock.arrow.circlepath"
         case .food: return "drop.fill"
         case .movement: return "figure.walk"
+        case .seated: return "figure.roll"
         }
     }
 }
@@ -188,18 +194,69 @@ public enum TipLibrary {
             category: .movement,
             title: "Étirez le bas du dos".wcLocalized,
             detail: "Torsion assise, genoux ramenés vers la poitrine, position de l'enfant : ces étirements détendent la ceinture abdominale.".wcLocalized
+        ),
+
+        // Sans se lever
+        //
+        // Rien ici ne relève du soin : aucune technique n'est décrite, et le
+        // programme intestinal reste celui établi avec l'équipe soignante.
+        // L'app aide à le tenir, elle ne le remplace pas.
+        Tip(
+            id: "seated-transfer",
+            category: .seated,
+            title: "Un transfert stable avant tout".wcLocalized,
+            detail: "Freins bloqués, repose-pieds dégagés, appui à portée de main. Une chute lors du transfert fait plus de dégâts qu'une visite ratée : si l'installation n'est pas sûre, rien d'autre ne compte.".wcLocalized
+        ),
+        Tip(
+            id: "seated-pressure",
+            category: .seated,
+            title: "Soulagez la pression régulièrement".wcLocalized,
+            detail: "Une lunette concentre tout le poids sur une petite surface, bien plus qu'un coussin. Penchez-vous d'un côté puis de l'autre, ou prenez appui pour vous soulever quelques secondes, toutes les deux ou trois minutes.".wcLocalized,
+            isImmediate: true
+        ),
+        Tip(
+            id: "seated-duration",
+            category: .seated,
+            title: "Fixez-vous une limite de temps".wcLocalized,
+            detail: "Sans sensation, on reste facilement trop longtemps. Le rappel de temps assis de l'app sert exactement à ça : au-delà de dix minutes, le risque de rougeur puis d'escarre augmente, et le résultat ne s'améliore plus.".wcLocalized,
+            isImmediate: true
+        ),
+        Tip(
+            id: "seated-massage",
+            category: .seated,
+            title: "Massez le ventre dans le sens du côlon".wcLocalized,
+            detail: "À plat de main, en remontant à droite, en traversant sous les côtes, puis en descendant à gauche. Lentement, plusieurs fois. C'est faisable assis, et c'est l'un des rares gestes qui aide sans se lever.".wcLocalized,
+            isImmediate: true
+        ),
+        Tip(
+            id: "seated-routine",
+            category: .seated,
+            title: "Toujours à la même heure, après un repas".wcLocalized,
+            detail: "Quand l'envie ne se fait plus sentir, c'est l'horaire qui prend le relais. Vingt à trente minutes après un repas, l'intestin se met en mouvement de lui-même : le rappel de régularité de l'app se cale sur ce créneau.".wcLocalized
+        ),
+        Tip(
+            id: "seated-program",
+            category: .seated,
+            title: "Votre programme reste celui de votre équipe".wcLocalized,
+            detail: "Suppositoire, stimulation, irrigation : ces gestes se décident et s'apprennent avec un professionnel, et l'app n'en décrit aucun. Elle sert à tenir le rythme convenu et à noter ce qui se passe, pour en reparler avec lui.".wcLocalized
         )
     ]
 
     /// Signaux qui justifient un avis médical plutôt que des conseils.
     public static var redFlags: [String] { [
+        // La dysréflexie autonome est une urgence vitale, déclenchée entre
+        // autres par un intestin plein, chez les personnes ayant une lésion
+        // médullaire haute. Elle figure en tête parce qu'elle ne se traite pas
+        // avec des conseils d'hygiène de vie.
+        "Après une lésion médullaire : maux de tête violents et soudains, sueurs ou rougeurs au-dessus du niveau de la lésion, vision trouble, nez bouché — ces signes peuvent être une dysréflexie autonome, déclenchée par un intestin plein. C'est une urgence : redressez-vous et appelez les secours",
         "Du sang dans les selles, ou des selles noires",
         "Une douleur abdominale intense, ou qui ne passe pas",
         "Des vomissements avec l'impossibilité d'aller à la selle ou d'émettre des gaz",
         "Une constipation qui dure plus d'une semaine malgré ces gestes",
         "Un changement durable et inexpliqué de votre transit, ou une perte de poids",
         "De la fièvre associée aux douleurs",
-        "Chez un enfant, une personne âgée, pendant une grossesse, ou avec un traitement en cours : demandez conseil sans attendre"
+        "Chez un enfant, une personne âgée, pendant une grossesse, ou avec un traitement en cours : demandez conseil sans attendre",
+        "Une rougeur qui ne s'efface pas, une peau abîmée au niveau des appuis après une visite : montrez-la sans attendre"
     ].map(\.wcLocalized) }
 
     public static func tips(for category: TipCategory) -> [Tip] {

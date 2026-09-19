@@ -18,6 +18,7 @@ export const fr = {
     links: [
       { href: "#fonctions", label: "Fonctions" },
       { href: "#aide", label: "Aide" },
+      { href: "#sans-se-lever", label: "Sans se lever" },
       { href: "#detente", label: "Détente" },
       { href: "#live", label: "Live Activity" },
       { href: "#watch", label: "Watch" },
@@ -335,6 +336,27 @@ export const fr = {
       { title: "Bilan pour le médecin", value: "30, 60 ou 90 jours", detail: "Fréquence, plus longue absence, consistance, symptômes. Une page à partager." },
       { title: "Objectif & Santé", value: "5 jours sur 7", detail: "Un objectif hebdomadaire modeste, et un export facultatif des symptômes vers Santé." },
     ],
+  },
+
+  seated: {
+    eyebrow: "Sans se lever",
+    title: "Quand on ne se lève pas, la moitié des conseils ne servent à rien",
+    body: "« Levez-vous au bout de cinq minutes. » « Marchez dix à quinze minutes. » « Allez-y quand l'envie vient. » Ces conseils, l'app les donne toujours — mais ils ne s'appliquent pas à tout le monde. En fauteuil roulant, après une lésion médullaire, avec un intestin neurogène, la sensation d'envie peut ne plus exister et le temps passé assis devient un risque en soi. Une famille de conseils leur est consacrée, et elle ne demande jamais de se mettre debout.",
+    points: [
+      "Un transfert stable d'abord : freins, repose-pieds, appui à portée de main",
+      "Soulager la pression toutes les deux ou trois minutes — une lunette concentre le poids sur une surface bien plus petite qu'un coussin",
+      "Une limite de temps, parce que sans sensation on reste facilement trop longtemps",
+      "Le massage abdominal, l'un des rares gestes qui aide assis",
+      "L'horaire qui remplace l'envie : vingt à trente minutes après un repas",
+    ],
+    programTitle: "Ce que l'app ne fait pas",
+    programBody: "Suppositoire, stimulation, irrigation : ces gestes se décident et s'apprennent avec un professionnel. L'app n'en décrit aucun. Elle sert à tenir le rythme convenu avec votre équipe, à limiter le temps assis, et à noter ce qui se passe pour en reparler.",
+    urgentTitle: "Un signal qui ne se discute pas",
+    urgentBody: "Après une lésion médullaire : maux de tête violents et soudains, sueurs ou rougeurs au-dessus du niveau de la lésion, vision trouble, nez bouché. Ces signes peuvent être une dysréflexie autonome, qu'un intestin plein suffit à déclencher. C'est une urgence vitale : se redresser et appeler les secours. L'app l'affiche en tête de ses signaux d'alerte.",
+    reminderTitle: "Le rappel de temps assis compte double",
+    reminderBody: "Au-delà d'une dizaine de minutes, le risque de rougeur puis d'escarre augmente, et le résultat ne s'améliore plus. Le rappel arrive pendant la visite et disparaît dès qu'elle se termine ; il se règle de 5 à 20 minutes.",
+    handsTitle: "Démarrer et terminer sans toucher l'écran",
+    handsBody: "« Dis Siri, je vais aux toilettes » lance le chronomètre, écran verrouillé. Le bouton « Terminer » est dans la Live Activity et sur la montre. Rien n'oblige à sortir le téléphone ni à viser une cible à l'écran.",
   },
 
   fun: {

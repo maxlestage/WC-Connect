@@ -16,6 +16,7 @@ export const en: Dictionary = {
     links: [
       { href: "#fonctions", label: "Features" },
       { href: "#aide", label: "Help" },
+      { href: "#sans-se-lever", label: "Seated" },
       { href: "#detente", label: "Unwind" },
       { href: "#live", label: "Live Activity" },
       { href: "#watch", label: "Watch" },
@@ -332,6 +333,27 @@ export const en: Dictionary = {
       { title: "Report for your doctor", value: "30, 60 or 90 days", detail: "Frequency, longest absence, consistency, symptoms. One page to share." },
       { title: "Goal & Health", value: "5 days out of 7", detail: "A modest weekly goal, and an optional export of symptoms to Health." },
     ],
+  },
+
+  seated: {
+    eyebrow: "Without standing up",
+    title: "When you do not stand up, half the advice is useless",
+    body: "“Stand up after five minutes.” “Walk for ten to fifteen minutes.” “Go when the urge comes.” The app still gives that advice — but it does not apply to everyone. In a wheelchair, after a spinal cord injury, with a neurogenic bowel, the urge may no longer exist at all, and time spent seated becomes a risk in itself. One family of advice is devoted to that, and it never asks you to stand.",
+    points: [
+      "A stable transfer first: brakes, footrests, a grab rail within reach",
+      "Relieve the pressure every two or three minutes — a toilet seat concentrates your weight on a far smaller area than a cushion",
+      "A time limit, because without sensation it is easy to stay too long",
+      "Abdominal massage, one of the few things that helps from a seated position",
+      "A schedule instead of an urge: twenty to thirty minutes after a meal",
+    ],
+    programTitle: "What the app does not do",
+    programBody: "Suppository, stimulation, irrigation: these are decided and learned with a professional. The app describes none of them. It is there to hold the rhythm agreed with your team, to limit time seated, and to record what happens so you can discuss it.",
+    urgentTitle: "One signal that is not up for debate",
+    urgentBody: "After a spinal cord injury: a sudden pounding headache, sweating or flushing above the level of the injury, blurred vision, a blocked nose. These can be autonomic dysreflexia, which a full bowel is enough to trigger. It is a life-threatening emergency: sit upright and call emergency services. The app shows it at the top of its warning signs.",
+    reminderTitle: "The time-seated reminder counts double",
+    reminderBody: "Beyond ten minutes or so, the risk of redness and then of a pressure sore goes up, and the result stops improving. The reminder arrives during the visit and goes away as soon as it ends; it is adjustable from 5 to 20 minutes.",
+    handsTitle: "Start and finish without touching the screen",
+    handsBody: "“Hey Siri, I'm going to the toilet” starts the timer with the screen locked. The “Finish” button is in the Live Activity and on the watch. Nothing forces you to take the phone out or to hit a target on screen.",
   },
 
   fun: {

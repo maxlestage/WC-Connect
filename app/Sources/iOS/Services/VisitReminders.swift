@@ -171,7 +171,7 @@ final class VisitReminders: ObservableObject {
 
         let contenu = UNMutableNotificationContent()
         contenu.title = "%@ minutes, c'est assez".wcLocalized(String(sittingMinutes))
-        contenu.body = "Rester assis à pousser fatigue les veines. Levez-vous, marchez, revenez quand l'envie revient.".wcLocalized
+        contenu.body = "Changez d'appui, ou levez-vous si vous le pouvez. Rester assis fatigue les veines et met la peau sous pression.".wcLocalized
         contenu.sound = .default
 
         try? await center.add(UNNotificationRequest(

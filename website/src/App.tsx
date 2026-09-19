@@ -10,6 +10,7 @@ import { JournalSection } from "./components/JournalSection";
 import { LiveActivitySection } from "./components/LiveActivitySection";
 import { Nav } from "./components/Nav";
 import { Privacy } from "./components/Privacy";
+import { SeatedSection } from "./components/SeatedSection";
 import { SoundSection } from "./components/SoundSection";
 import { TrackingSection } from "./components/TrackingSection";
 import { WatchSection } from "./components/WatchSection";
@@ -34,6 +35,7 @@ export default function App() {
         <Hero elapsed={elapsed} />
         <Features />
         <HelpSection />
+        <SeatedSection />
         <BreathSection />
         <SoundSection />
         <LiveActivitySection elapsed={elapsed} />

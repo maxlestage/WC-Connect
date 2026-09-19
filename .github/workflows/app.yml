@@ -40,6 +40,17 @@ jobs:
           xcodebuild -version
           swift --version
 
+      # Avant tout le reste : un contrôle structurel qui échoue en une seconde
+      # plutôt qu'au bout de plusieurs minutes de compilation. Il n'est pas un
+      # compilateur — c'est la suite du travail qui l'est — mais il attrape la
+      # classe d'erreur la plus bête et la plus coûteuse, celle qui casse la
+      # construction pour une virgule manquante.
+      - name: Contrôle structurel des sources Swift
+        run: python3 app/Support/Tools/check_syntax.py
+
+      - name: Vérifier que toutes les chaînes sont traduites
+        run: python3 app/Support/Tools/localize.py --check
+
       - name: Installer XcodeGen
         run: brew install xcodegen
 
