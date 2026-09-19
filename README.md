@@ -40,7 +40,8 @@ website/
   scripts/                   contrôles Playwright (débordement, aperçus de partage)
 package.json, Procfile       espace de travail npm et démarrage Heroku
 app.json                     manifeste du bouton « Deploy to Heroku »
-.github/workflows/site.yml   construction du site vérifiée à chaque commit
+.github/workflows/site.yml   site vérifié : types, construction, mise en page
+.github/workflows/app.yml    code Swift compilé et testé sur un runner macOS
 ```
 
 ### Aide quand ça coince
@@ -511,6 +512,26 @@ Les balises Open Graph contiennent un marqueur `__SITE_URL__` :
 
 La CI vérifie les deux chemins : page construite avec origine figée, puis
 serveur Node interrogé derrière un proxy simulé.
+
+## Coût des vérifications
+
+Le dépôt est **privé** : les minutes GitHub Actions y sont facturées, alors
+qu'elles sont gratuites sur un dépôt public. Et le travail Swift tourne sur un
+runner **macOS, facturé dix fois la minute d'un runner Linux** — c'est le
+premier poste de dépense.
+
+Les deux workflows se déclenchent donc sur `pull_request` pour les branches et
+sur `push` pour `master` seulement. Avec `branches: ["**"]`, chaque commit
+d'une branche suivie d'une pull request lançait **deux fois** la même
+vérification. Aucun commit n'échappe au contrôle pour autant : les branches
+passent par leur pull request, `master` par la poussée de fusion.
+
+Un bloc `concurrency` complète le dispositif : une nouvelle poussée annule la
+vérification qu'elle rend caduque.
+
+Si les travaux ne démarrent plus du tout et que l'onglet Actions signale un
+échec sans aucune étape exécutée, ce n'est pas le dépôt : c'est la facturation
+du compte (Settings → Billing & plans).
 
 ## Vie privée
 
