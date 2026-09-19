@@ -241,6 +241,25 @@ L'app s'affiche en **français ou en anglais**, selon la langue de l'appareil.
 - Le séparateur décimal suit la langue de l'appareil, plutôt qu'une virgule
   imposée.
 
+### Avant de pousser du Swift
+
+Aucun toolchain Swift n'existe dans l'environnement de développement : **la CI
+macOS est la seule vérification réelle**. Deux contrôles rapides s'exécutent
+malgré tout en amont, et la CI les lance en premier, avant même d'installer
+XcodeGen :
+
+```bash
+python3 app/Support/Tools/check_syntax.py      # structure des sources
+python3 app/Support/Tools/localize.py --check  # chaînes traduites
+```
+
+`check_syntax.py` n'est **pas un compilateur**. Il vérifie l'équilibre des
+délimiteurs et la séparation des éléments des tableaux littéraux — la classe
+d'erreur la plus bête et la plus coûteuse, celle qui casse la construction pour
+une virgule manquante après plusieurs minutes de runner macOS, facturé dix fois
+le tarif Linux. Il a été écrit après avoir justement perdu un tour de CI sur
+une virgule oubliée dans `TipLibrary.all`.
+
 ### Architecture en bref
 
 - `ToiletSession` — une visite : début, fin, type, lieu, confort, note,
