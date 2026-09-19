@@ -512,6 +512,13 @@ domaine personnalisé.
 | Cloudflare Pages / Netlify | oui | gratuit |
 | Render (`render.yaml`, statique) | oui | gratuit |
 
+Le workflow `pages.yml` est en **déclenchement manuel** : il échoue tant que
+Pages n'est pas activé sur le dépôt (Settings → Pages → Source : GitHub
+Actions), avec « Get Pages site failed ». Déclenché à chaque commit sur
+`master`, il y rendait la CI rouge en permanence alors que le site est déployé
+sur Heroku et que Pages n'a jamais été activé. Le dépôt étant privé, l'activer
+demande en plus une offre payante.
+
 Construisez alors avec `VITE_SITE_URL` renseigné, pour que les URL de partage
 soient absolues — il n'y a aucun serveur pour les calculer à la volée.
 

@@ -1,15 +1,18 @@
 name: Pages
 
-# Publie le site statique sur GitHub Pages à chaque commit sur master.
-# Aucun serveur : le dépôt sert des fichiers, c'est tout.
+# Publie le site statique sur GitHub Pages. Aucun serveur : le dépôt sert des
+# fichiers, c'est tout.
+#
+# **Déclenchement manuel uniquement.** Ce travail échoue tant que GitHub Pages
+# n'est pas activé sur le dépôt (Settings → Pages → Source : GitHub Actions) :
+# « Get Pages site failed ». Déclenché à chaque commit sur `master`, il y
+# rendait donc la CI rouge en permanence, alors que le site est déployé sur
+# Heroku et que Pages n'a jamais été activé.
+#
+# Deux choses à savoir avant de l'activer : le dépôt est privé, et Pages y
+# demande un abonnement payant ; et il faut choisir « GitHub Actions » comme
+# source, pas une branche.
 on:
-  push:
-    branches: [master]
-    paths:
-      - "website/**"
-      - "package.json"
-      - "package-lock.json"
-      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
