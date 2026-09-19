@@ -59,9 +59,18 @@ jobs:
           set -euo pipefail
           cd website/dist
 
-          for fichier in index.html social-card.png logo.svg favicon.svg; do
+          for fichier in index.html social-card.png logo.svg favicon.svg \
+                         manifest.webmanifest sw.js \
+                         icon-192.png icon-512.png icon-maskable-512.png apple-touch-icon.png; do
             test -s "$fichier" || { echo "manquant ou vide : $fichier"; exit 1; }
           done
+
+          # Le manifeste et le service worker sont écrits à la construction :
+          # une erreur de génération donnerait un fichier présent mais inerte.
+          node -e "JSON.parse(require('node:fs').readFileSync('manifest.webmanifest','utf8'))" \
+            || { echo "manifeste illisible"; exit 1; }
+          ! grep -q '__PRECACHE__\|__CACHE__\|__BASE__' sw.js \
+            || { echo "marqueur non remplacé dans sw.js"; exit 1; }
 
           ls assets/*.js  > /dev/null || { echo "aucun script construit"; exit 1; }
           ls assets/*.css > /dev/null || { echo "aucune feuille de style construite"; exit 1; }
@@ -121,7 +130,8 @@ jobs:
     # burger fermé puis ouvert, puis à trois tailles de texte du navigateur. Il
     # contrôle aussi les maquettes d'appareils, le panneau du menu à hauteur
     # d'écran réelle, la cohérence du thème sombre, la concordance des chiffres
-    # annoncés par le site avec le code de l'app, et le contraste des textes.
+    # annoncés par le site avec le code de l'app, le contraste des textes, et
+    # enfin l'installation sur l'écran d'accueil et l'ouverture sans réseau.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -158,3 +168,13 @@ jobs:
           npm run check:claims --workspace website -- http://localhost:4173/
           npm run check:contrast --workspace website -- http://localhost:4173/
           kill $serveur
+
+      # Ce contrôle démarre et arrête son propre serveur : c'est en l'éteignant
+      # qu'il prouve que le site s'ouvre sans réseau.
+      - name: Verifier l'installation et le hors-ligne
+        run: npm run check:pwa --workspace website
+
+      # Reconstruit le site sous un sous-chemin : un chemin absolu oublié ne se
+      # voit pas à la racine d'un domaine et casse tout sur GitHub Pages.
+      - name: Verifier la publication sous un sous-chemin
+        run: npm run check:souschemin --workspace website

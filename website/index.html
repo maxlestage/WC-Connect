@@ -19,9 +19,22 @@
 </script>
 <title>WC Connect — le suivi de vos pauses, sur iPhone et Apple Watch</title>
 <meta name="description" content="WC Connect chronomètre vos passages aux toilettes, aide quand ça coince (posture, respiration guidée, ambiances sonores), affiche une Live Activity et se pilote depuis l'Apple Watch. 100 % hors ligne.">
-<meta name="theme-color" content="#1c66c7">
+<!-- La barre du navigateur suit le thème de la page : un bandeau clair
+     au-dessus d'un site sombre se voit tout de suite sur un téléphone. -->
+<meta name="theme-color" content="#f6f8fc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/social-card.png">
+
+<!-- Installation sur l'écran d'accueil. Le manifeste est écrit à la
+     construction par vite.config.ts : lui seul connaît le sous-chemin de
+     publication. iOS ne lit pas le manifeste et veut ses propres balises. -->
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="WC Connect">
+<meta name="application-name" content="WC Connect">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <!-- __SITE_URL__ est remplacé par website/server.js par l'origine réellement
      servie : les aperçus de partage fonctionnent sur n'importe quel domaine. -->
 <link rel="canonical" href="__SITE_URL__/">
