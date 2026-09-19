@@ -3,9 +3,16 @@ name: App
 # Compile et teste l'application iOS/watchOS sur un runner macOS : c'est la
 # seule vérification possible du code Swift, l'environnement de développement
 # n'ayant pas de toolchain Xcode.
+# Déclenchement : `pull_request` pour les branches, `push` pour `master`
+# seulement. Avec `push: branches: ["**"]`, chaque commit d'une branche ayant
+# une pull request ouverte lançait **deux** fois la même vérification. C'était
+# sans conséquence tant que le dépôt était public, où Actions est gratuit ; il
+# est devenu privé, et les minutes sont désormais facturées.
+# Ce travail tourne sur macOS, facturé dix fois la minute d'un runner Linux :
+# c'est le premier poste de dépense du dépôt.
 on:
   push:
-    branches: ["**"]
+    branches: ["master"]
     paths:
       - "app/**"
       - ".github/workflows/app.yml"

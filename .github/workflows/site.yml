@@ -2,9 +2,14 @@ name: Site
 
 # Vérifie le site statique : types, construction, et contenu du dossier
 # publié. Il n'y a plus de serveur à démarrer.
+# Déclenchement : `pull_request` pour les branches, `push` pour `master`
+# seulement. Avec `push: branches: ["**"]`, chaque commit d'une branche ayant
+# une pull request ouverte lançait **deux** fois la même vérification. C'était
+# sans conséquence tant que le dépôt était public, où Actions est gratuit ; il
+# est devenu privé, et les minutes sont désormais facturées.
 on:
   push:
-    branches: ["**"]
+    branches: ["master"]
     paths:
       - "website/**"
       - "package.json"
@@ -22,6 +27,10 @@ on:
       - "Procfile"
       - "app.json"
       - ".github/workflows/site.yml"
+
+concurrency:
+  group: site-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
