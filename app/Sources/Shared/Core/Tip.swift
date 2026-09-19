@@ -194,7 +194,8 @@ public enum TipLibrary {
             category: .movement,
             title: "Étirez le bas du dos".wcLocalized,
             detail: "Torsion assise, genoux ramenés vers la poitrine, position de l'enfant : ces étirements détendent la ceinture abdominale.".wcLocalized
-        )
+        ),
+
         // Sans se lever
         //
         // Rien ici ne relève du soin : aucune technique n'est décrite, et le
@@ -238,10 +239,8 @@ public enum TipLibrary {
             category: .seated,
             title: "Votre programme reste celui de votre équipe".wcLocalized,
             detail: "Suppositoire, stimulation, irrigation : ces gestes se décident et s'apprennent avec un professionnel, et l'app n'en décrit aucun. Elle sert à tenir le rythme convenu et à noter ce qui se passe, pour en reparler avec lui.".wcLocalized
-        ),
-
+        )
     ]
-
 
     /// Signaux qui justifient un avis médical plutôt que des conseils.
     public static var redFlags: [String] { [
