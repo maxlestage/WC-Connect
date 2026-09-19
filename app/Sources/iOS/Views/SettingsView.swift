@@ -17,6 +17,7 @@ struct SettingsView: View {
     @AppStorage("nightLightEndHour", store: AppGroup.defaults) private var nightEnd = 7
     @AppStorage("autoSoundscape", store: AppGroup.defaults) private var autoSoundscapeRaw: String?
     @AppStorage("autoBreathing", store: AppGroup.defaults) private var autoBreathing = false
+    @AppStorage("hideGoals", store: AppGroup.defaults) private var hideGoals = false
 
     @State private var showResetConfirmation = false
     @State private var exportedCSV: String?
@@ -61,6 +62,7 @@ struct SettingsView: View {
                         }
                     }
                     Toggle("Respiration au démarrage", isOn: $autoBreathing)
+                    Toggle("Sans objectifs", isOn: $hideGoals)
                 } header: {
                     Text("Sérénité")
                 } footer: {
@@ -303,6 +305,9 @@ struct SettingsView: View {
 
     /// Pied de la section Hydratation : les heures réellement programmées.
     private var sereniteFooter: String {
+        if hideGoals {
+            return "Sans objectifs, l'objectif de la semaine et la série de jours disparaissent de l'app. Une série qui se casse fait plus de mal qu'une série qui dure ne fait de bien.".wcLocalized
+        }
         if serenity {
             return "Pendant la visite, l'app n'affiche ni chiffre ni objectif : juste un souffle. La durée reste enregistrée pour les statistiques et le bilan médical.".wcLocalized
         }

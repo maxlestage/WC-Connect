@@ -13,6 +13,7 @@ public enum CalmSettings {
         static let nightLight = "nightLightEnabled"
         static let nightStart = "nightLightStartHour"
         static let nightEnd = "nightLightEndHour"
+        static let hideGoals = "hideGoals"
         static let autoSoundscape = "autoSoundscape"
         static let autoBreathing = "autoBreathing"
     }
@@ -68,6 +69,19 @@ public enum CalmSettings {
     /// Veilleuse active à cet instant, réglages compris.
     public static func nightLightActive(at date: Date = Date(), calendar: Calendar = .current) -> Bool {
         nightLight && isNight(at: date, start: nightStartHour, end: nightEndHour, calendar: calendar)
+    }
+
+    // MARK: - Sans objectifs
+
+    /// Masque l'objectif de la semaine et la série de jours suivis.
+    ///
+    /// Une série qui se casse fait plus de mal qu'une série qui dure ne fait
+    /// de bien : c'est la deuxième source de pression de l'app, après le
+    /// chronomètre. Les données restent calculées — elles ne sont plus mises
+    /// sous les yeux.
+    public static var hideGoals: Bool {
+        get { AppGroup.defaults.bool(forKey: Key.hideGoals) }
+        set { AppGroup.defaults.set(newValue, forKey: Key.hideGoals) }
     }
 
     // MARK: - Ambiance et respiration au démarrage

@@ -720,6 +720,10 @@ TRANSLATIONS.update({
     "Ambiance au démarrage": "Soundscape on start",
     "Respiration au démarrage": "Breathing on start",
     "Aucune": "None",
+    "Sans objectifs": "No targets",
+    "Sans objectifs, l'objectif de la semaine et la série de jours disparaissent de l'app. Une série qui se casse fait plus de mal qu'une série qui dure ne fait de bien.":
+        "With no targets, the weekly target and the day streak disappear from the app. A streak that breaks does more harm than a streak that holds does good.",
+    "Visites notées": "Visits recorded",
 })
 
 

@@ -15,6 +15,7 @@ export const en: Dictionary = {
     languageLabel: "Language",
     links: [
       { href: "#fonctions", label: "Features" },
+      { href: "#serenite", label: "Calm" },
       { href: "#aide", label: "Help" },
       { href: "#sans-se-lever", label: "Seated" },
       { href: "#detente", label: "Unwind" },
@@ -42,34 +43,78 @@ export const en: Dictionary = {
   },
 
   hero: {
-    eyebrow: "iPhone · Apple Watch · Live Activity",
-    titleLine1: "Every break",
-    titleLine2: "really counts.",
-    lead: "WC Connect times your bathroom visits in a single tap, shows the elapsed time on the Lock Screen and in the Dynamic Island, and lets you run everything from your wrist. No account, no server, no judgement.",
+    eyebrow: "iPhone · Apple Watch · nothing to count",
+    titleLine1: "Take your time.",
+    titleLine2: "The app handles the rest.",
+    lead: "WC Connect records your bathroom visits in a single tap, then goes quiet. In calm mode there is no number, no target and no bar filling up: just a breath, on the phone and on the wrist. Everything is still recorded, for the statistics and for your doctor — you simply do not have to look at it.",
     primary: "See what it does",
-    secondary: "See the Live Activity",
+    secondary: "See calm mode",
     facts: [
-      { value: "1 tap", label: "to get started" },
+      { value: "0 numbers", label: "in front of you, if you like" },
       { value: "0 data", label: "sent anywhere" },
       { value: "2 devices", label: "kept in sync" },
     ],
-    phoneAlt: "iPhone Lock Screen showing the WC Connect Live Activity",
-    watchAlt: "Apple Watch showing the WC Connect timer",
+    phoneAlt: "iPhone Lock Screen in calm mode: no stopwatch, only “Take your time”",
+    watchAlt: "Apple Watch in calm mode: a slow breath, with no numbers",
     activityLabel: "Visit in progress",
-    activityMeta: "Standard · Home",
+    activityTitle: "Take your time",
+    activityMeta: "No rush, nothing is being counted",
+    islandLabel: "Calm mode",
+    nightLabel: "Night light",
+    nightValue: "10 pm → 7 am",
     lockTime: "9:41",
     lockDate: "Wednesday 18 March",
     watchPlace: "Home",
+    watchCalm: "Breathe",
     watchButton: "Finish",
+  },
+
+  calm: {
+    eyebrow: "Calm",
+    title: "Nothing is counting while you wait",
+    body: "A stopwatch climbing while you wait does nobody any good: it measures, so it judges. Calm mode takes it away everywhere — main screen, watch, Lock Screen, Dynamic Island — and puts a slowly beating breath in its place. The duration itself is still recorded: your statistics and the report for your doctor lose nothing.",
+    demoAlt: "Visit screen in calm mode: a breathing halo, with no numbers at all",
+    demoTitle: "Take your time",
+    demoMeta: "No rush, nothing is being counted",
+    cards: [
+      {
+        title: "Calm mode",
+        description: "No number, no target, no bar filling up, anywhere. One switch in the settings, and the app stops showing you the time passing — without stopping recording it.",
+      },
+      {
+        title: "Night light",
+        description: "Between 10 pm and 7 am by default, the screen turns a very dark amber. Enough to find your way at three in the morning without fully waking up. The hours are yours to set.",
+      },
+      {
+        title: "Soundscape on start",
+        description: "Pick once and for all the loop that starts by itself when a visit begins: rain, brown noise, swell, or nothing at all.",
+      },
+      {
+        title: "Breathing on start",
+        description: "Guided breathing can open on its own the moment a visit starts, so the first thing on screen is a breath rather than a measurement.",
+      },
+      {
+        title: "No targets",
+        description: "The weekly target and the run of tracked days disappear from the app. A streak that breaks does more harm than a streak that holds does good.",
+      },
+    ],
   },
 
   features: {
     title: "Everything you need, nothing else",
-    lead: "An app you open, use and close in under three seconds.",
+    lead: "Sixteen features, and not one that hurries you: an app you open, use and close in under three seconds.",
     cards: [
       {
-        title: "One-tap timer",
-        description: "One button, one progress ring, and you're off. Visit type and place are remembered from one time to the next.",
+        title: "Calm mode",
+        description: "One switch takes every number off the screen, the watch and the Lock Screen, and puts a breath there instead. The duration is still recorded, it is simply no longer shown.",
+      },
+      {
+        title: "Night light",
+        description: "At night the screen turns a very dark amber, between the hours you choose. Enough to see by, not enough to wake you up properly.",
+      },
+      {
+        title: "One-tap start",
+        description: "One button, and you're off. Visit type and place are remembered from one time to the next. The progress ring only shows if you want it to.",
       },
       {
         title: "Live Activity",
@@ -113,7 +158,15 @@ export const en: Dictionary = {
       },
       {
         title: "Siri & shortcuts",
-        description: "“Hey Siri, I'm going to the bathroom.” The timer starts, even on the Lock Screen, without opening the app.",
+        description: "“Hey Siri, I'm going to the bathroom.” Tracking starts, even on the Lock Screen, without opening the app.",
+      },
+      {
+        title: "Without standing up",
+        description: "A family of tips for anyone who stays in a wheelchair: a stable transfer, pressure relieved every two or three minutes, a limit on time seated, and the signs of autonomic dysreflexia to recognise straight away.",
+      },
+      {
+        title: "Everything stays on the device",
+        description: "No account, no server, no usage analytics. Visits live in an app group shared between the iPhone, the watch and the widgets, and nowhere else.",
       },
     ],
   },
@@ -249,6 +302,7 @@ export const en: Dictionary = {
       "Progress bar towards the target duration for that visit type",
       "The activity is picked back up if the app relaunches",
       "Carried over to the Apple Watch Smart Stack",
+      "In calm mode, no stopwatch and no bar: a leaf and “Take your time”",
     ],
     kind: "Standard",
     place: "Home",
@@ -504,6 +558,7 @@ export const en: Dictionary = {
       {
         title: "Wellbeing",
         links: [
+          { href: "#serenite", label: "Calm mode" },
           { href: "#aide", label: "When it won't come" },
           { href: "#detente", label: "Guided breathing" },
           { href: "#son", label: "Soundscapes and music" },

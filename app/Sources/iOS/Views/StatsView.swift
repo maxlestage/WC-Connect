@@ -4,6 +4,8 @@ import SwiftUI
 struct StatsView: View {
     @EnvironmentObject private var store: SessionStore
 
+    @AppStorage("hideGoals", store: AppGroup.defaults) private var hideGoals = false
+
     private var stats: Stats { store.stats }
     private var hours: [HourBucket] { StatsEngine.hourBuckets(sessions: store.sessions) }
 
@@ -11,7 +13,9 @@ struct StatsView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    goalCard
+                    if !hideGoals {
+                        goalCard
+                    }
                     ForecastCard(
                         forecast: ForecastEngine.forecast(sessions: store.sessions),
                         nextVisit: ForecastEngine.nextVisit(sessions: store.sessions),

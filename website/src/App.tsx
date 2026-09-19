@@ -1,4 +1,5 @@
 import { BreathSection } from "./components/BreathSection";
+import { CalmSection } from "./components/CalmSection";
 import { Cta } from "./components/Cta";
 import { Faq } from "./components/Faq";
 import { Features } from "./components/Features";
@@ -32,8 +33,9 @@ export default function App() {
       <Nav />
 
       <main id="contenu">
-        <Hero elapsed={elapsed} />
+        <Hero />
         <Features />
+        <CalmSection />
         <HelpSection />
         <SeatedSection />
         <BreathSection />

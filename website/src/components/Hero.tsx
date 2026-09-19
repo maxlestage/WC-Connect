@@ -1,13 +1,13 @@
 import { useT } from "../i18n";
-import { PhoneMockup } from "./PhoneMockup";
+import { CalmPhoneMockup, CalmWatchMockup } from "./CalmMockup";
 import { Reveal } from "./Reveal";
-import { WatchMockup } from "./WatchMockup";
 
-interface HeroProps {
-  readonly elapsed: number;
-}
-
-export function Hero({ elapsed }: HeroProps) {
+/**
+ * Première page. Elle ne montre aucun chronomètre : rien n'y compte, rien n'y
+ * avance. `scripts/check-hero.mjs` le vérifie, parce que rien n'empêcherait un
+ * chiffre qui monte de revenir s'y glisser.
+ */
+export function Hero() {
   const t = useT();
 
   return (
@@ -25,7 +25,7 @@ export function Hero({ elapsed }: HeroProps) {
             <a className="btn" href="#fonctions">
               {t.hero.primary}
             </a>
-            <a className="btn btn--ghost" href="#live">
+            <a className="btn btn--ghost" href="#serenite">
               {t.hero.secondary}
             </a>
           </div>
@@ -40,8 +40,8 @@ export function Hero({ elapsed }: HeroProps) {
         </Reveal>
 
         <Reveal className="hero__devices">
-          <PhoneMockup elapsed={elapsed} />
-          <WatchMockup elapsed={elapsed} />
+          <CalmPhoneMockup />
+          <CalmWatchMockup />
         </Reveal>
       </div>
     </section>

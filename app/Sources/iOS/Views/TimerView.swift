@@ -11,6 +11,7 @@ struct TimerView: View {
     @AppStorage("nightLightEnabled", store: AppGroup.defaults) private var nightLight = false
     @AppStorage("nightLightStartHour", store: AppGroup.defaults) private var nightStart = 22
     @AppStorage("nightLightEndHour", store: AppGroup.defaults) private var nightEnd = 7
+    @AppStorage("hideGoals", store: AppGroup.defaults) private var hideGoals = false
 
     @State private var sessionToAnnotate: ToiletSession?
     @State private var showBreathing = false
@@ -426,12 +427,23 @@ struct TimerView: View {
                 label: "Durée moyenne".wcLocalized,
                 symbol: "timer"
             )
-            StatTile(
-                value: stats.streakDays > 0 ? "\(stats.streakDays) j" : "—",
-                label: "Série en cours".wcLocalized,
-                symbol: "flame.fill",
-                color: WCTheme.mint
-            )
+            // Sans objectifs, la série disparaît : ce n'est pas la durée qui
+            // pèse le plus, c'est le compteur de jours qu'on redoute de casser.
+            if hideGoals {
+                StatTile(
+                    value: "\(store.sessions.count)",
+                    label: "Visites notées".wcLocalized,
+                    symbol: "checkmark.circle.fill",
+                    color: WCTheme.mint
+                )
+            } else {
+                StatTile(
+                    value: stats.streakDays > 0 ? "\(stats.streakDays) j" : "—",
+                    label: "Série en cours".wcLocalized,
+                    symbol: "flame.fill",
+                    color: WCTheme.mint
+                )
+            }
         }
     }
 
