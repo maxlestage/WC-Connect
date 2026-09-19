@@ -15,9 +15,19 @@
   --surface-2: #eef2f9;
   --ink: #101828;
   --ink-2: #475467;
-  --ink-3: #78829a;
+  --ink-3: #616a81;
   --line: rgba(16, 24, 40, 0.1);
   --shadow: 0 18px 40px -24px rgba(16, 24, 40, 0.45);
+
+  /* Couleurs d'accent lorsqu'elles servent de *texte*. Les teintes vives
+     conviennent à un aplat ou à un trait, mais tombent sous le seuil de
+     contraste AA (4,5:1) dès qu'on écrit avec. Le contrôle
+     `scripts/check-contrast.mjs` mesure les deux thèmes. */
+  --accent-ink: #145fae;
+  --mint-ink: #00714d;
+  --amber-ink: #9f5c00;
+  --btn-bg: #145fae;
+  --btn-ink: #ffffff;
 
   --radius: 18px;
   --radius-lg: 28px;
@@ -49,6 +59,12 @@
     --ink-3: #8b96ae;
     --line: rgba(255, 255, 255, 0.12);
     --shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.9);
+
+    --accent-ink: #52a8ff;
+    --mint-ink: #3ddbb0;
+    --amber-ink: #f0b64b;
+    --btn-bg: #52a8ff;
+    --btn-ink: #0b1020;
   }
 }
 
@@ -67,6 +83,12 @@
   --ink-3: #8b96ae;
   --line: rgba(255, 255, 255, 0.12);
   --shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.9);
+
+  --accent-ink: #52a8ff;
+  --mint-ink: #3ddbb0;
+  --amber-ink: #f0b64b;
+  --btn-bg: #52a8ff;
+  --btn-ink: #0b1020;
 }
 
 /* Les contrôles du navigateur (champs, ascenseurs) suivent le choix, et pas
@@ -364,8 +386,8 @@ a { color: inherit; }
   gap: 8px;
   padding: 13px 22px;
   border-radius: 999px;
-  background: var(--accent);
-  color: #fff;
+  background: var(--btn-bg);
+  color: var(--btn-ink);
   font-weight: 620;
   text-decoration: none;
   border: 1px solid transparent;
@@ -408,7 +430,7 @@ a { color: inherit; }
   letter-spacing: 0.12em;
   font-size: 0.76rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--accent-ink);
   margin-bottom: 14px;
 }
 
@@ -857,7 +879,7 @@ a { color: inherit; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary::after {
   content: "+";
-  color: var(--accent);
+  color: var(--accent-ink);
   font-size: 1.3rem;
   line-height: 1;
 }
@@ -914,7 +936,7 @@ a { color: inherit; }
   color: var(--ink-2);
   text-decoration: none;
 }
-.footer__column a:hover { color: var(--accent); text-decoration: underline; }
+.footer__column a:hover { color: var(--accent-ink); text-decoration: underline; }
 
 .footer__status,
 .footer__credits {
@@ -941,7 +963,7 @@ a { color: inherit; }
   color: var(--ink-2);
   text-decoration: none;
 }
-.footer__top:hover { color: var(--accent); }
+.footer__top:hover { color: var(--accent-ink); }
 
 .footer__legal { margin-top: 14px; }
 .footer__legal p {
@@ -1025,7 +1047,7 @@ a { color: inherit; }
 .nudge__tips li:last-child { border-bottom: none; }
 .nudge__actions { display: flex; align-items: center; gap: 8px; }
 
-.pill--solid { background: var(--accent); color: #fff; }
+.pill--solid { background: var(--btn-bg); color: var(--btn-ink); }
 .pill--icon { padding: 6px 11px; }
 
 .warning {
@@ -1050,7 +1072,7 @@ a { color: inherit; }
   left: 0;
   top: 0;
   font-weight: 700;
-  color: var(--amber);
+  color: var(--amber-ink);
 }
 .warning p { margin: 0; font-size: 0.76rem; color: var(--ink-3); }
 
@@ -1067,7 +1089,7 @@ a { color: inherit; }
 .rhythm__count {
   font-variant-numeric: tabular-nums;
   font-weight: 640;
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 .rhythm p { margin: 0; font-size: 0.88rem; }
 .badge {
@@ -1077,7 +1099,7 @@ a { color: inherit; }
   padding: 4px 10px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--mint) 18%, transparent);
-  color: var(--mint);
+  color: var(--mint-ink);
   white-space: nowrap;
 }
 
@@ -1298,7 +1320,7 @@ main section[id] { scroll-margin-top: 80px; }
 .absurd li strong {
   min-width: 68px;
   font-variant-numeric: tabular-nums;
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 .absurd li span { font-size: 0.84rem; color: var(--ink-2); }
 .absurd__foot { margin: 10px 0 0; font-size: 0.72rem; color: var(--ink-3); }
@@ -1353,7 +1375,7 @@ main section[id] { scroll-margin-top: 80px; }
 .forecast__persona span { font-size: 0.76rem; color: var(--ink-2); }
 
 .forecast__meta { margin: 12px 0 0; font-size: 0.78rem; color: var(--ink-3); }
-.forecast__life { margin: 4px 0 0; font-size: 0.78rem; font-weight: 600; color: var(--amber); }
+.forecast__life { margin: 4px 0 0; font-size: 0.78rem; font-weight: 600; color: var(--amber-ink); }
 
 .nav__actions { display: flex; align-items: center; gap: 10px; }
 
@@ -1470,7 +1492,7 @@ main section[id] { scroll-margin-top: 80px; }
 .journal__symptom--on {
   background: rgba(192, 125, 10, 0.14);
   border-color: var(--amber);
-  color: var(--amber);
+  color: var(--amber-ink);
   font-weight: 600;
 }
 

@@ -96,15 +96,19 @@ export const en: Dictionary = {
       },
       {
         title: "Clear statistics",
-        description: "Average duration, favourite time slot, home / work / out split, running streak and seven-day charts.",
+        description: "Average duration, favourite time slot, home / work / out split, running streak and seven-day charts — with your progress on this week's goal at the top.",
       },
       {
         title: "Symptom journal",
         description: "Consistency on the Bristol scale, perceived effort and symptoms recorded at the end of a visit. Enough to show a trend to a professional, and to export it to Health if you want to.",
       },
       {
-        title: "Goal & hydration",
-        description: "A modest weekly goal — regularity, short visits — and reminders to drink, scheduled locally in the time range you choose.",
+        title: "Four useful reminders",
+        description: "Drink, go at a fixed time, do not linger seated, and an alert after several days with nothing. Each backed by real advice, each scheduled locally, each switched off on its own.",
+      },
+      {
+        title: "Report for your doctor",
+        description: "One page over 30, 60 or 90 days: frequency, longest absence, average duration, consistency and recorded symptoms. Shared like an image — a CSV reads badly in a consulting room.",
       },
       {
         title: "Siri & shortcuts",
@@ -333,7 +337,7 @@ export const en: Dictionary = {
   fun: {
     eyebrow: "Useless, therefore essential",
     title: "A trophy room for a subject that deserved none",
-    body: "14 achievements computed from your real visits, rigorously absurd equivalences, an honorary title and a certificate to pass around to people who never asked for it.",
+    body: "Nineteen achievements computed from your real visits, five of which only reveal themselves once unlocked, rigorously absurd equivalences, an honorary title and a certificate to pass around to people who never asked for it.",
     badgesAlt: "Examples of achievements to unlock",
     points: [
       "An honorary title that evolves, from “Bathroom Nobody” to “Deity of the Latrines”",
@@ -343,7 +347,7 @@ export const en: Dictionary = {
       "An official certificate to share, with no legal value whatsoever",
       "A challenge card to send: your rank, your streak, and nothing to referee it",
       "A hidden throne mode: press and hold the timer",
-      "Fourteen achievements to unlock, computed from your real visits",
+      "Fourteen achievements announced, plus five secret ones: nineteen in all",
     ],
     badges: [
       { title: "Lightning", detail: "A visit in under 45 seconds" },

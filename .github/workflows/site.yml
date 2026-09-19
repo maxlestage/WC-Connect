@@ -2,9 +2,14 @@ name: Site
 
 # Vérifie le site statique : types, construction, et contenu du dossier
 # publié. Il n'y a plus de serveur à démarrer.
+# Déclenchement : `pull_request` pour les branches, `push` pour `master`
+# seulement. Avec `push: branches: ["**"]`, chaque commit d'une branche ayant
+# une pull request ouverte lançait **deux** fois la même vérification. C'était
+# sans conséquence tant que le dépôt était public, où Actions est gratuit ; il
+# est devenu privé, et les minutes sont désormais facturées.
 on:
   push:
-    branches: ["**"]
+    branches: ["master"]
     paths:
       - "website/**"
       - "package.json"
@@ -22,6 +27,10 @@ on:
       - "Procfile"
       - "app.json"
       - ".github/workflows/site.yml"
+
+concurrency:
+  group: site-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -111,7 +120,8 @@ jobs:
     # travail le vérifie à seize largeurs, dans les deux langues, menu du
     # burger fermé puis ouvert, puis à trois tailles de texte du navigateur. Il
     # contrôle aussi les maquettes d'appareils, le panneau du menu à hauteur
-    # d'écran réelle, et la cohérence du thème sombre.
+    # d'écran réelle, la cohérence du thème sombre, la concordance des chiffres
+    # annoncés par le site avec le code de l'app, et le contraste des textes.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -145,4 +155,6 @@ jobs:
           npm run check:overflow --workspace website -- http://localhost:4173/
           npm run check:hero --workspace website -- http://localhost:4173/
           npm run check:menu --workspace website -- http://localhost:4173/
+          npm run check:claims --workspace website -- http://localhost:4173/
+          npm run check:contrast --workspace website -- http://localhost:4173/
           kill $serveur

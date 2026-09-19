@@ -99,15 +99,19 @@ export const fr = {
       },
       {
         title: "Statistiques claires",
-        description: "Durée moyenne, créneau favori, répartition maison / travail / dehors, série de jours suivis et graphiques sur 7 jours.",
+        description: "Durée moyenne, créneau favori, répartition maison / travail / dehors, série de jours suivis et graphiques sur 7 jours — avec, en tête, l'avancement de votre objectif de la semaine.",
       },
       {
         title: "Journal des symptômes",
         description: "Consistance sur l'échelle de Bristol, effort ressenti et symptômes notés en fin de visite. De quoi montrer une évolution à un professionnel, et l'exporter vers Santé si vous le voulez.",
       },
       {
-        title: "Objectif & hydratation",
-        description: "Un objectif hebdomadaire modeste — de la régularité, des visites courtes — et des rappels de boire, programmés localement dans le créneau que vous choisissez.",
+        title: "Quatre rappels utiles",
+        description: "Boire, y aller à heure fixe, ne pas s'éterniser assis, et une alerte après plusieurs jours sans rien. Chacun adossé à une recommandation réelle, chacun programmé localement, chacun désactivable seul.",
+      },
+      {
+        title: "Bilan pour le médecin",
+        description: "Une page sur 30, 60 ou 90 jours : fréquence, plus longue absence, durée moyenne, consistance et symptômes notés. À partager comme une image — un CSV se lit mal en cabinet.",
       },
       {
         title: "Siri & raccourcis",
@@ -336,7 +340,7 @@ export const fr = {
   fun: {
     eyebrow: "Inutile, donc indispensable",
     title: "Un palmarès pour un sujet qui n'en méritait pas",
-    body: "14 hauts faits calculés sur vos vraies visites, des équivalences rigoureusement absurdes, un titre honorifique et un certificat à faire circuler auprès de gens qui ne l'ont pas demandé.",
+    body: "Dix-neuf hauts faits calculés sur vos vraies visites, dont cinq qui ne se dévoilent qu'au déblocage, des équivalences rigoureusement absurdes, un titre honorifique et un certificat à faire circuler auprès de gens qui ne l'ont pas demandé.",
     badgesAlt: "Exemples de hauts faits à débloquer",
     points: [
       "Un titre honorifique qui évolue, d'« Anonyme des toilettes » à « Divinité des latrines »",
@@ -346,7 +350,7 @@ export const fr = {
       "Un certificat officiel à partager, sans aucune valeur légale",
       "Une carte de défi à envoyer : votre rang, votre série, et rien pour arbitrer",
       "Un mode trône caché : appuyez longuement sur le chronomètre",
-      "Quatorze hauts faits à débloquer, calculés sur vos vraies visites",
+      "Quatorze hauts faits annoncés, plus cinq secrets : dix-neuf en tout",
     ],
     badges: [
       { title: "Éclair", detail: "Une visite en moins de 45 secondes" },
