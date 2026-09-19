@@ -61,6 +61,33 @@ app.json                     manifeste du bouton « Deploy to Heroku »
   rythme conseillé pendant une visite est sans apnée, parce que retenir son
   souffle revient à pousser.
 
+### Sans se lever
+
+Plusieurs conseils de l'app supposent qu'on se lève : « au bout de cinq
+minutes, levez-vous », « marchez dix à quinze minutes », « allez-y quand
+l'envie vient ». En fauteuil roulant, après une lésion médullaire, avec un
+intestin neurogène, la sensation d'envie peut ne plus exister et le temps passé
+assis devient un risque en soi.
+
+- `TipCategory.seated` réunit six conseils qui ne demandent jamais de se mettre
+  debout : transfert stable, soulagement de la pression, limite de temps,
+  massage abdominal, horaire après un repas, et le renvoi au programme établi
+  avec l'équipe soignante.
+- **L'app ne décrit aucun geste de soin.** Suppositoire, stimulation,
+  irrigation : ces gestes se décident et s'apprennent avec un professionnel.
+  L'app sert à tenir le rythme convenu et à noter ce qui se passe.
+  `TipLibraryTests` vérifie qu'aucun conseil de cette famille ne décrit un
+  geste de soin, et qu'aucun ne demande de se lever ou de marcher.
+- `TipLibrary.redFlags` s'ouvre désormais sur la **dysréflexie autonome** :
+  maux de tête violents, sueurs ou rougeurs au-dessus du niveau de la lésion,
+  vision trouble — une urgence vitale qu'un intestin plein suffit à déclencher.
+  Elle figure en tête parce qu'elle ne se traite pas avec des conseils
+  d'hygiène de vie, et un test garde cette place.
+- La liste gagne aussi la **rougeur qui ne s'efface pas** après une visite :
+  le premier signe d'escarre.
+- Le rappel de temps assis est reformulé : « changez d'appui, ou levez-vous si
+  vous le pouvez » plutôt que « levez-vous, marchez ».
+
 ### Journal, objectifs et Santé
 
 - `Bristol` — l'**échelle de Bristol** (types 1 à 7) avec le détail de chaque

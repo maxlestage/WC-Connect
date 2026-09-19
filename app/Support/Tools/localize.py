@@ -608,6 +608,41 @@ TRANSLATIONS.update({
 })
 
 TRANSLATIONS.update({
+    # --- Sans se lever : fauteuil roulant, transfert, intestin neurogène ---
+    "Sans se lever": "Without standing up",
+    "Un transfert stable avant tout": "A stable transfer comes first",
+    "Freins bloqués, repose-pieds dégagés, appui à portée de main. Une chute lors du transfert fait plus de dégâts qu'une visite ratée : si l'installation n'est pas sûre, rien d'autre ne compte.":
+        "Brakes locked, footrests clear, a grab rail within reach. A fall during the transfer does more damage than a failed visit: if the setup is not safe, nothing else matters.",
+    "Soulagez la pression régulièrement": "Relieve the pressure regularly",
+    "Une lunette concentre tout le poids sur une petite surface, bien plus qu'un coussin. Penchez-vous d'un côté puis de l'autre, ou prenez appui pour vous soulever quelques secondes, toutes les deux ou trois minutes.":
+        "A toilet seat concentrates all your weight on a small area, far more than a cushion does. Lean to one side then the other, or push up to lift yourself for a few seconds, every two or three minutes.",
+    "Fixez-vous une limite de temps": "Set yourself a time limit",
+    "Sans sensation, on reste facilement trop longtemps. Le rappel de temps assis de l'app sert exactement à ça : au-delà de dix minutes, le risque de rougeur puis d'escarre augmente, et le résultat ne s'améliore plus.":
+        "Without sensation, it is easy to stay too long. The app's time-seated reminder is there for exactly this: beyond ten minutes the risk of redness, then of a pressure sore, goes up, and the result stops improving.",
+    "Massez le ventre dans le sens du côlon": "Massage your belly along the colon",
+    "À plat de main, en remontant à droite, en traversant sous les côtes, puis en descendant à gauche. Lentement, plusieurs fois. C'est faisable assis, et c'est l'un des rares gestes qui aide sans se lever.":
+        "Flat-handed, up the right side, across under the ribs, then down the left. Slowly, several times. It works from a seated position, and it is one of the few things that helps without standing up.",
+    "Toujours à la même heure, après un repas": "Always at the same time, after a meal",
+    "Quand l'envie ne se fait plus sentir, c'est l'horaire qui prend le relais. Vingt à trente minutes après un repas, l'intestin se met en mouvement de lui-même : le rappel de régularité de l'app se cale sur ce créneau.":
+        "When the urge no longer makes itself felt, the schedule takes over. Twenty to thirty minutes after a meal, the gut starts moving on its own: the app's regularity reminder settles on that window.",
+    "Votre programme reste celui de votre équipe": "Your programme stays your team's",
+    "Suppositoire, stimulation, irrigation : ces gestes se décident et s'apprennent avec un professionnel, et l'app n'en décrit aucun. Elle sert à tenir le rythme convenu et à noter ce qui se passe, pour en reparler avec lui.":
+        "Suppository, stimulation, irrigation: these are decided and learned with a professional, and the app describes none of them. It is there to hold the agreed rhythm and to record what happens, so you can discuss it with them.",
+
+    # --- Signaux d'alerte ajoutés ---
+    "Après une lésion médullaire : maux de tête violents et soudains, sueurs ou rougeurs au-dessus du niveau de la lésion, vision trouble, nez bouché — ces signes peuvent être une dysréflexie autonome, déclenchée par un intestin plein. C'est une urgence : redressez-vous et appelez les secours":
+        "After a spinal cord injury: a sudden pounding headache, sweating or flushing above the level of the injury, blurred vision, a blocked nose — these can be autonomic dysreflexia, triggered by a full bowel. This is an emergency: sit yourself upright and call emergency services",
+    "Une rougeur qui ne s'efface pas, une peau abîmée au niveau des appuis après une visite : montrez-la sans attendre":
+        "Redness that does not fade, or broken skin at the pressure points after a visit: have it looked at without delay",
+
+    # --- Rappel de temps assis, reformulé ---
+    "Changez d'appui, ou levez-vous si vous le pouvez. Rester assis fatigue les veines et met la peau sous pression.":
+        "Shift your weight, or stand up if you can. Staying seated tires the veins and puts the skin under pressure.",
+    "Rester longtemps assis fatigue les veines, et met la peau sous pression — ce qui compte double quand on ne se lève pas. Le rappel arrive pendant la visite, et disparaît dès qu'elle se termine.":
+        "Sitting for a long time tires the veins and puts the skin under pressure — which counts double when you do not stand up. The reminder arrives during the visit, and goes away as soon as it ends.",
+})
+
+TRANSLATIONS.update({
     # --- Rappel de régularité ---
     "Régularité": "Regularity",
     "Rappel de régularité": "Regularity reminder",

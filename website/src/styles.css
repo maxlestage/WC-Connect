@@ -1058,6 +1058,34 @@ a { color: inherit; }
   border: 1px solid color-mix(in srgb, var(--amber) 35%, transparent);
 }
 .warning h3 { font-size: 0.92rem; margin-bottom: 8px; }
+.warning__body { margin: 0; font-size: 0.86rem; color: var(--ink-2); }
+/* Le trait est plus marqué que sur une carte d'avertissement ordinaire :
+   celle-ci décrit une urgence vitale, pas une situation à surveiller. */
+.warning--urgent { border-width: 2px; }
+
+.seated__cards {
+  display: grid;
+  gap: 12px;
+  width: min(340px, 100%);
+  margin-top: 16px;
+}
+.seated__card {
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.seated__card p { margin: 0; font-size: 0.84rem; }
+/* `.seated__card p` l'emporterait sur une classe seule : on qualifie la
+   classe par sa balise plutôt que de recourir à `!important`. */
+.seated__card p.seated__card-title {
+  margin: 0 0 6px;
+  font-size: 0.74rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink-3);
+}
 .warning ul { list-style: none; padding: 0; margin: 0 0 12px; }
 .warning li {
   font-size: 0.86rem;

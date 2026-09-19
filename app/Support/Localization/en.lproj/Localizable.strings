@@ -43,6 +43,7 @@
 "Appareils" = "Devices";
 "Apple Watch" = "Apple Watch";
 "Apprenti" = "Apprentice";
+"Après une lésion médullaire : maux de tête violents et soudains, sueurs ou rougeurs au-dessus du niveau de la lésion, vision trouble, nez bouché — ces signes peuvent être une dysréflexie autonome, déclenchée par un intestin plein. C'est une urgence : redressez-vous et appelez les secours" = "After a spinal cord injury: a sudden pounding headache, sweating or flushing above the level of the injury, blurred vision, a blocked nose — these can be autonomic dysreflexia, triggered by a full bowel. This is an emergency: sit yourself upright and call emergency services";
 "Arrête le chronomètre et enregistre la visite dans l'historique." = "Stops the timer and records the visit in your history.";
 "Arrêter" = "Stop";
 "Au bout de cinq minutes, levez-vous" = "After five minutes, stand up";
@@ -84,6 +85,7 @@
 "Certificat officiel" = "Official certificate";
 "Ces gestes-là s'appliquent tout de suite, assis." = "These apply straight away, sitting down.";
 "Cette action est définitive." = "This cannot be undone.";
+"Changez d'appui, ou levez-vous si vous le pouvez. Rester assis fatigue les veines et met la peau sous pression." = "Shift your weight, or stand up if you can. Staying seated tires the veins and puts the skin under pressure.";
 "Chaque jour à %@" = "Every day at %@";
 "Chez un enfant, une personne âgée, pendant une grossesse, ou avec un traitement en cours : demandez conseil sans attendre" = "For a child, an older person, during pregnancy, or while on medication: seek advice without delay";
 "Chiffres absurdes" = "Absurd figures";
@@ -169,6 +171,8 @@
 "Express" = "Express";
 "Fermer" = "Close";
 "Filtrer" = "Filter";
+"Fixez-vous une limite de temps" = "Set yourself a time limit";
+"Freins bloqués, repose-pieds dégagés, appui à portée de main. Une chute lors du transfert fait plus de dégâts qu'une visite ratée : si l'installation n'est pas sûre, rien d'autre ne compte." = "Brakes locked, footrests clear, a grab rail within reach. A fall during the transfer does more damage than a failed visit: if the setup is not safe, nothing else matters.";
 "Fruits, légumes, légumineuses, céréales complètes : montez en douceur sur une à deux semaines, sinon ça ballonne." = "Fruit, vegetables, pulses, wholegrains: ramp up gently over one or two weeks, otherwise it bloats.";
 "Fréquence" = "Frequency";
 "Gardez les deux pieds posés et les genoux un peu écartés : sur la pointe des pieds, tout le bassin se crispe." = "Keep both feet down and your knees slightly apart: on tiptoe, the whole pelvis tightens.";
@@ -237,6 +241,7 @@
 "Marathonien" = "Marathoner";
 "Marchez dix à quinze minutes" = "Walk for ten to fifteen minutes";
 "Masquer les conseils" = "Hide the tips";
+"Massez le ventre dans le sens du côlon" = "Massage your belly along the colon";
 "Massez-vous le ventre" = "Massage your belly";
 "Maître du transit" = "Master of Transit";
 "Morceaux floconneux, bords déchiquetés" = "Fluffy pieces, ragged edges";
@@ -290,6 +295,7 @@
 "Prêt" = "Ready";
 "Période" = "Period";
 "Quand consulter" = "When to see a doctor";
+"Quand l'envie ne se fait plus sentir, c'est l'horaire qui prend le relais. Vingt à trente minutes après un repas, l'intestin se met en mouvement de lui-même : le rappel de régularité de l'app se cale sur ce créneau." = "When the urge no longer makes itself felt, the schedule takes over. Twenty to thirty minutes after a meal, the gut starts moving on its own: the app's regularity reminder settles on that window.";
 "Quatre temps égaux pour calmer le rythme et se recentrer." = "Four equal counts to slow things down and settle.";
 "Rappel après %@ min" = "Remind me after %@ min";
 "Rappel de régularité" = "Regularity reminder";
@@ -307,6 +313,7 @@
 "Respirer lentement relâche le ventre et le périnée. Ne bloquez jamais votre souffle pour pousser." = "Breathing slowly releases the belly and the pelvic floor. Never hold your breath to push.";
 "Respirez par le ventre" = "Breathe with your belly";
 "Rester assis à pousser fatigue les veines. Levez-vous, marchez, revenez quand l'envie revient." = "Sitting and pushing tires the veins. Stand up, walk, come back when the urge returns.";
+"Rester longtemps assis fatigue les veines, et met la peau sous pression — ce qui compte double quand on ne se lève pas. Le rappel arrive pendant la visite, et disparaît dès qu'elle se termine." = "Sitting for a long time tires the veins and puts the skin under pressure — which counts double when you do not stand up. The reminder arrives during the visit, and goes away as soon as it ends.";
 "Rester longtemps assis à pousser fatigue les veines du bas du corps. Le rappel arrive pendant la visite, et disparaît dès qu'elle se termine." = "Sitting for a long time and pushing tires the veins in your lower body. The reminder arrives during the visit, and goes away as soon as it ends.";
 "Retenez" = "Hold";
 "Retour haptique sur la Watch" = "Haptic feedback on the Watch";
@@ -326,6 +333,8 @@
 "Sa Majesté siège · %@" = "His Majesty is seated · %@";
 "Sans apnée : la plus indiquée sur le trône, elle relâche le ventre et le périnée." = "No breath hold: the best one on the throne, it releases the belly and the pelvic floor.";
 "Sans apnée, %@" = "No breath hold, %@";
+"Sans se lever" = "Without standing up";
+"Sans sensation, on reste facilement trop longtemps. Le rappel de temps assis de l'app sert exactement à ça : au-delà de dix minutes, le risque de rougeur puis d'escarre augmente, et le résultat ne s'améliore plus." = "Without sensation, it is easy to stay too long. The app's time-seated reminder is there for exactly this: beyond ten minutes the risk of redness, then of a pressure sore, goes up, and the result stops improving.";
 "Santé" = "Health";
 "Secret" = "Secret";
 "Semaine parfaite" = "Perfect week";
@@ -337,9 +346,11 @@
 "Six respirations de plus si besoin — sans jamais pousser en retenant votre souffle." = "Six more breaths if needed — never pushing while holding your breath.";
 "Souffle" = "Breath";
 "Soufflez comme sur une bougie" = "Blow as if onto a candle";
+"Soulagez la pression régulièrement" = "Relieve the pressure regularly";
 "Standard" = "Standard";
 "Statistiques" = "Statistics";
 "Stats" = "Stats";
+"Suppositoire, stimulation, irrigation : ces gestes se décident et s'apprennent avec un professionnel, et l'app n'en décrit aucun. Elle sert à tenir le rythme convenu et à noter ce qui se passe, pour en reparler avec lui." = "Suppository, stimulation, irrigation: these are decided and learned with a professional, and the app describes none of them. It is there to hold the agreed rhythm and to record what happens, so you can discuss it with them.";
 "Supprimer" = "Delete";
 "Surélevez les pieds" = "Raise your feet";
 "Symptôme à signaler" = "Symptom worth reporting";
@@ -357,6 +368,7 @@
 "Titre inconnu" = "Unknown title";
 "Torsion assise, genoux ramenés vers la poitrine, position de l'enfant : ces étirements détendent la ceinture abdominale." = "Seated twist, knees to your chest, child's pose: these stretches relax the abdominal girdle.";
 "Total" = "Total";
+"Toujours à la même heure, après un repas" = "Always at the same time, after a meal";
 "Tous les conseils" = "All tips";
 "Tous les lieux" = "All places";
 "Toutes les données restent sur vos appareils : stockage local partagé entre l'app, les widgets et la Watch. Aucun compte, aucun serveur." = "All data stays on your devices: local storage shared between the app, the widgets and the Watch. No account, no server.";
@@ -374,11 +386,14 @@
 "Un souffle retenu" = "A held-in breath waits";
 "Un symptôme noté justifie un avis médical. L'app ne diagnostique rien : montrez ce journal à un professionnel." = "One recorded symptom warrants medical advice. The app diagnoses nothing: show this journal to a professional.";
 "Un tabouret, un marchepied ou même une pile de livres suffit. Genoux plus haut que les hanches : le passage s'ouvre et l'effort diminue nettement." = "A stool, a step or even a stack of books will do. Knees above your hips: the passage opens and the effort drops noticeably.";
+"Un transfert stable avant tout" = "A stable transfer comes first";
 "Un verre d'eau ?" = "A glass of water?";
 "Une carte à envoyer à qui vous voudrez. Aucun serveur, aucun classement : juste une image et votre parole." = "A card to send to whoever you like. No server, no leaderboard: just an image and your word.";
 "Une constipation qui dure plus d'une semaine malgré ces gestes" = "Constipation lasting more than a week despite these measures";
 "Une douleur abdominale intense, ou qui ne passe pas" = "Severe abdominal pain, or pain that won't go away";
 "Une image à faire circuler auprès de gens qui ne l'ont pas demandée." = "An image to pass around to people who never asked for it.";
+"Une lunette concentre tout le poids sur une petite surface, bien plus qu'un coussin. Penchez-vous d'un côté puis de l'autre, ou prenez appui pour vous soulever quelques secondes, toutes les deux ou trois minutes." = "A toilet seat concentrates all your weight on a small area, far more than a cushion does. Lean to one side then the other, or push up to lift yourself for a few seconds, every two or three minutes.";
+"Une rougeur qui ne s'efface pas, une peau abîmée au niveau des appuis après une visite : montrez-la sans attendre" = "Redness that does not fade, or broken skin at the pressure points after a visit: have it looked at without delay";
 "Une visite avant 6 h." = "A visit before 6 am.";
 "Une visite bouclée en moins de 45 secondes." = "A visit wrapped up in under 45 seconds.";
 "Une visite dans les cinq premières minutes d'un jour nouveau." = "A visit within the first five minutes of a new day.";
@@ -404,6 +419,7 @@
 "Visites par jour" = "Visits per day";
 "Votre année sur le trône, résumée en une image. Personne ne vous l'a demandée." = "Your year on the throne, in one image. Nobody asked for it.";
 "Votre musique" = "Your music";
+"Votre programme reste celui de votre équipe" = "Your programme stays your team's";
 "Vous avez passé %.1f heures sur le trône. Un bon film, quoi." = "You have spent %.1f hours on the throne. A decent film, then.";
 "Vous avez passé %.1f jours entiers sur le trône. Assumez." = "You have spent %.1f full days on the throne. Own it.";
 "Vous avez passé %@ sur le trône. C'est un début." = "You have spent %@ on the throne. It's a start.";
@@ -474,6 +490,7 @@
 "À ce rythme, vous y passerez %.1f mois de votre vie. Assis." = "At this rate, you will spend %.1f months of your life on it. Sitting.";
 "À découvrir par accident." = "To be discovered by accident.";
 "À partir de %@" = "From %@";
+"À plat de main, en remontant à droite, en traversant sous les côtes, puis en descendant à gauche. Lentement, plusieurs fois. C'est faisable assis, et c'est l'un des rares gestes qui aide sans se lever." = "Flat-handed, up the right side, across under the ribs, then down the left. Slowly, several times. It works from a seated position, and it is one of the few things that helps without standing up.";
 "À plat, avec la paume, dans le sens des aiguilles d'une montre : en bas à droite, puis le long des côtes, puis en bas à gauche. Quelques minutes, sans appuyer fort." = "Flat, with your palm, clockwise: lower right, then along the ribs, then lower left. A few minutes, without pressing hard.";
 "Ça coince ?" = "Stuck?";
 "Éclair" = "Lightning";
