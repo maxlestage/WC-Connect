@@ -372,6 +372,17 @@ boîtier, que la carte tient dans l'écran du téléphone, que la page ne débor
 pas, et que **l'anneau et la barre affichent la même progression** — elles
 décrivent la même visite.
 
+### Les chiffres du site ne doivent pas se périmer
+
+Le site affirme des quantités — combien de hauts faits, d'ambiances, de rythmes
+de respiration — qui vivent en réalité dans le code Swift. Rien n'empêchait le
+site de rester sur un chiffre dépassé.
+
+`npm run check:claims` lit les vraies quantités dans
+`app/Sources/Shared/Core/`, puis vérifie que le texte réellement affiché par la
+section concernée les porte, en chiffres ou en toutes lettres, dans les deux
+langues. Une reformulation passe ; un chiffre périmé échoue.
+
 ### Grilles : toujours `minmax(0, 1fr)`
 
 Un `1fr` nu vaut `minmax(auto, 1fr)` : son minimum est la largeur du contenu,
