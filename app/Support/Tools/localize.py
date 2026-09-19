@@ -706,6 +706,22 @@ TRANSLATIONS.update({
         "WC Connect is not a medical device. This report describes what you recorded, nothing more: the interpretation is for a professional.",
 })
 
+TRANSLATIONS.update({
+    # --- Sérénité : mode serein, veilleuse, démarrage apaisé ---
+    "Sérénité": "Calm",
+    "Mode serein": "Calm mode",
+    "Prenez votre temps": "Take your time",
+    "Rien ne presse, rien ne compte": "No rush, nothing is being counted",
+    "Le mode serein retire le chronomètre de l'écran et de l'écran verrouillé. Rien n'est perdu : la durée continue d'être enregistrée.":
+        "Calm mode takes the stopwatch off the screen and off the Lock Screen. Nothing is lost: the duration is still recorded.",
+    "Pendant la visite, l'app n'affiche ni chiffre ni objectif : juste un souffle. La durée reste enregistrée pour les statistiques et le bilan médical.":
+        "During a visit the app shows no number and no target: just a breath. The duration is still recorded, for the statistics and the medical report.",
+    "Veilleuse": "Night light",
+    "Ambiance au démarrage": "Soundscape on start",
+    "Respiration au démarrage": "Breathing on start",
+    "Aucune": "None",
+})
+
 
 def escape(texte: str) -> str:
     return texte.replace("\\", "\\\\").replace('"', '\\"')

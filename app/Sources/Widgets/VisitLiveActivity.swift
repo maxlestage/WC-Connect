@@ -27,21 +27,29 @@ struct VisitLiveActivity: Widget {
                     .foregroundStyle(color)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text(timerInterval: context.state.timerRange, countsDown: false)
-                        .font(.title3.weight(.semibold))
-                        .monospacedDigit()
-                        .foregroundStyle(color)
-                        .frame(maxWidth: 76)
+                    if context.state.serenity {
+                        Image(systemName: "leaf.fill")
+                            .font(.title3)
+                            .foregroundStyle(color)
+                    } else {
+                        Text(timerInterval: context.state.timerRange, countsDown: false)
+                            .font(.title3.weight(.semibold))
+                            .monospacedDigit()
+                            .foregroundStyle(color)
+                            .frame(maxWidth: 76)
+                    }
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     VStack(spacing: 8) {
-                        ProgressView(
-                            timerInterval: context.state.timerRange,
-                            countsDown: false,
-                            label: { EmptyView() },
-                            currentValueLabel: { EmptyView() }
-                        )
-                        .tint(color)
+                        if !context.state.serenity {
+                            ProgressView(
+                                timerInterval: context.state.timerRange,
+                                countsDown: false,
+                                label: { EmptyView() },
+                                currentValueLabel: { EmptyView() }
+                            )
+                            .tint(color)
+                        }
 
                         HStack {
                             Label(context.state.place.title, systemImage: context.state.place.symbol)
@@ -61,10 +69,15 @@ struct VisitLiveActivity: Widget {
                 Image(systemName: "toilet.fill")
                     .foregroundStyle(color)
             } compactTrailing: {
-                Text(timerInterval: context.state.timerRange, countsDown: false, showsHours: false)
-                    .monospacedDigit()
-                    .frame(maxWidth: 44)
-                    .foregroundStyle(color)
+                if context.state.serenity {
+                    Image(systemName: "leaf.fill")
+                        .foregroundStyle(color)
+                } else {
+                    Text(timerInterval: context.state.timerRange, countsDown: false, showsHours: false)
+                        .monospacedDigit()
+                        .frame(maxWidth: 44)
+                        .foregroundStyle(color)
+                }
             } minimal: {
                 Image(systemName: "toilet.fill")
                     .foregroundStyle(color)
@@ -92,9 +105,14 @@ struct LockScreenLiveActivityView: View {
                 Text("Visite en cours")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(.secondary)
-                Text(timerInterval: state.timerRange, countsDown: false)
-                    .font(.system(size: 30, weight: .semibold, design: .rounded))
-                    .monospacedDigit()
+                if state.serenity {
+                    Text("Prenez votre temps")
+                        .font(.system(size: 22, weight: .semibold, design: .rounded))
+                } else {
+                    Text(timerInterval: state.timerRange, countsDown: false)
+                        .font(.system(size: 30, weight: .semibold, design: .rounded))
+                        .monospacedDigit()
+                }
                 HStack(spacing: 6) {
                     Label(state.kind.title, systemImage: state.kind.symbol)
                     Text("·")
