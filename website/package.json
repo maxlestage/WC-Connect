@@ -16,7 +16,8 @@
     "check:theme": "node scripts/check-theme.mjs",
     "check:hero": "node scripts/check-hero.mjs",
     "check:menu": "node scripts/check-menu.mjs",
-    "check:claims": "node scripts/check-claims.mjs"
+    "check:claims": "node scripts/check-claims.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

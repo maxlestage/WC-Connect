@@ -373,6 +373,29 @@ boîtier, que la carte tient dans l'écran du téléphone, que la page ne débor
 pas, et que **l'anneau et la barre affichent la même progression** — elles
 décrivent la même visite.
 
+### Contraste : des jetons distincts pour le texte
+
+Les teintes vives de la charte conviennent à un aplat ou à un trait, mais
+tombent sous le seuil WCAG AA (4,5:1) dès qu'on **écrit** avec : l'accent donne
+4,07:1 sur blanc, et le libellé blanc du bouton principal tombait à 2,5:1 sur
+l'accent clair du thème sombre. Vingt-neuf textes étaient concernés en thème
+clair, deux en sombre.
+
+D'où des jetons réservés au texte — `--accent-ink`, `--mint-ink`,
+`--amber-ink` — et une paire `--btn-bg` / `--btn-ink` pour le bouton, qui
+inverse le rapport en thème sombre : libellé foncé sur accent clair, le motif
+idiomatique. Les aplats, traits et anneaux gardent les teintes vives.
+
+`npm run check:contrast` mesure chaque texte de la page dans les deux thèmes et
+les deux langues, en reconstituant le fond effectif (couches translucides
+empilées). Les éléments posés sur un dégradé sont écartés : leur fond n'est pas
+calculable de façon fiable, et une fausse alerte userait le contrôle.
+
+> Piège rencontré en écrivant ce contrôle : Chromium renvoie tantôt
+> `rgb(0-255)`, tantôt `color(srgb 0-1)` — notamment pour tout ce qui vient de
+> `color-mix()`. Lire les seconds comme les premiers faisait mesurer du noir sur
+> blanc à 1,2:1, et produisait une trentaine de fausses alertes.
+
 ### Les chiffres du site ne doivent pas se périmer
 
 Le site affirme des quantités — combien de hauts faits, d'ambiances, de rythmes

@@ -120,8 +120,8 @@ jobs:
     # travail le vérifie à seize largeurs, dans les deux langues, menu du
     # burger fermé puis ouvert, puis à trois tailles de texte du navigateur. Il
     # contrôle aussi les maquettes d'appareils, le panneau du menu à hauteur
-    # d'écran réelle, la cohérence du thème sombre, et la concordance des
-    # chiffres annoncés par le site avec le code de l'app.
+    # d'écran réelle, la cohérence du thème sombre, la concordance des chiffres
+    # annoncés par le site avec le code de l'app, et le contraste des textes.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -156,4 +156,5 @@ jobs:
           npm run check:hero --workspace website -- http://localhost:4173/
           npm run check:menu --workspace website -- http://localhost:4173/
           npm run check:claims --workspace website -- http://localhost:4173/
+          npm run check:contrast --workspace website -- http://localhost:4173/
           kill $serveur
