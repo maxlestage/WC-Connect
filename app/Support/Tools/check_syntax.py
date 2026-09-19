@@ -71,13 +71,19 @@ def virgules_de_tableau(chemin: pathlib.Path, source: str) -> list[str]:
 
 
 def main() -> int:
-    racine = pathlib.Path(__file__).resolve().parents[2] / "Sources"
-    fichiers = sorted(racine.rglob("*.swift"))
+    racine = pathlib.Path(__file__).resolve().parents[2]
+    # Les tests aussi : une virgule oubliée dans un tableau de test coûte le
+    # même quart d'heure de CI macOS qu'une virgule oubliée dans le code.
+    fichiers = sorted(
+        chemin
+        for dossier in ("Sources", "Tests")
+        for chemin in (racine / dossier).rglob("*.swift")
+    )
     erreurs: list[str] = []
 
     for chemin in fichiers:
         source = chemin.read_text()
-        relatif = chemin.relative_to(racine.parent)
+        relatif = chemin.relative_to(racine)
         nu = sans_texte(source)
         erreurs += equilibre(relatif, nu)
         erreurs += virgules_de_tableau(relatif, source)

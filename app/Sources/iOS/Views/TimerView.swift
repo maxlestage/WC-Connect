@@ -7,6 +7,11 @@ struct TimerView: View {
     @AppStorage("defaultKind", store: AppGroup.defaults) private var defaultKindRaw = SessionKind.standard.rawValue
     @AppStorage("defaultPlace", store: AppGroup.defaults) private var defaultPlaceRaw = Place.home.rawValue
     @AppStorage("royalMode", store: AppGroup.defaults) private var royalMode = false
+    @AppStorage("serenityMode", store: AppGroup.defaults) private var serenity = false
+    @AppStorage("nightLightEnabled", store: AppGroup.defaults) private var nightLight = false
+    @AppStorage("nightLightStartHour", store: AppGroup.defaults) private var nightStart = 22
+    @AppStorage("nightLightEndHour", store: AppGroup.defaults) private var nightEnd = 7
+    @AppStorage("hideGoals", store: AppGroup.defaults) private var hideGoals = false
 
     @State private var sessionToAnnotate: ToiletSession?
     @State private var showBreathing = false
@@ -67,15 +72,58 @@ struct TimerView: View {
                         }
                 }
             }
-            .onChange(of: store.active?.id) { _, _ in
+            .onChange(of: store.active?.id) { ancien, nouveau in
                 nudgeDismissed = false
+                if ancien == nil, nouveau != nil {
+                    demarrageApaise()
+                }
             }
         }
     }
 
     // MARK: - Chronomètre
 
+    @ViewBuilder
     private var chronometer: some View {
+        if serenity {
+            serenityDial
+        } else {
+            countingDial
+        }
+    }
+
+    /// Mode serein : un souffle qui bat lentement, pas un compte qui monte.
+    /// La visite est enregistrée exactement pareil — c'est l'affichage qui
+    /// change, pas la mesure.
+    private var serenityDial: some View {
+        let session = store.active
+        let color = WCTheme.color(for: session?.kind ?? kind)
+
+        return ZStack {
+            BreathingHalo(active: session != nil, color: color)
+            VStack(spacing: 8) {
+                if royalMode {
+                    Image(systemName: "crown.fill")
+                        .font(.title3)
+                        .foregroundStyle(WCTheme.warn)
+                }
+                Text(session == nil ? "Prêt".wcLocalized : "Prenez votre temps".wcLocalized)
+                    .font(.system(size: session == nil ? 34 : 28, weight: .semibold, design: .rounded))
+                    .multilineTextAlignment(.center)
+                Text(session == nil ? subtitle(for: nil) : "Rien ne presse, rien ne compte".wcLocalized)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.horizontal, 28)
+        }
+        .frame(height: 260)
+        .animation(.default, value: store.active?.id)
+        .onLongPressGesture(minimumDuration: 0.8) { royalMode.toggle() }
+        .sensoryFeedback(royalMode ? .success : .impact, trigger: royalMode)
+    }
+
+    private var countingDial: some View {
         TimelineView(.periodic(from: .now, by: 1)) { context in
             let session = store.active
             let elapsed = session?.duration(now: context.date) ?? 0
@@ -112,6 +160,17 @@ struct TimerView: View {
                 royalMode.toggle()
             }
             .sensoryFeedback(royalMode ? .success : .impact, trigger: royalMode)
+        }
+    }
+
+    /// Au début d'une visite, lance ce que le propriétaire a demandé une fois
+    /// pour toutes : l'ambiance sonore, la respiration guidée, ou rien.
+    private func demarrageApaise() {
+        if let ambiance = CalmSettings.autoSoundscape, soundscapes.current == nil {
+            soundscapes.play(ambiance)
+        }
+        if CalmSettings.autoBreathing {
+            showBreathing = true
         }
     }
 
@@ -368,12 +427,23 @@ struct TimerView: View {
                 label: "Durée moyenne".wcLocalized,
                 symbol: "timer"
             )
-            StatTile(
-                value: stats.streakDays > 0 ? "\(stats.streakDays) j" : "—",
-                label: "Série en cours".wcLocalized,
-                symbol: "flame.fill",
-                color: WCTheme.mint
-            )
+            // Sans objectifs, la série disparaît : ce n'est pas la durée qui
+            // pèse le plus, c'est le compteur de jours qu'on redoute de casser.
+            if hideGoals {
+                StatTile(
+                    value: "\(store.sessions.count)",
+                    label: "Visites notées".wcLocalized,
+                    symbol: "checkmark.circle.fill",
+                    color: WCTheme.mint
+                )
+            } else {
+                StatTile(
+                    value: stats.streakDays > 0 ? "\(stats.streakDays) j" : "—",
+                    label: "Série en cours".wcLocalized,
+                    symbol: "flame.fill",
+                    color: WCTheme.mint
+                )
+            }
         }
     }
 
@@ -390,12 +460,31 @@ struct TimerView: View {
     }
 
     private var backdrop: some View {
-        LinearGradient(
-            colors: [WCTheme.accent.opacity(store.active == nil ? 0.05 : 0.18), .clear],
-            startPoint: .top,
-            endPoint: .center
-        )
-        .ignoresSafeArea()
+        // Le quart d'heure suffit : la veilleuse change d'état sur une heure
+        // pleine, inutile de réveiller la vue chaque seconde.
+        TimelineView(.periodic(from: .now, by: 900)) { context in
+            let nuit = nightLight
+                && CalmSettings.isNight(at: context.date, start: nightStart, end: nightEnd)
+            ZStack {
+                LinearGradient(
+                    colors: [WCTheme.accent.opacity(store.active == nil ? 0.05 : 0.18), .clear],
+                    startPoint: .top,
+                    endPoint: .center
+                )
+                if nuit {
+                    // Ambre très sombre : de quoi voir l'écran sans se réveiller
+                    // pour de bon à trois heures du matin.
+                    LinearGradient(
+                        colors: [Color(red: 0.24, green: 0.11, blue: 0.02), Color.black],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .opacity(0.88)
+                }
+            }
+            .animation(.easeInOut(duration: 0.8), value: nuit)
+            .ignoresSafeArea()
+        }
     }
 }
 

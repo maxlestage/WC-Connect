@@ -7,6 +7,12 @@
 // script vérifie les trois, plus l'absence de débordement de la page, à
 // plusieurs largeurs et à trois tailles de texte.
 //
+// Il vérifie aussi, depuis que le propriétaire l'a demandé, que la première
+// page ne compte rien : ni anneau de progression, ni barre qui se remplit, ni
+// texte qui change avec le temps. Le chronomètre existe toujours dans l'app et
+// se montre plus bas dans la page ; il n'a simplement plus à accueillir les
+// visiteurs.
+//
 // Usage : node website/scripts/check-hero.mjs [url]
 import { chromium } from "playwright";
 
@@ -51,24 +57,20 @@ for (const width of largeurs) {
         const r = el.getBoundingClientRect();
         return { gauche: r.left, droite: r.right, haut: r.top, bas: r.bottom };
       };
-      // Part de progression réellement affichée par l'anneau et par la barre :
-      // elles décrivent la même visite et doivent donc concorder.
-      const anneau = document.querySelector(".hero__devices .ring__value");
-      const barre = document.querySelector(".hero__devices .bar span");
-      const circonference = 2 * Math.PI * 50;
-      const decalage = anneau ? parseFloat(getComputedStyle(anneau).strokeDashoffset) : NaN;
-      const largeurBarre = barre ? parseFloat(getComputedStyle(barre).width) : NaN;
-      const largeurPiste = barre ? parseFloat(getComputedStyle(barre.parentElement).width) : NaN;
+      // Aucun compteur ne doit revenir sur la première page : ni anneau de
+      // progression, ni barre qui se remplit.
+      const compteurs = document.querySelectorAll(
+        ".hero__devices .ring__value, .hero__devices .bar",
+      ).length;
 
       return {
-        partAnneau: Number.isFinite(decalage) ? 1 - decalage / circonference : null,
-        partBarre: Number.isFinite(largeurBarre) ? largeurBarre / largeurPiste : null,
+        compteurs,
         telephone: boite(".hero__devices .phone"),
         montre: boite(".hero__devices .watch"),
         cadran: boite(".hero__devices .ring"),
         bouton: boite(".hero__devices .watch__button"),
         carte: boite(".hero__devices .activity"),
-        barre: boite(".hero__devices .activity--bar"),
+        barre: boite(".hero__devices .activity--night"),
         largeurPage: document.documentElement.scrollWidth,
       };
     });
@@ -85,14 +87,14 @@ for (const width of largeurs) {
     const { telephone, montre, cadran, bouton, carte, barre, largeurPage } = mesure;
     const marge = 1;
 
-    // 0. L'anneau de la montre et la barre du téléphone décrivent la même
-    //    visite : un écart signale une valeur figée quelque part.
-    if (mesure.partAnneau === null || mesure.partBarre === null) {
-      signaler(`${etiquette} : progression non mesurable (anneau ou barre absent)`);
-    } else if (Math.abs(mesure.partAnneau - mesure.partBarre) > 0.03) {
+    // 0. Rien ne compte sur la première page. C'est une demande explicite du
+    //    propriétaire : un chronomètre en tête de page met la pression avant
+    //    même d'avoir ouvert l'app. Le chronomètre existe toujours — il se
+    //    montre plus bas, dans la section Live Activity.
+    if (mesure.compteurs > 0) {
       signaler(
-        `${etiquette} : l'anneau affiche ${Math.round(mesure.partAnneau * 100)}% ` +
-          `alors que la barre affiche ${Math.round(mesure.partBarre * 100)}%`,
+        `${etiquette} : ${mesure.compteurs} compteur(s) de progression dans le hero ` +
+          `(anneau ou barre) — la première page ne doit rien mesurer`,
       );
     }
 
@@ -108,8 +110,8 @@ for (const width of largeurs) {
       );
     }
 
-    // 2. La montre ne recouvre ni la carte ni la barre de progression.
-    for (const [nom, cible] of [["la carte", carte], ["la barre", barre]]) {
+    // 2. La montre ne recouvre ni la carte de la visite ni celle de la veilleuse.
+    for (const [nom, cible] of [["la carte", carte], ["la veilleuse", barre]]) {
       const chevauche =
         montre.gauche < cible.droite - marge &&
         montre.droite > cible.gauche + marge &&
@@ -152,10 +154,34 @@ for (const width of largeurs) {
   }
 }
 
+// Dernier contrôle, une seule fois : le texte de la première page est
+// strictement le même deux secondes plus tard. Un chiffre qui avance — même
+// ailleurs que dans un anneau ou une barre — se ferait prendre ici.
+{
+  const contexte = await navigateur.newContext({
+    viewport: { width: 1280, height: 900 },
+    locale: "fr-FR",
+    reducedMotion: "reduce",
+  });
+  const page = await contexte.newPage();
+  await page.goto(url, { waitUntil: "networkidle" });
+  await page.waitForTimeout(300);
+  const texte = () => page.evaluate(() => document.querySelector(".hero")?.innerText ?? "");
+  const avant = await texte();
+  await page.waitForTimeout(2000);
+  const apres = await texte();
+  if (avant !== apres) {
+    signaler("le texte de la première page change avec le temps : quelque chose y compte");
+  } else {
+    console.log("ok   la première page ne compte rien");
+  }
+  await contexte.close();
+}
+
 await navigateur.close();
 
 if (echecs > 0) {
   console.error(`\n${echecs} défaut(s) dans les maquettes du hero.`);
   process.exit(1);
 }
-console.log("\nMaquettes conformes : montre lisible, rien qui déborde.");
+console.log("\nMaquettes conformes : montre lisible, rien qui déborde, rien qui compte.");

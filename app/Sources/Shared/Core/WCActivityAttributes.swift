@@ -12,20 +12,32 @@ public struct WCActivityAttributes: ActivityAttributes {
         public var place: Place
         /// Objectif indicatif en secondes, pour la barre de progression.
         public var goal: TimeInterval
+        /// Mode serein : l'écran verrouillé n'affiche ni chronomètre ni
+        /// progression. Sans cela, le chronomètre resterait sous les yeux là où
+        /// on le voit le plus, et le mode ne servirait à rien.
+        public var serenity: Bool
 
-        public init(startedAt: Date, kind: SessionKind, place: Place, goal: TimeInterval) {
+        public init(
+            startedAt: Date,
+            kind: SessionKind,
+            place: Place,
+            goal: TimeInterval,
+            serenity: Bool = false
+        ) {
             self.startedAt = startedAt
             self.kind = kind
             self.place = place
             self.goal = goal
+            self.serenity = serenity
         }
 
-        public init(session: ToiletSession) {
+        public init(session: ToiletSession, serenity: Bool = CalmSettings.serenity) {
             self.init(
                 startedAt: session.startedAt,
                 kind: session.kind,
                 place: session.place,
-                goal: session.kind.goal
+                goal: session.kind.goal,
+                serenity: serenity
             )
         }
 

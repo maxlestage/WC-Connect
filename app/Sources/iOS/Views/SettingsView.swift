@@ -11,6 +11,13 @@ struct SettingsView: View {
     @AppStorage("defaultKind", store: AppGroup.defaults) private var defaultKindRaw = SessionKind.standard.rawValue
     @AppStorage("defaultPlace", store: AppGroup.defaults) private var defaultPlaceRaw = Place.home.rawValue
     @AppStorage("hapticsEnabled", store: AppGroup.defaults) private var hapticsEnabled = true
+    @AppStorage("serenityMode", store: AppGroup.defaults) private var serenity = false
+    @AppStorage("nightLightEnabled", store: AppGroup.defaults) private var nightLight = false
+    @AppStorage("nightLightStartHour", store: AppGroup.defaults) private var nightStart = 22
+    @AppStorage("nightLightEndHour", store: AppGroup.defaults) private var nightEnd = 7
+    @AppStorage("autoSoundscape", store: AppGroup.defaults) private var autoSoundscapeRaw: String?
+    @AppStorage("autoBreathing", store: AppGroup.defaults) private var autoBreathing = false
+    @AppStorage("hideGoals", store: AppGroup.defaults) private var hideGoals = false
 
     @State private var showResetConfirmation = false
     @State private var exportedCSV: String?
@@ -30,6 +37,36 @@ struct SettingsView: View {
                         }
                     }
                     Toggle("Retour haptique sur la Watch", isOn: $hapticsEnabled)
+                }
+
+                Section {
+                    Toggle("Mode serein", isOn: $serenity)
+                        .onChange(of: serenity) { _, _ in
+                            // Une visite déjà lancée doit suivre : sinon
+                            // l'écran verrouillé garderait son chronomètre.
+                            store.refreshActivity()
+                        }
+                    Toggle("Veilleuse", isOn: $nightLight)
+                    if nightLight {
+                        Stepper(value: $nightStart, in: 18...23) {
+                            Text("À partir de %@".wcLocalized(WCFormat.hourLabel(nightStart)))
+                        }
+                        Stepper(value: $nightEnd, in: 4...11) {
+                            Text("Jusqu'à %@".wcLocalized(WCFormat.hourLabel(nightEnd)))
+                        }
+                    }
+                    Picker("Ambiance au démarrage", selection: $autoSoundscapeRaw) {
+                        Text("Aucune").tag(String?.none)
+                        ForEach(Soundscape.allCases) { ambiance in
+                            Text(ambiance.title).tag(String?.some(ambiance.rawValue))
+                        }
+                    }
+                    Toggle("Respiration au démarrage", isOn: $autoBreathing)
+                    Toggle("Sans objectifs", isOn: $hideGoals)
+                } header: {
+                    Text("Sérénité")
+                } footer: {
+                    Text(sereniteFooter)
                 }
 
                 Section {
@@ -267,6 +304,16 @@ struct SettingsView: View {
     }
 
     /// Pied de la section Hydratation : les heures réellement programmées.
+    private var sereniteFooter: String {
+        if hideGoals {
+            return "Sans objectifs, l'objectif de la semaine et la série de jours disparaissent de l'app. Une série qui se casse fait plus de mal qu'une série qui dure ne fait de bien.".wcLocalized
+        }
+        if serenity {
+            return "Pendant la visite, l'app n'affiche ni chiffre ni objectif : juste un souffle. La durée reste enregistrée pour les statistiques et le bilan médical.".wcLocalized
+        }
+        return "Le mode serein retire le chronomètre de l'écran et de l'écran verrouillé. Rien n'est perdu : la durée continue d'être enregistrée.".wcLocalized
+    }
+
     private var hydrationFooter: String {
         guard hydration.isEnabled else {
             return "Boire régulièrement est le conseil le plus déterminant, et le plus facile à oublier.".wcLocalized

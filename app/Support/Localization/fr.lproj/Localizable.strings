@@ -35,6 +35,7 @@
 "Alerte d'absence" = "Alerte d'absence";
 "Allez-y quand l'envie vient" = "Allez-y quand l'envie vient";
 "Ambiance" = "Ambiance";
+"Ambiance au démarrage" = "Ambiance au démarrage";
 "Ambiances" = "Ambiances";
 "Annuler" = "Annuler";
 "Annuler la visite" = "Annuler la visite";
@@ -48,6 +49,7 @@
 "Arrêter" = "Arrêter";
 "Au bout de cinq minutes, levez-vous" = "Au bout de cinq minutes, levez-vous";
 "Au-delà de %@" = "Au-delà de %@";
+"Aucune" = "Aucune";
 "Aucune visite" = "Aucune visite";
 "Aucune visite en cours" = "Aucune visite en cours";
 "Aucune visite en cours." = "Aucune visite en cours.";
@@ -220,6 +222,7 @@
 "Le Veilleur" = "Le Veilleur";
 "Le bulletin du jour, calculé sur votre semaine." = "Le bulletin du jour, calculé sur votre semaine.";
 "Le carrelage froid" = "Le carrelage froid";
+"Le mode serein retire le chronomètre de l'écran et de l'écran verrouillé. Rien n'est perdu : la durée continue d'être enregistrée." = "Le mode serein retire le chronomètre de l'écran et de l'écran verrouillé. Rien n'est perdu : la durée continue d'être enregistrée.";
 "Le moment de votre visite" = "Le moment de votre visite";
 "Le passage s'annonce laborieux. Une marche et un verre d'eau amélioreraient le front." = "Le passage s'annonce laborieux. Une marche et un verre d'eau amélioreraient le front.";
 "Le silence s'installe" = "Le silence s'installe";
@@ -244,6 +247,7 @@
 "Massez le ventre dans le sens du côlon" = "Massez le ventre dans le sens du côlon";
 "Massez-vous le ventre" = "Massez-vous le ventre";
 "Maître du transit" = "Maître du transit";
+"Mode serein" = "Mode serein";
 "Morceaux floconneux, bords déchiquetés" = "Morceaux floconneux, bords déchiquetés";
 "Morceaux mous aux bords nets" = "Morceaux mous aux bords nets";
 "Moyenne" = "Moyenne";
@@ -270,6 +274,7 @@
 "Pas encore assez de visites pour établir des prévisions. Revenez après quelques passages." = "Pas encore assez de visites pour établir des prévisions. Revenez après quelques passages.";
 "Pause" = "Pause";
 "Penchez-vous vers l'avant" = "Penchez-vous vers l'avant";
+"Pendant la visite, l'app n'affiche ni chiffre ni objectif : juste un souffle. La durée reste enregistrée pour les statistiques et le bilan médical." = "Pendant la visite, l'app n'affiche ni chiffre ni objectif : juste un souffle. La durée reste enregistrée pour les statistiques et le bilan médical.";
 "Perturbé" = "Perturbé";
 "Pieds à plat, jambes écartées" = "Pieds à plat, jambes écartées";
 "Pluie" = "Pluie";
@@ -282,6 +287,7 @@
 "Pousser en retenant sa respiration fait monter la pression et fatigue le périnée, sans faire avancer les choses. Continuez à respirer, toujours." = "Pousser en retenant sa respiration fait monter la pression et fatigue le périnée, sans faire avancer les choses. Continuez à respirer, toujours.";
 "Première fois" = "Première fois";
 "Prendre le temps, sans pousser. Si rien ne vient, revenez plus tard." = "Prendre le temps, sans pousser. Si rien ne vient, revenez plus tard.";
+"Prenez votre temps" = "Prenez votre temps";
 "Pression" = "Pression";
 "Prochaine visite prévue vers %@ — fiabilité %@ %%" = "Prochaine visite prévue vers %@ — fiabilité %@ %%";
 "Profil vierge" = "Profil vierge";
@@ -307,6 +313,7 @@
 "Relâchez ce qui se crispe" = "Relâchez ce qui se crispe";
 "Repousser l'envie laisse le temps à l'eau d'être réabsorbée : les selles durcissent et la fois suivante est plus difficile." = "Repousser l'envie laisse le temps à l'eau d'être réabsorbée : les selles durcissent et la fois suivante est plus difficile.";
 "Respiration" = "Respiration";
+"Respiration au démarrage" = "Respiration au démarrage";
 "Respiration guidée" = "Respiration guidée";
 "Respire sur dix secondes" = "Respire sur dix secondes";
 "Respirer" = "Respirer";
@@ -320,6 +327,7 @@
 "Rien depuis %@ jours" = "Rien depuis %@ jours";
 "Rien depuis %@ jours. Au-delà de trois jours, un avis médical vaut mieux qu'un remède maison." = "Rien depuis %@ jours. Au-delà de trois jours, un avis médical vaut mieux qu'un remède maison.";
 "Rien en cours de lecture. Choisissez un morceau dans Musique, puis revenez ici." = "Rien en cours de lecture. Choisissez un morceau dans Musique, puis revenez ici.";
+"Rien ne presse, rien ne compte" = "Rien ne presse, rien ne compte";
 "Rythme" = "Rythme";
 "Réglages" = "Réglages";
 "Régularité" = "Régularité";
@@ -333,6 +341,8 @@
 "Sa Majesté siège · %@" = "Sa Majesté siège · %@";
 "Sans apnée : la plus indiquée sur le trône, elle relâche le ventre et le périnée." = "Sans apnée : la plus indiquée sur le trône, elle relâche le ventre et le périnée.";
 "Sans apnée, %@" = "Sans apnée, %@";
+"Sans objectifs" = "Sans objectifs";
+"Sans objectifs, l'objectif de la semaine et la série de jours disparaissent de l'app. Une série qui se casse fait plus de mal qu'une série qui dure ne fait de bien." = "Sans objectifs, l'objectif de la semaine et la série de jours disparaissent de l'app. Une série qui se casse fait plus de mal qu'une série qui dure ne fait de bien.";
 "Sans se lever" = "Sans se lever";
 "Sans sensation, on reste facilement trop longtemps. Le rappel de temps assis de l'app sert exactement à ça : au-delà de dix minutes, le risque de rougeur puis d'escarre augmente, et le résultat ne s'améliore plus." = "Sans sensation, on reste facilement trop longtemps. Le rappel de temps assis de l'app sert exactement à ça : au-delà de dix minutes, le risque de rougeur puis d'escarre augmente, et le résultat ne s'améliore plus.";
 "Santé" = "Santé";
@@ -357,6 +367,7 @@
 "Symptômes notés" = "Symptômes notés";
 "Série" = "Série";
 "Série en cours" = "Série en cours";
+"Sérénité" = "Sérénité";
 "Temps assis" = "Temps assis";
 "Temps total" = "Temps total";
 "Tempête" = "Tempête";
@@ -403,6 +414,7 @@
 "Une visite le 31 décembre ou le 1er janvier. Bonne année." = "Une visite le 31 décembre ou le 1er janvier. Bonne année.";
 "Urgence" = "Urgence";
 "Variable" = "Variable";
+"Veilleuse" = "Veilleuse";
 "Ventre 4-6" = "Ventre 4-6";
 "Version" = "Version";
 "Vingt visites au travail. Personne n'a rien remarqué." = "Vingt visites au travail. Personne n'a rien remarqué.";
@@ -416,6 +428,7 @@
 "Visites" = "Visites";
 "Visites des 7 derniers jours" = "Visites des 7 derniers jours";
 "Visites enregistrées" = "Visites enregistrées";
+"Visites notées" = "Visites notées";
 "Visites par jour" = "Visites par jour";
 "Votre année sur le trône, résumée en une image. Personne ne vous l'a demandée." = "Votre année sur le trône, résumée en une image. Personne ne vous l'a demandée.";
 "Votre musique" = "Votre musique";

@@ -8,6 +8,7 @@ struct WatchTimerView: View {
     @AppStorage("defaultKind", store: AppGroup.defaults) private var defaultKindRaw = SessionKind.standard.rawValue
     @AppStorage("defaultPlace", store: AppGroup.defaults) private var defaultPlaceRaw = Place.home.rawValue
     @AppStorage("hapticsEnabled", store: AppGroup.defaults) private var hapticsEnabled = true
+    @AppStorage("serenityMode", store: AppGroup.defaults) private var serenity = false
 
     private var kind: SessionKind { SessionKind(rawValue: defaultKindRaw) ?? .standard }
     private var place: Place { Place(rawValue: defaultPlaceRaw) ?? .home }
@@ -15,29 +16,50 @@ struct WatchTimerView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 12) {
-                TimelineView(.periodic(from: .now, by: 1)) { context in
+                if serenity {
+                    // Mode serein : au poignet non plus, aucun chiffre qui
+                    // monte. La visite est enregistrée à l'identique.
                     let session = store.active
-                    let elapsed = session?.duration(now: context.date) ?? 0
                     let color = WCTheme.color(for: session?.kind ?? kind)
-
                     ZStack {
-                        ProgressRing(
-                            progress: elapsed / max((session?.kind ?? kind).goal, 1),
-                            color: color,
-                            lineWidth: 10
-                        )
+                        BreathingHalo(active: session != nil, color: color)
                         VStack(spacing: 2) {
-                            Text(session == nil ? "Prêt" : WCFormat.clock(elapsed))
-                                .font(.system(size: 26, weight: .semibold, design: .rounded))
-                                .monospacedDigit()
+                            Text(session == nil ? "Prêt" : "Prenez votre temps")
+                                .font(.system(size: session == nil ? 26 : 17, weight: .semibold, design: .rounded))
+                                .multilineTextAlignment(.center)
                                 .minimumScaleFactor(0.6)
-                                .lineLimit(1)
                             Text(session == nil ? "\(kind.title) · \(place.title)" : (session?.place.title ?? ""))
                                 .font(.caption2)
                                 .foregroundStyle(.secondary)
                         }
+                        .padding(.horizontal, 8)
                     }
                     .frame(height: 120)
+                } else {
+                    TimelineView(.periodic(from: .now, by: 1)) { context in
+                        let session = store.active
+                        let elapsed = session?.duration(now: context.date) ?? 0
+                        let color = WCTheme.color(for: session?.kind ?? kind)
+
+                        ZStack {
+                            ProgressRing(
+                                progress: elapsed / max((session?.kind ?? kind).goal, 1),
+                                color: color,
+                                lineWidth: 10
+                            )
+                            VStack(spacing: 2) {
+                                Text(session == nil ? "Prêt" : WCFormat.clock(elapsed))
+                                    .font(.system(size: 26, weight: .semibold, design: .rounded))
+                                    .monospacedDigit()
+                                    .minimumScaleFactor(0.6)
+                                    .lineLimit(1)
+                                Text(session == nil ? "\(kind.title) · \(place.title)" : (session?.place.title ?? ""))
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .frame(height: 120)
+                    }
                 }
 
                 if store.active == nil {

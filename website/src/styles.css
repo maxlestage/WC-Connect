@@ -173,6 +173,14 @@ a { color: inherit; }
   min-height: 64px;
 }
 
+/* La barre de navigation est le seul bloc plus large que `--wrap` : elle porte
+   douze liens, deux sélecteurs et un bouton sur une ligne, là où le reste de la
+   page se lit mieux en colonne étroite. La valeur est en `em` pour suivre la
+   taille de texte par défaut du navigateur, comme le seuil de bascule
+   ci-dessous : en pixels, elle aurait laissé la barre déborder dès que le texte
+   grossit. */
+.nav .wrap { max-width: 82.5em; }
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -290,16 +298,19 @@ a { color: inherit; }
 }
 .menu__cta { justify-content: center; text-align: center; }
 
-/* Le panneau et son bouton remplacent les liens en ligne sous 1220 px. Dix
+/* Le panneau et son bouton remplacent les liens en ligne sous 1280 px. Douze
    liens, deux sélecteurs et un bouton d'appel ne tiennent pas sur une ligne en
    dessous — et c'est ce débordement qui élargissait la page entière. Rien
    n'est perdu : tout passe par le menu.
+   Le seuil valait 76,25em tant que la barre portait onze liens ; l'arrivée de
+   « Sérénité » l'a fait déborder entre 1221 et 1320 px, là où la barre est plus
+   large que la fenêtre mais où le centrage le masquait au-delà.
    Le seuil est en `em` et non en pixels : dans une requête de média, `em` suit
    la taille de texte par défaut du navigateur (le réglage « texte plus grand »
    d'un téléphone). Exprimé en pixels, il laissait les liens en ligne alors
    qu'ils étaient devenus une fois et demie plus larges, et la page débordait
-   à nouveau. 76,25em = 1220px à 16px. */
-@media (max-width: 76.25em) {
+   à nouveau. 80em = 1280px à 16px. */
+@media (max-width: 80em) {
   .nav__links { display: none; }
   .nav__wide { display: none; }
   .burger { display: inline-flex; }
@@ -307,7 +318,7 @@ a { color: inherit; }
 }
 
 /* Ouvert puis fenêtre élargie : le panneau s'efface, les liens reviennent. */
-@media (min-width: 76.3125em) {
+@media (min-width: 80.0625em) {
   .menu--on { display: none; }
 }
 
@@ -700,6 +711,96 @@ a { color: inherit; }
   font-size: 0.74em;
   font-weight: 620;
   white-space: nowrap;
+}
+
+/* ---------- Maquettes en mode serein (première page) ---------- */
+
+/* Rien ici ne mesure quoi que ce soit : ni anneau de progression, ni barre, ni
+   chiffre qui avance. C'est la raison d'être de ces maquettes, et
+   `scripts/check-hero.mjs` vérifie qu'aucun compteur n'y revient. */
+
+.island__label {
+  font-size: 0.82em;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.phone .island__label { font-size: 0.9em; }
+
+/* La pastille du mode serein bat deux fois plus lentement que celle d'une
+   visite chronométrée, et en vert plutôt qu'en bleu. */
+.island__dot--calm {
+  background: #4fd39a;
+  animation-duration: 5.2s;
+  box-shadow: 0 0 0 0 rgba(79, 211, 154, 0.7);
+}
+
+.activity__icon--calm { background: linear-gradient(160deg, #5fd6a4, #1d8f68); }
+
+.activity__calm {
+  margin: 0.118em 0;
+  font-size: 1.22em;
+  font-weight: 620;
+  line-height: 1.15;
+  color: #fff;
+}
+
+/* Deuxième carte de l'écran verrouillé : la veilleuse, à la place de la barre
+   de progression qui s'y trouvait. */
+.activity--night {
+  margin-top: 0.625em;
+  margin-bottom: 0.75em;
+  padding: 0.75em 0.875em;
+  gap: 0.5em;
+  font-size: 0.78em;
+}
+.night__dot {
+  width: 0.7em;
+  height: 0.7em;
+  flex: none;
+  border-radius: 50%;
+  background: #ffb45c;
+  box-shadow: 0 0 0.6em rgba(255, 180, 92, 0.75);
+}
+.night__label { font-weight: 600; color: #fff; }
+.night__value {
+  margin-left: auto;
+  opacity: 0.72;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* Cadran serein : deux halos concentriques qui respirent, sans aucun tracé de
+   progression. */
+.ring--calm { display: grid; place-items: center; }
+.ring__halo {
+  position: absolute;
+  inset: 2%;
+  border-radius: 50%;
+  background: rgba(79, 211, 154, 0.22);
+  animation: souffle 5.5s ease-in-out infinite;
+}
+.ring__halo--inner {
+  inset: 18%;
+  background: rgba(79, 211, 154, 0.34);
+  animation-delay: 0.3s;
+}
+.ring__calm {
+  display: block;
+  font-size: 0.86em;
+  font-weight: 620;
+  line-height: 1.1;
+}
+
+@keyframes souffle {
+  0%, 100% { transform: scale(0.82); }
+  50% { transform: scale(1); }
+}
+
+/* Une animation qui respire en boucle n'est pas discutable : qui a demandé
+   moins de mouvement doit l'obtenir. */
+@media (prefers-reduced-motion: reduce) {
+  .ring__halo { animation: none; transform: scale(0.9); }
 }
 
 /* La montre se pose dans l'espace laissé libre à droite du téléphone : elle ne
@@ -1157,6 +1258,54 @@ a { color: inherit; }
 .breath__label span { display: block; font-size: 0.95rem; font-weight: 600; }
 .breath__label strong { font-size: 2.6rem; font-weight: 650; }
 .breath__caption { font-size: 0.82rem; color: var(--ink-3); text-align: center; margin: 0; }
+
+/* ---------- Sérénité ---------- */
+
+.section--calm { background: var(--surface-2); }
+
+/* Deux colonnes de cartes dans la moitié gauche du bloc : les quatre réglages
+   tiennent ensemble sans allonger la page. `minmax(0, …)` et non `1fr` nu,
+   sinon la grille refuse de descendre sous la largeur de son contenu et la
+   page défile de côté. */
+.grid--pair { grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 14px; margin-top: 26px; }
+.card--calm { padding: 18px; }
+.card--calm h3 { font-size: 1.02rem; }
+.card--calm p { font-size: 0.9rem; }
+
+.calm {
+  position: relative;
+  width: min(280px, 72vw);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+.calm__halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--mint) 16%, transparent);
+  animation: souffle 5.5s ease-in-out infinite;
+}
+.calm__halo--inner {
+  inset: 18%;
+  background: color-mix(in srgb, var(--mint) 26%, transparent);
+  animation-delay: 0.3s;
+}
+.calm__label {
+  position: relative;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 0 12px;
+  color: var(--mint-ink);
+}
+.calm__label strong { font-size: 1.3rem; font-weight: 650; }
+.calm__label span { font-size: 0.86rem; color: var(--ink-3); }
+
+@media (prefers-reduced-motion: reduce) {
+  .calm__halo { animation: none; transform: scale(0.92); }
+}
 
 /* ---------- Son ---------- */
 

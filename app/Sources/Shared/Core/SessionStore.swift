@@ -84,6 +84,14 @@ public final class SessionStore: ObservableObject {
         liveActivity?.endActivity(for: session)
     }
 
+    /// Rejoue l'affichage de la visite en cours sans toucher aux données.
+    /// Nécessaire quand un réglage change ce que la Live Activity montre —
+    /// le mode serein, par exemple — alors qu'une visite est déjà lancée.
+    public func refreshActivity() {
+        guard let session = active else { return }
+        liveActivity?.updateActivity(for: session)
+    }
+
     public func updateActive(kind: SessionKind? = nil, place: Place? = nil) {
         guard var session = active else { return }
         if let kind { session.kind = kind }

@@ -17,6 +17,7 @@ export const fr = {
     languageLabel: "Langue",
     links: [
       { href: "#fonctions", label: "Fonctions" },
+      { href: "#serenite", label: "Sérénité" },
       { href: "#aide", label: "Aide" },
       { href: "#sans-se-lever", label: "Sans se lever" },
       { href: "#detente", label: "Détente" },
@@ -45,34 +46,78 @@ export const fr = {
   },
 
   hero: {
-    eyebrow: "iPhone · Apple Watch · Live Activity",
-    titleLine1: "Chaque pause",
-    titleLine2: "compte vraiment.",
-    lead: "WC Connect chronomètre vos passages aux toilettes d'un seul geste, affiche le temps écoulé sur l'écran verrouillé et dans la Dynamic Island, et vous laisse tout piloter depuis votre poignet. Sans compte, sans serveur, sans jugement.",
+    eyebrow: "iPhone · Apple Watch · rien à compter",
+    titleLine1: "Prenez votre temps.",
+    titleLine2: "L'app s'occupe du reste.",
+    lead: "WC Connect note vos passages aux toilettes d'un seul geste, puis se tait. En mode serein, ni chiffre ni objectif ni barre qui se remplit : juste un souffle, sur le téléphone comme au poignet. Tout reste enregistré pour les statistiques et pour votre médecin — simplement, vous n'êtes pas obligé de le regarder.",
     primary: "Découvrir l'app",
-    secondary: "Voir la Live Activity",
+    secondary: "Voir le mode serein",
     facts: [
-      { value: "1 geste", label: "pour démarrer" },
+      { value: "0 chiffre", label: "sous les yeux, si vous voulez" },
       { value: "0 donnée", label: "envoyée en ligne" },
       { value: "2 appareils", label: "synchronisés" },
     ],
-    phoneAlt: "Écran verrouillé d'un iPhone affichant la Live Activity de WC Connect",
-    watchAlt: "Apple Watch affichant le chronomètre WC Connect",
+    phoneAlt: "Écran verrouillé d'un iPhone en mode serein : aucun chronomètre, seulement « Prenez votre temps »",
+    watchAlt: "Apple Watch en mode serein : un souffle qui bat lentement, sans aucun chiffre",
     activityLabel: "Visite en cours",
-    activityMeta: "Standard · Maison",
+    activityTitle: "Prenez votre temps",
+    activityMeta: "Rien ne presse, rien ne compte",
+    islandLabel: "Mode serein",
+    nightLabel: "Veilleuse",
+    nightValue: "22 h → 7 h",
     lockTime: "9:41",
     lockDate: "mercredi 18 mars",
     watchPlace: "Maison",
+    watchCalm: "Respirez",
     watchButton: "Terminer",
+  },
+
+  calm: {
+    eyebrow: "Sérénité",
+    title: "Rien ne compte pendant que vous attendez",
+    body: "Un chronomètre qui monte pendant qu'on attend ne rend service à personne : il mesure, donc il juge. Le mode serein le retire partout — écran principal, montre, écran verrouillé, Dynamic Island — et le remplace par un souffle qui bat lentement. La durée, elle, continue d'être enregistrée : vos statistiques et le bilan pour le médecin ne perdent rien.",
+    demoAlt: "Écran de visite en mode serein : un halo qui respire, sans aucun chiffre",
+    demoTitle: "Prenez votre temps",
+    demoMeta: "Rien ne presse, rien ne compte",
+    cards: [
+      {
+        title: "Mode serein",
+        description: "Ni chiffre, ni objectif, ni barre qui se remplit, nulle part. Un interrupteur dans les réglages, et l'app arrête de vous montrer le temps qui passe — sans arrêter de le noter.",
+      },
+      {
+        title: "Veilleuse",
+        description: "Entre 22 h et 7 h par défaut, l'écran passe en ambre très sombre. De quoi trouver son chemin à trois heures du matin sans se réveiller tout à fait. Les heures se règlent.",
+      },
+      {
+        title: "Ambiance au démarrage",
+        description: "Choisissez une fois pour toutes la boucle sonore qui se lance d'elle-même au début d'une visite : pluie, bruit brun, souffle, ou rien du tout.",
+      },
+      {
+        title: "Respiration au démarrage",
+        description: "La respiration guidée peut s'ouvrir seule dès que la visite commence, pour que la première chose à l'écran soit un souffle et non une mesure.",
+      },
+      {
+        title: "Sans objectifs",
+        description: "L'objectif de la semaine et la série de jours suivis disparaissent de l'app. Une série qui se casse fait plus de mal qu'une série qui dure ne fait de bien.",
+      },
+    ],
   },
 
   features: {
     title: "Tout ce qu'il faut, rien de plus",
-    lead: "Une app qui s'ouvre, s'utilise et se referme en moins de trois secondes.",
+    lead: "Seize fonctions, et pas une qui vous presse : l'app s'ouvre, s'utilise et se referme en moins de trois secondes.",
     cards: [
       {
-        title: "Chronomètre d'un geste",
-        description: "Un bouton, un anneau de progression, et c'est parti. Type de visite et lieu sont mémorisés d'une fois sur l'autre.",
+        title: "Mode serein",
+        description: "Un interrupteur retire tous les chiffres de l'écran, de la montre et de l'écran verrouillé, et les remplace par un souffle. La durée reste enregistrée, elle n'est simplement plus montrée.",
+      },
+      {
+        title: "Veilleuse",
+        description: "La nuit, l'écran passe en ambre très sombre entre les heures que vous choisissez. Assez pour y voir, pas assez pour se réveiller pour de bon.",
+      },
+      {
+        title: "Démarrer d'un geste",
+        description: "Un bouton, et c'est parti. Type de visite et lieu sont mémorisés d'une fois sur l'autre. L'anneau de progression ne s'affiche que si vous le voulez bien.",
       },
       {
         title: "Live Activity",
@@ -116,7 +161,15 @@ export const fr = {
       },
       {
         title: "Siri & raccourcis",
-        description: "« Dis Siri, je vais aux toilettes. » Le chronomètre démarre, même écran verrouillé, sans ouvrir l'app.",
+        description: "« Dis Siri, je vais aux toilettes. » Le suivi démarre, même écran verrouillé, sans ouvrir l'app.",
+      },
+      {
+        title: "Sans se lever",
+        description: "Une famille de conseils pour qui reste en fauteuil : transfert stable, appuis à soulager toutes les deux ou trois minutes, limite de temps assis, et les signes d'une dysréflexie autonome à reconnaître tout de suite.",
+      },
+      {
+        title: "Tout reste sur l'appareil",
+        description: "Aucun compte, aucun serveur, aucune analyse d'usage. Les visites vivent dans un groupe d'app partagé entre l'iPhone, la montre et les widgets, et nulle part ailleurs.",
       },
     ],
   },
@@ -252,6 +305,7 @@ export const fr = {
       "Barre de progression vers la durée cible du type de visite",
       "Reprise automatique de l'activité si l'app est relancée",
       "Reprise sur la pile intelligente de l'Apple Watch",
+      "En mode serein, ni chronomètre ni barre : une feuille et « Prenez votre temps »",
     ],
     kind: "Standard",
     place: "Maison",
@@ -507,6 +561,7 @@ export const fr = {
       {
         title: "Bien-être",
         links: [
+          { href: "#serenite", label: "Mode serein" },
           { href: "#aide", label: "Quand ça coince" },
           { href: "#detente", label: "Respiration guidée" },
           { href: "#son", label: "Ambiances et musique" },
