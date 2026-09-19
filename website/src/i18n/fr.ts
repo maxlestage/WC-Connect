@@ -61,7 +61,7 @@ export const fr = {
     watchAlt: "Apple Watch en mode serein : un souffle qui bat lentement, sans aucun chiffre",
     activityLabel: "Visite en cours",
     activityTitle: "Prenez votre temps",
-    activityMeta: "Rien ne presse, rien ne compte",
+    activityMeta: "Rien ne presse",
     islandLabel: "Mode serein",
     nightLabel: "Veilleuse",
     nightValue: "22 h → 7 h",

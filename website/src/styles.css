@@ -745,6 +745,19 @@ a { color: inherit; }
   color: #fff;
 }
 
+/* Carte de la visite en mode serein. Ses textes sont des phrases, pas un
+   chronomètre de quatre caractères : le `nowrap` hérité de `.activity__label`
+   et `.activity__meta` les faisait sortir de la carte — de 34 px en français,
+   de 61 px en anglais, à toutes les largeurs. Ici, tout se replie. */
+.activity--serein .activity__label,
+.activity--serein .activity__meta,
+.activity--serein .activity__calm {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+.activity--serein .activity__label { letter-spacing: 0.05em; font-size: 0.66em; }
+.activity--serein .activity__meta { font-size: 0.72em; }
+
 /* Deuxième carte de l'écran verrouillé : la veilleuse, à la place de la barre
    de progression qui s'y trouvait. */
 .activity--night {

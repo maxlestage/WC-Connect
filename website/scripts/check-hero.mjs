@@ -7,8 +7,9 @@
 // script vérifie les trois, plus l'absence de débordement de la page, à
 // plusieurs largeurs et à trois tailles de texte.
 //
-// Il vérifie aussi, depuis que le propriétaire l'a demandé, que la première
-// page ne compte rien : ni anneau de progression, ni barre qui se remplit, ni
+// Il vérifie aussi que le texte ne sort pas des maquettes — une boîte peut
+// tenir pendant que son contenu déborde, et c'est arrivé — et, depuis que le
+// propriétaire l'a demandé, que la première page ne compte rien : ni anneau de progression, ni barre qui se remplit, ni
 // texte qui change avec le temps. Le chronomètre existe toujours dans l'app et
 // se montre plus bas dans la page ; il n'a simplement plus à accueillir les
 // visiteurs.
@@ -151,6 +152,97 @@ for (const width of largeurs) {
     }
 
     await contexte.close();
+  }
+}
+
+// Contrôle du texte *à l'intérieur* des maquettes.
+//
+// Les contrôles ci-dessus mesurent des boîtes : le téléphone, la montre, le
+// cadran, les cartes. Aucun ne regardait le texte à l'intérieur, et c'est
+// exactement là qu'un défaut est passé : « Rien ne presse, rien ne compte »
+// sortait de la carte de 34 px en français et de 61 px en anglais, à toutes
+// les largeurs, parce que `.activity__meta` hérite de `white-space: nowrap`.
+// Une boîte peut tenir pendant que son contenu déborde.
+//
+// Ici on mesure l'encre : l'étendue réelle de chaque nœud de texte, comparée
+// à la zone de contenu du plus proche bloc qui le porte. Une première version
+// la comparait à la carte entière — et ne voyait rien, parce que le texte
+// fautif débordait de son bloc en restant dans la carte, sous la pastille.
+{
+  const largeurs = [320, 390, 1024, 1440];
+  const langues = ["fr-FR", "en-US"];
+  const polices = [16, 24];
+
+  for (const width of largeurs) {
+    for (const locale of langues) {
+      for (const police of polices) {
+        const contexte = await navigateur.newContext({
+          viewport: { width, height: 900 },
+          locale,
+          isMobile: width < 900,
+          hasTouch: width < 900,
+          reducedMotion: "reduce",
+        });
+        const page = await contexte.newPage();
+        const cdp = await contexte.newCDPSession(page);
+        await cdp.send("Page.setFontSizes", { fontSizes: { standard: police, fixed: police } });
+        await page.goto(url, { waitUntil: "networkidle" });
+        await page.waitForTimeout(250);
+
+        const fautes = await page.evaluate(() => {
+          const racine = document.querySelector(".hero__devices");
+          if (!racine) return [{ texte: "(hero absent)", contenant: ".hero__devices", depasse: 0 }];
+
+          const resultat = [];
+          const marcheur = document.createTreeWalker(racine, NodeFilter.SHOW_TEXT);
+          for (let noeud = marcheur.nextNode(); noeud; noeud = marcheur.nextNode()) {
+            const contenu = noeud.nodeValue.trim();
+            if (!contenu) continue;
+            // Le conteneur qui compte est le plus proche bloc, pas la carte :
+            // le texte fautif débordait de `.activity__body` et passait sous
+            // la pastille « terminer », tout en restant dans la carte. Une
+            // comparaison avec la carte laissait donc passer le défaut.
+            let contenant = noeud.parentElement;
+            while (contenant && getComputedStyle(contenant).display === "inline") {
+              contenant = contenant.parentElement;
+            }
+            if (!contenant || !contenant.closest(".hero__devices")) continue;
+
+            const plage = document.createRange();
+            plage.selectNodeContents(noeud);
+            const encre = plage.getBoundingClientRect();
+            if (encre.width === 0) continue;
+
+            const boite = contenant.getBoundingClientRect();
+            const style = getComputedStyle(contenant);
+            const px = (v) => parseFloat(v) || 0;
+            const gauche = boite.left + px(style.borderLeftWidth) + px(style.paddingLeft);
+            const droite = boite.right - px(style.borderRightWidth) - px(style.paddingRight);
+            const depasse = Math.max(gauche - encre.left, encre.right - droite);
+
+            if (depasse > 1) {
+              resultat.push({
+                texte: contenu.slice(0, 32),
+                contenant: (contenant.className || contenant.tagName).split(" ")[0],
+                depasse: Math.round(depasse),
+              });
+            }
+          }
+          return resultat;
+        });
+
+        const etiquette = `${width}px / ${locale} / racine ${police}px`;
+        if (fautes.length > 0) {
+          for (const f of fautes) {
+            signaler(`${etiquette} : « ${f.texte} » sort de .${f.contenant} de ${f.depasse} px`);
+          }
+        } else {
+          console.log(`ok   texte dans les maquettes — ${etiquette}`);
+        }
+
+        await contexte.close();
+      }
+    }
   }
 }
 
