@@ -17,7 +17,10 @@
     "check:hero": "node scripts/check-hero.mjs",
     "check:menu": "node scripts/check-menu.mjs",
     "check:claims": "node scripts/check-claims.mjs",
-    "check:contrast": "node scripts/check-contrast.mjs"
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:pwa": "node scripts/check-pwa.mjs",
+    "icons": "node scripts/make-icons.mjs",
+    "check:souschemin": "node scripts/check-souschemin.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

@@ -29,12 +29,13 @@ const TYPES = new Map(
     ".ico": "image/x-icon",
     ".woff2": "font/woff2",
     ".txt": "text/plain; charset=utf-8",
+    ".webmanifest": "application/manifest+json; charset=utf-8",
     ".map": "application/json; charset=utf-8",
   }),
 );
 
 /** Les types texte gagnent à être compressés ; les images déjà compressées non. */
-const COMPRESSIBLES = new Set([".html", ".js", ".css", ".json", ".svg", ".txt", ".map"]);
+const COMPRESSIBLES = new Set([".html", ".js", ".css", ".json", ".svg", ".txt", ".map", ".webmanifest"]);
 
 const gabaritAccueil = readFileSync(accueil, "utf8");
 
@@ -130,10 +131,15 @@ const serveur = createServer((requete, reponse) => {
 
   const extension = extname(fichier);
   const type = TYPES.get(extension) ?? "application/octet-stream";
-  // Les fichiers versionnés par Vite portent une empreinte : ils sont immuables.
-  const cache = fichier.includes(`${sep}assets${sep}`)
-    ? "public, max-age=31536000, immutable"
-    : "public, max-age=3600";
+  // Le service worker et le manifeste pilotent tout le reste : gardés en cache
+  // par le navigateur, une mise à jour du site mettrait une heure à être vue.
+  // Ils se revalident donc à chaque fois.
+  const cache = /(?:^|[\\/])(?:sw\.js|manifest\.webmanifest)$/.test(chemin)
+    ? "no-cache"
+    // Les fichiers versionnés par Vite portent une empreinte : ils sont immuables.
+    : fichier.includes(`${sep}assets${sep}`)
+      ? "public, max-age=31536000, immutable"
+      : "public, max-age=3600";
 
   if (COMPRESSIBLES.has(extension)) {
     envoie(requete, reponse, 200, type, readFileSync(fichier), cache);
