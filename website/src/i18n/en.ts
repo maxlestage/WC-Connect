@@ -58,7 +58,7 @@ export const en: Dictionary = {
     watchAlt: "Apple Watch in calm mode: a slow breath, with no numbers",
     activityLabel: "Visit in progress",
     activityTitle: "Take your time",
-    activityMeta: "No rush, nothing is being counted",
+    activityMeta: "No rush",
     islandLabel: "Calm mode",
     nightLabel: "Night light",
     nightValue: "10 pm → 7 am",

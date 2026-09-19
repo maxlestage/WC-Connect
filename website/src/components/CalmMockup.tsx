@@ -25,7 +25,7 @@ export function CalmPhoneMockup() {
         <div className="phone__time">{t.hero.lockTime}</div>
         <div className="phone__date">{t.hero.lockDate}</div>
 
-        <div className="activity">
+        <div className="activity activity--serein">
           <div className="activity__icon activity__icon--calm">
             <LeafIcon />
           </div>
